@@ -1,12 +1,24 @@
 package gabriel.moraes.school.Model.employee;
 
-import gabriel.moraes.school.Model.ClassPb;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import gabriel.moraes.school.Model.ClassRoom;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class ScrumMaster extends Employee {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ScrumMaster{
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
     @OneToOne(mappedBy = "scrumMaster")
-    private ClassPb scrumMasterCourse;
+    private ClassRoom scrumMasterCourse;
 }

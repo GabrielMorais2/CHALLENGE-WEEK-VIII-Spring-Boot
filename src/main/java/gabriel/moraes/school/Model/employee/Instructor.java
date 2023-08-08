@@ -1,14 +1,27 @@
 package gabriel.moraes.school.Model.employee;
 
-import gabriel.moraes.school.Model.ClassPb;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import gabriel.moraes.school.Model.ClassRoom;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Instructor extends Employee {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Instructor{
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
     @ManyToOne
-    @JoinColumn(name = "class_pb_id")
-    private ClassPb instructorClass;
+    @JoinColumn(name = "classroom_id")
+    @JsonIgnore
+    private ClassRoom classRoom;
 }
