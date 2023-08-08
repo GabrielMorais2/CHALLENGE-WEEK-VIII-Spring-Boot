@@ -1,11 +1,23 @@
 package gabriel.moraes.school.Model.employee;
 
-import gabriel.moraes.school.Model.ClassPb;
+import gabriel.moraes.school.Model.ClassRoom;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Coordinator extends Employee {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Coordinator{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
 
     @OneToOne(mappedBy = "coordinator")
-    private ClassPb coordinatorClass;
+    private ClassRoom coordinatorClass;
 }

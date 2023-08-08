@@ -1,5 +1,7 @@
 package gabriel.moraes.school.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,17 +16,11 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String email;
-    private String phone;
 
     @ManyToOne
-    @JoinColumn(name = "class_id")
-    private ClassPb studentClass;
-
-    @ManyToOne
-    @JoinColumn(name = "squad_id")
-    private Squad studentSquad;
-
+    @JoinColumn(name = "classroom_id")
+    @JsonIgnore
+    private ClassRoom classRoom;
 }

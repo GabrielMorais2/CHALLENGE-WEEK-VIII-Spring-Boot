@@ -1,5 +1,6 @@
 package gabriel.moraes.school.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import gabriel.moraes.school.Model.employee.Coordinator;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
@@ -15,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassPb {
+public class ClassRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +33,18 @@ public class ClassPb {
     @JoinColumn(name = "scrum_master_id")
     private ScrumMaster scrumMaster;
 
-    @OneToMany(mappedBy = "instructorClass")
+    @OneToMany(mappedBy = "classRoom")
     private List<Instructor> instructors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "studentClass")
+    @OneToMany(mappedBy = "classRoom")
     private List<Student> students = new ArrayList<>();
 
+    public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors, List<Student> students) {
+        this.name = name;
+        this.status = ClassStatus.WAITING;
+        this.coordinator = coordinator;
+        this.scrumMaster = scrumMaster;
+        this.instructors = instructors;
+        this.students = students;
+    }
 }
