@@ -43,6 +43,11 @@ public class ClassRoom {
     @JsonManagedReference
     private List<Student> students = new ArrayList<>();
 
+    @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Squad> squads = new ArrayList<>();
+
+
     public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors) {
         this.name = name;
         this.status = ClassStatus.WAITING;

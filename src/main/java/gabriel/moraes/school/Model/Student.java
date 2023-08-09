@@ -23,4 +23,10 @@ public class Student {
     @JsonBackReference
     private ClassRoom classRoom;
 
+    @ManyToOne
+    @JoinColumn(name = "squad_id")
+    @JsonBackReference
+    private Squad squad;
+
+
 }
