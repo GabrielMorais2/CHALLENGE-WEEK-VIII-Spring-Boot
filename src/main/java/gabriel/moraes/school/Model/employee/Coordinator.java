@@ -1,5 +1,6 @@
 package gabriel.moraes.school.Model.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import gabriel.moraes.school.Model.ClassRoom;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,5 +20,6 @@ public class Coordinator{
     private String email;
 
     @OneToOne(mappedBy = "coordinator")
+    @JsonBackReference
     private ClassRoom coordinatorClass;
 }

@@ -1,6 +1,6 @@
 package gabriel.moraes.school.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import gabriel.moraes.school.Model.employee.Coordinator;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
@@ -27,24 +27,28 @@ public class ClassRoom {
 
     @OneToOne
     @JoinColumn(name = "coordinator_id")
+    @JsonManagedReference
     private Coordinator coordinator;
 
     @OneToOne
     @JoinColumn(name = "scrum_master_id")
+    @JsonManagedReference
     private ScrumMaster scrumMaster;
 
-    @OneToMany(mappedBy = "classRoom")
+    @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Instructor> instructors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "classRoom")
+    @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Student> students = new ArrayList<>();
 
-    public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors, List<Student> students) {
+    public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors) {
         this.name = name;
         this.status = ClassStatus.WAITING;
         this.coordinator = coordinator;
         this.scrumMaster = scrumMaster;
         this.instructors = instructors;
-        this.students = students;
     }
+
 }
