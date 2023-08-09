@@ -31,8 +31,8 @@ public class ClassRoom {
     private Coordinator coordinator;
 
     @OneToOne
-    @JoinColumn(name = "scrum_master_id")@JsonManagedReference
-
+    @JoinColumn(name = "scrum_master_id")
+    @JsonManagedReference
     private ScrumMaster scrumMaster;
 
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
@@ -43,13 +43,12 @@ public class ClassRoom {
     @JsonManagedReference
     private List<Student> students = new ArrayList<>();
 
-    public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors, List<Student> students) {
+    public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors) {
         this.name = name;
         this.status = ClassStatus.WAITING;
         this.coordinator = coordinator;
         this.scrumMaster = scrumMaster;
         this.instructors = instructors;
-        this.students = students;
     }
 
 }

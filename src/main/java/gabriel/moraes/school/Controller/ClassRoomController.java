@@ -1,6 +1,7 @@
 package gabriel.moraes.school.Controller;
 
 import gabriel.moraes.school.Model.ClassRoom;
+import gabriel.moraes.school.Model.employee.DtoRequest.AddStudentsDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Service.ClassRoomService;
@@ -32,6 +33,16 @@ public class ClassRoomController {
     public ResponseEntity<ClassRoomDtoResponse> createClass(@Valid @RequestBody ClassRoomDtoRequest classRoomDtoRequest){
         ClassRoomDtoResponse dto = classService.createClass(classRoomDtoRequest);
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}/add-students")
+    public ResponseEntity<ClassRoomDtoResponse> addStudentsToClass(
+            @PathVariable Long id,
+            @RequestBody AddStudentsDtoRequest addStudentsDtoRequest) {
+
+        ClassRoomDtoResponse response = classService.addStudentsToClass(id, addStudentsDtoRequest);
+
+        return ResponseEntity.ok(response);
     }
 
 }

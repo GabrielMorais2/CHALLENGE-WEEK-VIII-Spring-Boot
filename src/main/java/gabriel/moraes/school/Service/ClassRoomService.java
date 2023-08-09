@@ -3,6 +3,7 @@ package gabriel.moraes.school.Service;
 import gabriel.moraes.school.Model.ClassRoom;
 import gabriel.moraes.school.Model.Student;
 import gabriel.moraes.school.Model.employee.Coordinator;
+import gabriel.moraes.school.Model.employee.DtoRequest.AddStudentsDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.Instructor;
@@ -34,19 +35,22 @@ public class ClassRoomService {
         this.mapper = mapper;
     }
 
+    public ClassRoomDtoResponse getClassById(Long id) {
+        ClassRoom classRoom = classRoomRepository.findById(id).get();
+        return mapper.map(classRoom, ClassRoomDtoResponse.class);
+    }
+
     public ClassRoomDtoResponse createClass(ClassRoomDtoRequest classDto) {
 
         Coordinator coordinator = findCoordinatorById(classDto.getCoordinator());
         ScrumMaster scrumMaster = findScrumMasterById(classDto.getScrumMaster());
+
         List<Instructor> instructors = findInstructorsByIds(classDto.getInstructors());
-        List<Student> students = findStudentsByIds(classDto.getStudents());
 
         validateInstructors(instructors);
-        validateStudents(students);
 
-        ClassRoom classRoom = new ClassRoom(classDto.getName(), coordinator, scrumMaster, instructors, students);
+        ClassRoom classRoom = new ClassRoom(classDto.getName(), coordinator, scrumMaster, instructors);
 
-        assignClassToStudents(students, classRoom);
         assignClassToInstructors(instructors, classRoom);
 
         ClassRoom savedClassRoom = classRoomRepository.save(classRoom);
@@ -54,6 +58,22 @@ public class ClassRoomService {
         return mapper.map(savedClassRoom, ClassRoomDtoResponse.class);
     }
 
+    public ClassRoomDtoResponse addStudentsToClass(Long id, AddStudentsDtoRequest addStudentsDtoRequest) {
+
+        ClassRoom classRoom = classRoomRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ClassRoom not found"));
+
+        List<Student> students = findStudentsByIds(addStudentsDtoRequest.getStudents());
+
+        validateStudents(students);
+
+        assignClassToStudents(students, classRoom);
+
+        classRoom.getStudents().addAll(students);
+        classRoomRepository.save(classRoom);
+
+        return mapper.map(classRoom, ClassRoomDtoResponse.class);
+    }
 
     private Coordinator findCoordinatorById(Long coordinatorId) {
         return coordinatorRepository.findById(coordinatorId)
@@ -81,7 +101,7 @@ public class ClassRoomService {
 
     private void validateStudents(List<Student> students) {
         int studentsCount = students.size();
-        if (studentsCount < 5 || studentsCount > 30) {
+        if (studentsCount < 15 || studentsCount > 30) {
             throw new IllegalArgumentException("Requires a minimum of 15 students and a maximum of 30");
         }
     }
@@ -104,10 +124,5 @@ public class ClassRoomService {
         }
 
         instructors.forEach(instructor -> instructor.setClassRoom(classRoom));
-    }
-
-    public ClassRoomDtoResponse getClassById(Long id) {
-        ClassRoom classRoom = classRoomRepository.findById(id).get();
-        return mapper.map(classRoom, ClassRoomDtoResponse.class);
     }
 }

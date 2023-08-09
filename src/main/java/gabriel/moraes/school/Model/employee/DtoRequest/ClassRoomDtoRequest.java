@@ -22,6 +22,4 @@ public class ClassRoomDtoRequest {
     private Long scrumMaster;
     @NotNull
     private List<Long> instructors = new ArrayList<>();
-    @NotNull
-    private List<Long> students = new ArrayList<>();
 }
