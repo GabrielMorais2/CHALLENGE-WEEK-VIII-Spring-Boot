@@ -4,6 +4,7 @@ import gabriel.moraes.school.Model.Squad;
 import gabriel.moraes.school.Model.employee.DtoRequest.AddStudentsDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.SquadDtoRequest;
+import gabriel.moraes.school.Model.employee.DtoRequest.UpdateSquadNameRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.Service.ClassRoomService;
@@ -23,7 +24,16 @@ public class SquadController {
     public SquadController(SquadService squadService){
         this.squadService = squadService;
     }
+    @PutMapping("/{classId}/update-squad/{squadId}")
+    public ResponseEntity<SquadDtoResponse> updateSquadName(
+            @PathVariable Long classId,
+            @PathVariable Long squadId,
+            @Valid @RequestBody UpdateSquadNameRequest updateSquadNameRequest) {
 
+        SquadDtoResponse dtoResponse = squadService.updateSquadName(classId, squadId, updateSquadNameRequest.getName());
+
+        return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
+    }
 
     @PostMapping("/{id}/create-squad")
     public ResponseEntity<List<SquadDtoResponse>> createClass(@PathVariable Long id) {

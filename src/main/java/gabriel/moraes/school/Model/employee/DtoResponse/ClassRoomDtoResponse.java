@@ -27,6 +27,6 @@ public class ClassRoomDtoResponse {
     private ScrumMaster scrumMaster;
     private List<Instructor> instructors = new ArrayList<>();
     private List<Student> students = new ArrayList<>();
-    private List<Squad> Squad = new ArrayList<>();
+    private List<Squad> squads = new ArrayList<>();
 
 }

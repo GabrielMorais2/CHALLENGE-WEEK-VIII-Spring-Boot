@@ -30,55 +30,68 @@ public class SquadService {
     private SquadRepository squadRepository;
     @Autowired
     private ModelMapper mapper;
+
     @Transactional
     public List<SquadDtoResponse> createSquad(Long idClass) {
+        ClassRoom classRoom = getClassRoomById(idClass);
+        List<Squad> squads = createSquadsFromClassRoom(classRoom);
+        updateClassRoomWithSquads(classRoom, squads);
+        setSquadForStudents(squads);
+        return mapSquadsToDtoResponse(squads);
+    }
 
-        ClassRoom classRoom = classRoomRepository.findById(idClass)
+    private ClassRoom getClassRoomById(Long idClass) {
+        return classRoomRepository.findById(idClass)
                 .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + idClass));
+    }
+    private List<Squad> createSquadsFromClassRoom(ClassRoom classRoom) {
 
-        List<Squad> squads = getSquads(classRoom);
+        List<Student> students = classRoom.getStudents();
+        int maxStudentsPerSquad = 5;
+        List<Squad> squads = new ArrayList<>();
 
-        squads = squadRepository.saveAll(squads);
+        for (int studentIndex = 0; studentIndex < students.size(); studentIndex += maxStudentsPerSquad) {
+            int currentSquadSize = Math.min(maxStudentsPerSquad, students.size() - studentIndex);
+            List<Student> squadStudents = students.subList(studentIndex, studentIndex + currentSquadSize);
+            Squad squad = new Squad("Não informado", classRoom, squadStudents);
+            squads.add(squad);
+        }
 
+        return squadRepository.saveAll(squads);
+    }
+
+    @Transactional
+    public SquadDtoResponse updateSquadName(Long classId, Long squadId, String newName) {
+
+        ClassRoom classRoom = getClassRoomById(classId);
+
+        Squad squadToUpdate = classRoom.getSquads().stream()
+                .filter(squad -> squad.getId().equals(squadId))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Squad not found with id: " + squadId));
+
+        squadToUpdate.setName(newName);
+
+        Squad updatedSquad = squadRepository.save(squadToUpdate);
+
+        return mapper.map(updatedSquad, SquadDtoResponse.class);
+    }
+
+    private void updateClassRoomWithSquads(ClassRoom classRoom, List<Squad> squads) {
         classRoom.getSquads().addAll(squads);
+        //classRoomRepository.save(classRoom);
+    }
 
+    private void setSquadForStudents(List<Squad> squads) {
         for (Squad squad : squads) {
             List<Student> squadStudents = squad.getStudents();
             squadStudents.forEach(student -> student.setSquad(squad));
         }
+    }
 
+    private List<SquadDtoResponse> mapSquadsToDtoResponse(List<Squad> squads) {
         return squads.stream()
                 .map(squad -> mapper.map(squad, SquadDtoResponse.class))
                 .collect(Collectors.toList());
-    }
-
-    private static List<Squad> getSquads(ClassRoom classRoom) {
-        List<Student> students = classRoom.getStudents();
-
-        int maxStudentsPerSquad = 5;
-
-        int numSquads = (int) Math.ceil((double) students.size() / maxStudentsPerSquad);
-
-        List<Squad> squads = new ArrayList<>();
-
-        int studentIndex = 0;
-
-        for (int i = 0; i < numSquads; i++) {
-
-            int currentSquadSize = Math.min(maxStudentsPerSquad, students.size() - studentIndex);
-
-            List<Student> squadStudents = students.subList(studentIndex, studentIndex + currentSquadSize);
-
-            Squad squad = new Squad("Não informado", classRoom, squadStudents);
-
-            squads.add(squad);
-
-            studentIndex += currentSquadSize;
-        }
-        return squads;
-    }
-
-    private List<Student> findStudentsByIds(List<Long> studentIds) {
-        return studentRepository.findAllById(studentIds);
     }
 }

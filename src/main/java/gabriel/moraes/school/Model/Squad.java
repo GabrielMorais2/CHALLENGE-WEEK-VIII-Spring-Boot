@@ -23,7 +23,7 @@ public class Squad {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
-    @JsonManagedReference
+    @JsonBackReference
     private ClassRoom classRoom;
 
     @OneToMany(mappedBy = "squad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

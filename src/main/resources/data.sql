@@ -1,8 +1,16 @@
 INSERT INTO coordinator (name, email)
 VALUES ('Ana Lima', 'ana.lima@example.com');
+INSERT INTO student (name, email)
+VALUES ('Amanda Almeida', 'amanda.almeida@example.com');
+INSERT INTO student (name, email)
+VALUES ('Gabriel Santos', 'gabriel.santos@example.com');
 
 INSERT INTO scrum_master (name, email)
 VALUES ('Pedro Santos', 'pedro.santos@example.com');
+INSERT INTO student (name, email)
+VALUES ('Sofia Lima', 'sofia.lima@example.com');
+INSERT INTO student (name, email)
+VALUES ('Rafael Oliveira', 'rafael.oliveira@example.com');
 
 INSERT INTO instructor (name, email)
 VALUES ('Carla Silva', 'carla.silva@example.com');
