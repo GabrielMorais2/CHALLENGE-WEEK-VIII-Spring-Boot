@@ -18,15 +18,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClassRoomDtoResponse {
+public class SquadDtoResponse {
 
     private Long id;
     private String name;
-    private ClassStatus status;
-    private Coordinator coordinator;
-    private ScrumMaster scrumMaster;
-    private List<Instructor> instructors = new ArrayList<>();
     private List<Student> students = new ArrayList<>();
-    private List<Squad> squads = new ArrayList<>();
 
 }
