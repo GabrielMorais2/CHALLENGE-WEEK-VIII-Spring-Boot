@@ -1,6 +1,6 @@
 package gabriel.moraes.school.Model.employee;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import gabriel.moraes.school.Model.ClassRoom;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +22,6 @@ public class Instructor{
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
-    @JsonIgnore
+    @JsonBackReference
     private ClassRoom classRoom;
 }
