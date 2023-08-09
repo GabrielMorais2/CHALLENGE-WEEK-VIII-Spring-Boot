@@ -1,13 +1,10 @@
 package gabriel.moraes.school.Controller;
 
-import gabriel.moraes.school.Model.ClassRoom;
 import gabriel.moraes.school.Model.employee.DtoRequest.AddStudentsDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Service.ClassRoomService;
-import gabriel.moraes.school.repository.ClassRoomRepository;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +32,14 @@ public class ClassRoomController {
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}/start")
+    public ResponseEntity<Void> startClass(@PathVariable Long id) {
+
+        classService.startClass(id);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}/add-students")
     public ResponseEntity<ClassRoomDtoResponse> addStudentsToClass(
             @PathVariable Long id,
@@ -42,7 +47,7 @@ public class ClassRoomController {
 
         ClassRoomDtoResponse response = classService.addStudentsToClass(id, addStudentsDtoRequest);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
