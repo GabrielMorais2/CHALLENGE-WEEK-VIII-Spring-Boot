@@ -85,7 +85,7 @@ public class ClassRoomService {
     // Métodos auxiliares para encontrar entidades por ID
     private ClassRoom findClassById(Long id) {
         return classRoomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("ClassRoom not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + id));
     }
 
     private Coordinator findCoordinatorById(Long coordinatorId) {
@@ -108,6 +108,7 @@ public class ClassRoomService {
 
     // Métodos auxiliares para validações
     private void validateStatus(ClassRoom classRoom) {
+
         int studentsCount = classRoom.getStudents().size();
         if (studentsCount < 15 || studentsCount > 30) {
             throw new IllegalArgumentException("A minimum of 15 students is required to start a class.");
@@ -119,6 +120,7 @@ public class ClassRoomService {
         } else {
             throw new InvalidClassStatusException("ClassRoom is not in waiting status");
         }
+
     }
 
     private void validateInstructors(List<Instructor> instructors) {
@@ -137,21 +139,22 @@ public class ClassRoomService {
     // Métodos auxiliares para atribuir turma a alunos e instrutores
     private void assignClassToStudents(List<Student> students, ClassRoom classRoom) {
 
-        if(classRoom.getStatus() == ClassStatus.WAITING){
-            students.forEach(student -> student.setClassRoom(classRoom));
-        } else {
-            throw new InvalidClassStatusException("ClassRoom is not in waiting status");
-        }
-
         for (Student student : students) {
             if (student.getClassRoom() != null) {
                 throw new IllegalArgumentException("Student " + student.getName() + " is already assigned to a class.");
             }
         }
 
+        if(classRoom.getStatus() == ClassStatus.WAITING){
+            students.forEach(student -> student.setClassRoom(classRoom));
+        } else {
+            throw new InvalidClassStatusException("ClassRoom is not in WAITING status");
+        }
+
     }
 
     private void assignClassToInstructors(List<Instructor> instructors, ClassRoom classRoom) {
+
         for (Instructor instructor : instructors) {
             if (instructor.getClassRoom() != null) {
                 throw new IllegalArgumentException("Instructor " + instructor.getName() + " is already assigned to a class.");
@@ -161,4 +164,15 @@ public class ClassRoomService {
         instructors.forEach(instructor -> instructor.setClassRoom(classRoom));
     }
 
+    public void finish(Long id) {
+        ClassRoom classRoom = findClassById(id);
+
+        if (classRoom.getStatus() == ClassStatus.STARTED) {
+            classRoom.setStatus(ClassStatus.FINISHED);
+            classRoomRepository.save(classRoom);
+        } else {
+            throw new InvalidClassStatusException("ClassRoom is not in STARTED status");
+        }
+
+    }
 }
