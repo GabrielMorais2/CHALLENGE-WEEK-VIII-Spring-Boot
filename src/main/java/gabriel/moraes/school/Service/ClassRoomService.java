@@ -105,4 +105,9 @@ public class ClassRoomService {
 
         instructors.forEach(instructor -> instructor.setClassRoom(classRoom));
     }
+
+    public ClassRoomDtoResponse getClassById(Long id) {
+        ClassRoom classRoom = classRoomRepository.findById(id).get();
+        return mapper.map(classRoom, ClassRoomDtoResponse.class);
+    }
 }
