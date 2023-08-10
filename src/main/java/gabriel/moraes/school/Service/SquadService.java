@@ -1,14 +1,14 @@
 package gabriel.moraes.school.Service;
 
 import gabriel.moraes.school.Model.ClassRoom;
+import gabriel.moraes.school.Model.ClassStatus;
 import gabriel.moraes.school.Model.Squad;
 import gabriel.moraes.school.Model.Student;
-import gabriel.moraes.school.Model.employee.DtoRequest.SquadDtoRequest;
-import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
+import gabriel.moraes.school.exception.InvalidClassStatusException;
+import gabriel.moraes.school.exception.NoRegisteredStudents;
 import gabriel.moraes.school.repository.ClassRoomRepository;
 import gabriel.moraes.school.repository.SquadRepository;
-import gabriel.moraes.school.repository.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,6 @@ public class SquadService {
     @Autowired
     private ClassRoomRepository classRoomRepository;
     @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
     private SquadRepository squadRepository;
     @Autowired
     private ModelMapper mapper;
@@ -41,6 +39,16 @@ public class SquadService {
     }
 
     private ClassRoom getClassRoomById(Long idClass) {
+
+        ClassRoom classRoom = classRoomRepository.findById(idClass).get();
+        if(classRoom.getStudents().isEmpty()){
+            throw new NoRegisteredStudents("There are no registered students.");
+        };
+
+        if(!(classRoom.getStatus() == ClassStatus.STARTED)){
+            throw new InvalidClassStatusException("It is only possible to create squads when a class is started.");
+        };
+
         return classRoomRepository.findById(idClass)
                 .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + idClass));
     }

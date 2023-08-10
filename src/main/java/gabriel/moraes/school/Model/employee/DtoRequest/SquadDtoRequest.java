@@ -1,6 +1,5 @@
 package gabriel.moraes.school.Model.employee.DtoRequest;
 
-import gabriel.moraes.school.Model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

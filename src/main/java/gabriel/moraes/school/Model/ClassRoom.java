@@ -1,6 +1,7 @@
 package gabriel.moraes.school.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import gabriel.moraes.school.Model.employee.Coordinator;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
@@ -16,6 +17,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class ClassRoom {
 
     @Id
@@ -27,26 +32,20 @@ public class ClassRoom {
 
     @OneToOne
     @JoinColumn(name = "coordinator_id")
-    @JsonManagedReference
     private Coordinator coordinator;
 
     @OneToOne
     @JoinColumn(name = "scrum_master_id")
-    @JsonManagedReference
     private ScrumMaster scrumMaster;
 
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Instructor> instructors = new ArrayList<>();
 
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Squad> squads = new ArrayList<>();
-
 
     public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors) {
         this.name = name;

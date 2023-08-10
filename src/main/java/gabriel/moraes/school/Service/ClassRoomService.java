@@ -12,14 +12,13 @@ import gabriel.moraes.school.Model.employee.ScrumMaster;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
 import gabriel.moraes.school.repository.*;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class ClassRoomService {
 
     private final InstructorRepository instructorRepository;
@@ -40,11 +39,13 @@ public class ClassRoomService {
         this.mapper = mapper;
     }
 
+    @Transactional(readOnly = true)
     public ClassRoomDtoResponse getClassById(Long id) {
         ClassRoom classRoom = findClassById(id);
         return mapper.map(classRoom, ClassRoomDtoResponse.class);
     }
 
+    @Transactional
     public ClassRoomDtoResponse createClass(ClassRoomDtoRequest classDto) {
         Coordinator coordinator = findCoordinatorById(classDto.getCoordinator());
         ScrumMaster scrumMaster = findScrumMasterById(classDto.getScrumMaster());
@@ -58,11 +59,6 @@ public class ClassRoomService {
         ClassRoom savedClassRoom = classRoomRepository.save(classRoom);
 
         return mapper.map(savedClassRoom, ClassRoomDtoResponse.class);
-    }
-
-    public void startClass(Long id) {
-        ClassRoom classRoom = findClassById(id);
-        validateStartStatus(classRoom);
     }
 
     public ClassRoomDtoResponse addStudentsToClass(Long id, AddStudentsDtoRequest addStudentsDtoRequest) {
@@ -110,7 +106,6 @@ public class ClassRoomService {
         if (classRoom.getStatus() != ClassStatus.WAITING) {
             throw new InvalidClassStatusException("To start a class you need the status in WAITING");
         }
-
         classRoom.setStatus(ClassStatus.STARTED);
     }
 
@@ -134,7 +129,7 @@ public class ClassRoomService {
 
         for (Student student : students) {
             if (student.getClassRoom() != null) {
-                throw new IllegalArgumentException("Student " + student.getName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
+                throw new IllegalArgumentException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
             }
             student.setClassRoom(classRoom);
         }
@@ -143,7 +138,7 @@ public class ClassRoomService {
     private void assignClassToInstructors(List<Instructor> instructors, ClassRoom classRoom) {
         for (Instructor instructor : instructors) {
             if (instructor.getClassRoom() != null) {
-                throw new IllegalArgumentException("Instructor " + instructor.getName() + " is already assigned to a class.");
+                throw new IllegalArgumentException("Instructor " + instructor.getFirstName() + " is already assigned to a class.");
             }
             instructor.setClassRoom(classRoom);
         }
@@ -159,6 +154,10 @@ public class ClassRoomService {
         } else {
             throw new InvalidClassStatusException("Classroom needs to be in STARTED status to be finished.");
         }
+    }
 
+    public void startClass(Long id) {
+        ClassRoom classRoom = findClassById(id);
+        validateStartStatus(classRoom);
     }
 }
