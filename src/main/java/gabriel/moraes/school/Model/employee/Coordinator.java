@@ -16,8 +16,10 @@ public class Coordinator{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String phone;
 
     @OneToOne(mappedBy = "coordinator")
     @JsonBackReference

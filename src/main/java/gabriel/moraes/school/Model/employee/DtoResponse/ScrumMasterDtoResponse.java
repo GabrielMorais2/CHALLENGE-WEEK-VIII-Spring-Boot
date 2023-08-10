@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InstructorDtoResponse {
+public class ScrumMasterDtoResponse {
 
     private Long id;
     private String firstName;

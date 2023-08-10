@@ -63,6 +63,15 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NoRegisteredStudents.class)
+    public ResponseEntity<ErrorResponse> illegalArgumentException(NoRegisteredStudents ex) {
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                timestamp,
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(InvalidClassStatusException.class)
     public ResponseEntity<ErrorResponse> invalidClassStatusException(InvalidClassStatusException ex) {
         ErrorResponse message = new ErrorResponse(

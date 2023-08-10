@@ -1,7 +1,8 @@
 package gabriel.moraes.school.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Squad {
 
     @Id
@@ -27,7 +32,6 @@ public class Squad {
     private ClassRoom classRoom;
 
     @OneToMany(mappedBy = "squad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Student> students = new ArrayList<>();
 
     public Squad(String name, ClassRoom classRoom, List<Student> squadStudents) {

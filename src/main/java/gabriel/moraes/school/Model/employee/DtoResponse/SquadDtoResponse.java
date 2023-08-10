@@ -1,11 +1,6 @@
 package gabriel.moraes.school.Model.employee.DtoResponse;
 
-import gabriel.moraes.school.Model.ClassStatus;
-import gabriel.moraes.school.Model.Squad;
 import gabriel.moraes.school.Model.Student;
-import gabriel.moraes.school.Model.employee.Coordinator;
-import gabriel.moraes.school.Model.employee.Instructor;
-import gabriel.moraes.school.Model.employee.ScrumMaster;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

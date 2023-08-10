@@ -9,15 +9,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InstructorDtoRequest {
+public class CoordinatorDtoRequest {
 
     @NotBlank
     private String firstName;
     @NotBlank
     private String lastName;
-
-    @NotBlank
     @Email
+    @NotBlank
     private String email;
     @NotBlank
     private String phone;
