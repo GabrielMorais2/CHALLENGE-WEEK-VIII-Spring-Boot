@@ -18,7 +18,7 @@ public class SquadController {
     public SquadController(SquadService squadService){
         this.squadService = squadService;
     }
-    @PutMapping("/{classId}/update-squad/{squadId}")
+    @PatchMapping("/{classId}/update-squad/{squadId}")
     public ResponseEntity<SquadDtoResponse> updateSquadName(
             @PathVariable Long classId,
             @PathVariable Long squadId,

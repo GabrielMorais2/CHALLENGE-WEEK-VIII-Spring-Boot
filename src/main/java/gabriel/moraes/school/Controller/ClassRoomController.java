@@ -32,7 +32,7 @@ public class ClassRoomController {
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}/start")
+    @PatchMapping("/{id}/start")
     public ResponseEntity<Void> startClass(@PathVariable Long id) {
 
         classService.startClass(id);
@@ -41,7 +41,7 @@ public class ClassRoomController {
     }
 
 
-    @PutMapping("/{id}/add-students")
+    @PatchMapping("/{id}/add-students")
     public ResponseEntity<ClassRoomDtoResponse> addStudentsToClass(
             @PathVariable Long id,
             @RequestBody AddStudentsDtoRequest addStudentsDtoRequest) {
@@ -51,7 +51,7 @@ public class ClassRoomController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/finish")
+    @PatchMapping("/{id}/finish")
     public ResponseEntity<Void> finishClass(@PathVariable Long id) {
 
         classService.finish(id);
