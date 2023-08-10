@@ -21,6 +21,10 @@ import java.util.List;
 @Service
 public class ClassRoomService {
 
+    private int minStudent = 15;
+    private int maxStudent = 30;
+    private int maxInstructors = 3;
+
     private final InstructorRepository instructorRepository;
     private final CoordinatorRepository coordinatorRepository;
     private final StudentRepository studentRepository;
@@ -99,7 +103,7 @@ public class ClassRoomService {
 
     private void validateStartStatus(ClassRoom classRoom) {
         int studentsCount = classRoom.getStudents().size();
-        if (studentsCount < 15 || studentsCount > 30) {
+        if (studentsCount < minStudent || studentsCount > maxStudent) {
             throw new IllegalArgumentException("A minimum of 15 students is required to start a class.");
         }
 
@@ -111,14 +115,14 @@ public class ClassRoomService {
     }
 
     private void validateInstructors(List<Instructor> instructors) {
-        if (instructors.size() < 3) {
+        if (instructors.size() < maxInstructors) {
             throw new IllegalArgumentException("Requires a minimum of 3 instructors");
         }
     }
 
     private void validateStudents(List<Student> students) {
         int studentsCount = students.size();
-        if (studentsCount > 30) {
+        if (studentsCount > maxStudent) {
             throw new IllegalArgumentException("A class can have a maximum of 30 students");
         }
     }
