@@ -87,7 +87,6 @@ public class SquadService {
 
     private void updateClassRoomWithSquads(ClassRoom classRoom, List<Squad> squads) {
         classRoom.getSquads().addAll(squads);
-        //classRoomRepository.save(classRoom);
     }
 
     private void setSquadForStudents(List<Squad> squads) {

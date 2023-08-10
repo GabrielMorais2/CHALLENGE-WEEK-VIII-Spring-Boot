@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/squad")
+@RequestMapping("/api/v1/squads")
 public class SquadController {
     private final SquadService squadService;
 
