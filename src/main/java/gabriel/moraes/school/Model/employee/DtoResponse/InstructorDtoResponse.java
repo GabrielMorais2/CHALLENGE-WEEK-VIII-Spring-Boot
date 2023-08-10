@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class InstructorDtoResponse {
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String phone;
 
 }

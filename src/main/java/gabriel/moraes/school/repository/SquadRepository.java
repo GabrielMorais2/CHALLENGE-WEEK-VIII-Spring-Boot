@@ -1,6 +1,5 @@
 package gabriel.moraes.school.repository;
 
-import gabriel.moraes.school.Model.ClassRoom;
 import gabriel.moraes.school.Model.Squad;
 import org.springframework.data.jpa.repository.JpaRepository;
 

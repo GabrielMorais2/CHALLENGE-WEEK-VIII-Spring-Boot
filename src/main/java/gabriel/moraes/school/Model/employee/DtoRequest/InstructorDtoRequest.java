@@ -15,9 +15,11 @@ public class InstructorDtoRequest {
     private String firstName;
     @NotBlank
     private String lastName;
-    @NotBlank
     @Email
+    @NotBlank
     private String email;
     @NotBlank
     private String phone;
+
+
 }

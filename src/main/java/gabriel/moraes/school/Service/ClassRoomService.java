@@ -134,7 +134,7 @@ public class ClassRoomService {
 
         for (Student student : students) {
             if (student.getClassRoom() != null) {
-                throw new IllegalArgumentException("Student " + student.getName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
+                throw new IllegalArgumentException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
             }
             student.setClassRoom(classRoom);
         }
@@ -143,7 +143,7 @@ public class ClassRoomService {
     private void assignClassToInstructors(List<Instructor> instructors, ClassRoom classRoom) {
         for (Instructor instructor : instructors) {
             if (instructor.getClassRoom() != null) {
-                throw new IllegalArgumentException("Instructor " + instructor.getName() + " is already assigned to a class.");
+                throw new IllegalArgumentException("Instructor " + instructor.getFirstName() + " is already assigned to a class.");
             }
             instructor.setClassRoom(classRoom);
         }

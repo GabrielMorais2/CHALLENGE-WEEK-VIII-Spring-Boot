@@ -1,13 +1,7 @@
 package gabriel.moraes.school.Controller;
 
-import gabriel.moraes.school.Model.Squad;
-import gabriel.moraes.school.Model.employee.DtoRequest.AddStudentsDtoRequest;
-import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
-import gabriel.moraes.school.Model.employee.DtoRequest.SquadDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.UpdateSquadNameRequest;
-import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
-import gabriel.moraes.school.Service.ClassRoomService;
 import gabriel.moraes.school.Service.SquadService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
