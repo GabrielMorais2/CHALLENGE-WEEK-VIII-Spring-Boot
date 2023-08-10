@@ -106,6 +106,7 @@ public class ClassRoomService {
         if (classRoom.getStatus() != ClassStatus.WAITING) {
             throw new InvalidClassStatusException("To start a class you need the status in WAITING");
         }
+
         classRoom.setStatus(ClassStatus.STARTED);
     }
 
@@ -144,6 +145,7 @@ public class ClassRoomService {
         }
     }
 
+    @Transactional
     public void finish(Long id) {
         ClassRoom classRoom = findClassById(id);
 
@@ -156,6 +158,7 @@ public class ClassRoomService {
         }
     }
 
+    @Transactional
     public void startClass(Long id) {
         ClassRoom classRoom = findClassById(id);
         validateStartStatus(classRoom);
