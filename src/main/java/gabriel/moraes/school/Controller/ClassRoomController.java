@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/class")
+@RequestMapping("/api/v1/classes")
 public class ClassRoomController {
     private final ClassRoomService classService;
 
