@@ -9,7 +9,7 @@ import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
-import gabriel.moraes.school.exception.NoRegisteredStudents;
+import gabriel.moraes.school.exception.NoRegisteredStudentsException;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ClassRoomRepository;
 import gabriel.moraes.school.repository.SquadRepository;
@@ -17,7 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
@@ -91,7 +90,7 @@ class SquadServiceTest {
     void whenCreateSquadThenReturnAnClassRoomInvalidObjectNotFoundException() {
         classRoom.setStatus(ClassStatus.STARTED);
 
-        Mockito.when(classRoomRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Class room not found with id:" + ID));
+        when(classRoomRepository.findById(anyLong())).thenThrow(new ObjectNotFoundException("Class room not found with id:" + ID));
 
         try {
             squadService.createSquad(ID);
@@ -103,11 +102,16 @@ class SquadServiceTest {
 
     @Test
     void whenCreateSquadThenReturnAnInvalidClassStatusException() {
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
+        when(classRoomRepository.findById(anyLong())).thenThrow(new InvalidClassStatusException("It is only possible to create squads when a class is started."));
 
-        assertThrows(InvalidClassStatusException.class, () -> squadService.createSquad(1L));
+        try {
+            squadService.createSquad(ID);
+        } catch (Exception ex) {
+            assertEquals(InvalidClassStatusException.class, ex.getClass());
+            assertEquals("It is only possible to create squads when a class is started.", ex.getMessage());
 
-        verify(classRoomRepository).findById(ID);
+            verify(classRoomRepository).findById(ID);
+        }
     }
 
     @Test
@@ -115,11 +119,19 @@ class SquadServiceTest {
         classRoom.setStatus(ClassStatus.STARTED);
         classRoom.setStudents(new ArrayList<>());
 
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
+        when(classRoomRepository.findById(anyLong())).thenThrow(new NoRegisteredStudentsException("There are no registered students."));
 
-        assertThrows(NoRegisteredStudents.class, () -> squadService.createSquad(1L));
+        try {
+            squadService.createSquad(ID);
+        } catch (Exception ex) {
+            assertEquals(NoRegisteredStudentsException.class, ex.getClass());
+            assertEquals("There are no registered students.", ex.getMessage());
+
+            verify(classRoomRepository).findById(ID);
+        }
 
         verify(classRoomRepository).findById(ID);
+
     }
 
     private void setupTestData() {

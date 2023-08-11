@@ -6,7 +6,7 @@ import gabriel.moraes.school.Model.Squad;
 import gabriel.moraes.school.Model.Student;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
-import gabriel.moraes.school.exception.NoRegisteredStudents;
+import gabriel.moraes.school.exception.NoRegisteredStudentsException;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ClassRoomRepository;
 import gabriel.moraes.school.repository.SquadRepository;
@@ -47,7 +47,7 @@ public class SquadService {
                 .orElseThrow(() -> new ObjectNotFoundException("Class room not found with id: " + classId));
 
         if (classRoom.getStudents().isEmpty()) {
-            throw new NoRegisteredStudents("There are no registered students.");
+            throw new NoRegisteredStudentsException("There are no registered students.");
         }
 
         if (classRoom.getStatus() != ClassStatus.STARTED) {

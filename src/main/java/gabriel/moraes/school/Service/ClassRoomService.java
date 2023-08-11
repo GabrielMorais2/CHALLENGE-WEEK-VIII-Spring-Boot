@@ -9,8 +9,7 @@ import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
-import gabriel.moraes.school.exception.InvalidClassStatusException;
-import gabriel.moraes.school.exception.ObjectNotFoundException;
+import gabriel.moraes.school.exception.*;
 import gabriel.moraes.school.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -92,7 +91,7 @@ public class ClassRoomService {
 
         for (Student student : students) {
             if (student.getClassRoom() != null) {
-                throw new IllegalArgumentException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
+                throw new StudentAlreadyAssignedException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
             }
             student.setClassRoom(classRoom);
         }
@@ -158,7 +157,7 @@ public class ClassRoomService {
     private void validateStartStatus(ClassRoom classRoom) {
         int studentsCount = classRoom.getStudents().size();
         if (studentsCount < minStudent || studentsCount > maxStudent) {
-            throw new IllegalArgumentException("A minimum of 15 students is required to start a class.");
+            throw new InsufficientStudentsException("A minimum of 15 students is required to start a class.");
         }
 
         if (classRoom.getStatus() != ClassStatus.WAITING) {
@@ -171,7 +170,7 @@ public class ClassRoomService {
     private void validateStudents(List<Student> students) {
         int studentsCount = students.size();
         if (studentsCount > maxStudent) {
-            throw new IllegalArgumentException("A class can have a maximum of 30 students");
+            throw new MaximumStudentsException("A class can have a maximum of 30 students");
         }
     }
 
