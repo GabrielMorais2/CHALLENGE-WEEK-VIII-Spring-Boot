@@ -5,7 +5,6 @@ import gabriel.moraes.school.exception.validation.ValidationErrorResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
@@ -14,10 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -118,6 +117,20 @@ class ExceptionHandlerControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(ErrorResponse.class, response.getBody().getClass());
         assertEquals("There are no registered students.", response.getBody().getMessage());
+    }
+
+    @Test
+    void minimumInstructorsException() {
+        ResponseEntity<ErrorResponse> response = exceptionHandlerController
+                .minimumInstructorsException(
+                        new MinimumInstructorsException("Requires a minimum of 3 instructors")
+                );
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(ErrorResponse.class, response.getBody().getClass());
+        assertEquals("Requires a minimum of 3 instructors", response.getBody().getMessage());
     }
 
     @Test
