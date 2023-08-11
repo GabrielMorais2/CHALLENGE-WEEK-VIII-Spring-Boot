@@ -7,12 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Instructor{
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +24,7 @@ public class Instructor{
     private String email;
     private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "classroom_id")
+    @ManyToMany(mappedBy = "instructors")
     @JsonBackReference
-    private ClassRoom classRoom;
+    private List<ClassRoom> classRooms = new ArrayList<>();
 }
