@@ -1,9 +1,9 @@
 package gabriel.moraes.school.Controller;
 
-import gabriel.moraes.school.Model.employee.DtoRequest.InstructorDtoRequest;
-import gabriel.moraes.school.Model.employee.DtoResponse.InstructorDtoResponse;
-import gabriel.moraes.school.Service.InstructorService;
-import gabriel.moraes.school.repository.InstructorRepository;
+import gabriel.moraes.school.Model.employee.DtoRequest.ScrumMasterDtoRequest;
+import gabriel.moraes.school.Model.employee.DtoResponse.ScrumMasterDtoResponse;
+import gabriel.moraes.school.Service.ScrumMasterService;
+import gabriel.moraes.school.repository.ScrumMasterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,20 +20,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-class InstructorControllerTest {
+class ScrumMasterControllerTest {
+
     public static final Long ID = 1L;
     public static final String FIRSTNAME = "Gabriel";
     public static final String LASTNAME = "Moraes";
     public static final String EMAIL = "gabriel@moraes";
     public static final String PHONE = "81984458436";
     @Mock
-    private InstructorRepository instructorRepository;
+    private ScrumMasterRepository scrumMasterRepository;
     @InjectMocks
-    private InstructorController instructorController;
+    private ScrumMasterController scrumMasterController;
     @Mock
-    private InstructorService instructorService;
-    private InstructorDtoRequest instructorDtoRequest;
-    private InstructorDtoResponse instructorDtoResponse;
+    private ScrumMasterService scrumMasterService;
+    private ScrumMasterDtoRequest scrumMasterDtoRequest;
+    private ScrumMasterDtoResponse scrumMasterDtoResponse;
 
     @BeforeEach
     public void setup() {
@@ -42,16 +43,16 @@ class InstructorControllerTest {
     }
 
     @Test
-    void WhenInstructorByIdThenReturnSuccess() {
-        when(instructorService.getInstructorById(anyLong())).thenReturn(instructorDtoResponse);
+    void WhenScrumMasterByIdThenReturnSuccess() {
+        when(scrumMasterService.getScrumMasterById(anyLong())).thenReturn(scrumMasterDtoResponse);
 
-        ResponseEntity<InstructorDtoResponse> response = instructorController.getInstructorById(ID);
+        ResponseEntity<ScrumMasterDtoResponse> response = scrumMasterController.getScrumMasterById(ID);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(InstructorDtoResponse.class, response.getBody().getClass());
+        assertEquals(ScrumMasterDtoResponse.class, response.getBody().getClass());
 
         assertEquals(ID, response.getBody().getId());
         assertEquals(FIRSTNAME, response.getBody().getFirstName());
@@ -62,16 +63,16 @@ class InstructorControllerTest {
     }
 
     @Test
-    void WhenGetAllInstructorsThenReturnAListOfInstructorDtoResponse() {
-        when(instructorService.getAllInstructors()).thenReturn(List.of(instructorDtoResponse));
+    void WhenGetAllScrumMastersThenReturnAListOfInstructorDtoResponse() {
+        when(scrumMasterService.getAllScrumMasters()).thenReturn(List.of(scrumMasterDtoResponse));
 
-        ResponseEntity<List<InstructorDtoResponse>> response = instructorController.getAllInstructors();
+        ResponseEntity<List<ScrumMasterDtoResponse>> response = scrumMasterController.getAllScrumMasters();
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(InstructorDtoResponse.class, response.getBody().get(0).getClass());
+        assertEquals(ScrumMasterDtoResponse.class, response.getBody().get(0).getClass());
 
         assertEquals(ID, response.getBody().get(0).getId());
         assertEquals(FIRSTNAME, response.getBody().get(0).getFirstName());
@@ -82,10 +83,10 @@ class InstructorControllerTest {
     }
 
     @Test
-    void WhenSaveThenReturnAnInstructorDtoResponseCreated() {
-        when(instructorService.save(any())).thenReturn(instructorDtoResponse);
+    void WhenSaveThenReturnAnScrumMasterDtoResponseCreated() {
+        when(scrumMasterService.save(any())).thenReturn(scrumMasterDtoResponse);
 
-        ResponseEntity<InstructorDtoResponse> response = instructorController.save(instructorDtoRequest);
+        ResponseEntity<ScrumMasterDtoResponse> response = scrumMasterController.save(scrumMasterDtoRequest);
 
         assertNotNull(response);
 
@@ -100,8 +101,8 @@ class InstructorControllerTest {
     }
 
     private void setupTestData(){
-        instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        instructorDtoResponse =  new InstructorDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        scrumMasterDtoRequest = new ScrumMasterDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        scrumMasterDtoResponse =  new ScrumMasterDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }
 
 }

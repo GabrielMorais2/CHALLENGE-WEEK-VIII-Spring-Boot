@@ -31,8 +31,8 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<StudentDtoResponse>> getAllStudents() {
-        List<StudentDtoResponse> dtos = studentService.getAllStudents();
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+        List<StudentDtoResponse> studentsDto = studentService.getAllStudents();
+        return new ResponseEntity<>(studentsDto, HttpStatus.OK);
     }
 
     @PostMapping
