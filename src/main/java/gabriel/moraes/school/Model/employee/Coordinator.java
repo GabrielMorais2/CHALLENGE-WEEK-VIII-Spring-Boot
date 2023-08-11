@@ -28,14 +28,11 @@ public class Coordinator{
     @JsonBackReference
     private List<ClassRoom> classRooms = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "ScrumMaster{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public Coordinator(Long id, String firstname, String lastname, String email, String phone) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.phone = phone;
     }
 }

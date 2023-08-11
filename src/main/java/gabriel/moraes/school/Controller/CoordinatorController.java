@@ -12,11 +12,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/coordinators")
-public class CordinatorController {
+public class CoordinatorController {
 
     private final CoordinatorService coordinatorService;
 
-    public CordinatorController(CoordinatorService coordinatorService) {
+    public CoordinatorController(CoordinatorService coordinatorService) {
         this.coordinatorService = coordinatorService;
     }
 
