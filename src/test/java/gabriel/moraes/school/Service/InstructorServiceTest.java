@@ -3,8 +3,8 @@ package gabriel.moraes.school.Service;
 import gabriel.moraes.school.Model.employee.DtoRequest.InstructorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.InstructorDtoResponse;
 import gabriel.moraes.school.Model.employee.Instructor;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.InstructorRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -59,13 +59,13 @@ class InstructorServiceTest {
     }
 
     @Test
-    public void whenGetInstructorByIdThenReturnAnEntityNotFoundException() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Instructor not found with id:" + ID));
+    public void whenGetInstructorByIdThenReturnAnObjectNotFoundException() {
+        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Instructor not found with id:" + ID));
 
         try {
             instructorService.getInstructorById(ID);
         } catch (Exception ex){
-            assertEquals(EntityNotFoundException.class, ex.getClass());
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Instructor not found with id:" + ID, ex.getMessage());
         }
     }

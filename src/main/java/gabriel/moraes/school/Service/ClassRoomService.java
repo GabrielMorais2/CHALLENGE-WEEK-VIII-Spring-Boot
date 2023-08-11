@@ -10,8 +10,8 @@ import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,7 +100,7 @@ public class ClassRoomService {
 
     private ClassRoom findClassById(Long id) {
         return classRoomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException("Class room not found with id: " + id));
     }
 
     private List<Coordinator> findCoordinatorById(List<Long> coordinatorIds) {
@@ -110,7 +110,7 @@ public class ClassRoomService {
             List<Long> notFoundIds = new ArrayList<>(coordinatorIds);
             notFoundIds.removeAll(coordinators.stream().map(Coordinator::getId).toList());
 
-            throw new EntityNotFoundException("Coordinators not found for IDs: " + notFoundIds);
+            throw new ObjectNotFoundException("Coordinators not found for IDs: " + notFoundIds);
         }
 
         return coordinators;
@@ -123,7 +123,7 @@ public class ClassRoomService {
             List<Long> notFoundIds = new ArrayList<>(scrumMasterIds);
             notFoundIds.removeAll(scrumMasters.stream().map(ScrumMaster::getId).toList());
 
-            throw new EntityNotFoundException("Scrum Masters not found for IDs: " + notFoundIds);
+            throw new ObjectNotFoundException("Scrum Masters not found for IDs: " + notFoundIds);
         }
 
         return scrumMasters;
@@ -136,7 +136,7 @@ public class ClassRoomService {
             List<Long> notFoundIds = new ArrayList<>(instructorIds);
             notFoundIds.removeAll(instructors.stream().map(Instructor::getId).toList());
 
-            throw new EntityNotFoundException("Instructors not found for IDs: " + notFoundIds);
+            throw new ObjectNotFoundException("Instructors not found for IDs: " + notFoundIds);
         }
 
         return instructors;
@@ -149,7 +149,7 @@ public class ClassRoomService {
             List<Long> notFoundIds = new ArrayList<>(studentIds);
             notFoundIds.removeAll(students.stream().map(Student::getId).toList());
 
-            throw new EntityNotFoundException("Students not found for IDs: " + notFoundIds);
+            throw new ObjectNotFoundException("Students not found for IDs: " + notFoundIds);
         }
 
         return students;

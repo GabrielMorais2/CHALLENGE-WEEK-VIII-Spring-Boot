@@ -3,8 +3,8 @@ package gabriel.moraes.school.Service;
 import gabriel.moraes.school.Model.employee.DtoRequest.ScrumMasterDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ScrumMasterDtoResponse;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ScrumMasterRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -59,13 +59,13 @@ class ScrumMasterServiceTest {
     }
 
     @Test
-    public void whenGetScrumMasterByIdThenReturnAnEntityNotFoundException() {
-        Mockito.when(scrumMasterRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Scrum Master not found with id:" + ID));
+    public void whenGetScrumMasterByIdThenReturnAnObjectNotFoundException() {
+        Mockito.when(scrumMasterRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Scrum Master not found with id:" + ID));
 
         try {
             scrumMasterService.getScrumMasterById(ID);
         } catch (Exception ex){
-            assertEquals(EntityNotFoundException.class, ex.getClass());
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Scrum Master not found with id:" + ID, ex.getMessage());
         }
     }

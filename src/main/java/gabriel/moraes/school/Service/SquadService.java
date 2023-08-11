@@ -7,9 +7,9 @@ import gabriel.moraes.school.Model.Student;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
 import gabriel.moraes.school.exception.NoRegisteredStudents;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ClassRoomRepository;
 import gabriel.moraes.school.repository.SquadRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class SquadService {
 
     private ClassRoom getClassRoomById(Long classId) {
         ClassRoom classRoom = classRoomRepository.findById(classId)
-                .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + classId));
+                .orElseThrow(() -> new ObjectNotFoundException("Class room not found with id: " + classId));
 
         if (classRoom.getStudents().isEmpty()) {
             throw new NoRegisteredStudents("There are no registered students.");
@@ -79,7 +79,7 @@ public class SquadService {
         Squad squadToUpdate = classRoom.getSquads().stream()
                 .filter(squad -> squad.getId().equals(squadId))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Squad not found with id: " + squadId));
+                .orElseThrow(() -> new ObjectNotFoundException("Squad not found with id: " + squadId));
 
         squadToUpdate.setName(newName);
 

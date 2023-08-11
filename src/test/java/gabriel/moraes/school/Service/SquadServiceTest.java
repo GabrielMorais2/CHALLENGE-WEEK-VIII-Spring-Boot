@@ -10,9 +10,9 @@ import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
 import gabriel.moraes.school.exception.NoRegisteredStudents;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ClassRoomRepository;
 import gabriel.moraes.school.repository.SquadRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -76,25 +76,27 @@ class SquadServiceTest {
         when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
         when(squadRepository.save(any())).thenReturn(squads.get(0));
 
-        SquadDtoResponse result = squadService.updateSquadName(ID, squadIdToUpdate, newSquadName);
+        SquadDtoResponse response = squadService.updateSquadName(ID, squadIdToUpdate, newSquadName);
 
         verify(classRoomRepository).findById(1L);
         verify(squadRepository).save(squads.get(0));
+
+        assertNotNull(response);
+
         assertEquals(newSquadName, squads.get(0).getName());
-        assertNotNull(result);
-        assertEquals(squads.get(0).getId(), result.getId());
-        assertEquals(newSquadName, result.getName());
+        assertEquals(squads.get(0).getId(), response.getId());
+        assertEquals(newSquadName, response.getName());
     }
     @Test
-    void whenCreateSquadThenReturnAnClassRoomInvalidEntityNotFoundException() {
+    void whenCreateSquadThenReturnAnClassRoomInvalidObjectNotFoundException() {
         classRoom.setStatus(ClassStatus.STARTED);
 
-        Mockito.when(classRoomRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Class room not found with id:" + ID));
+        Mockito.when(classRoomRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Class room not found with id:" + ID));
 
         try {
             squadService.createSquad(ID);
         } catch (Exception ex){
-            assertEquals(EntityNotFoundException.class, ex.getClass());
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Class room not found with id:" + ID, ex.getMessage());
         }
     }

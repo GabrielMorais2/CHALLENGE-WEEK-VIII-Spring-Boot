@@ -3,8 +3,8 @@ package gabriel.moraes.school.Service;
 import gabriel.moraes.school.Model.employee.Coordinator;
 import gabriel.moraes.school.Model.employee.DtoRequest.CoordinatorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.CoordinatorDtoResponse;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.CoordinatorRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -59,12 +59,12 @@ class CoordinatorServiceTest {
 
     @Test
     public void whenGetCoordinatorByIdThenReturnAnObjectNotFoundException() {
-        Mockito.when(coordinatorRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Coordinator not found with id:" + ID));
+        Mockito.when(coordinatorRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Coordinator not found with id:" + ID));
 
         try {
             coordinatorService.getCoordinatorById(ID);
         } catch (Exception ex){
-            assertEquals(EntityNotFoundException.class, ex.getClass());
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Coordinator not found with id:" + ID, ex.getMessage());
         }
     }
