@@ -51,6 +51,10 @@ class CoordinatorServiceTest {
 
         assertNotNull(response);
         assertEquals(ID, response.getId());
+        assertEquals(FIRSTNAME, response.getFirstName());
+        assertEquals(LASTNAME, response.getLastName());
+        assertEquals(PHONE, response.getPhone());
+        assertEquals(EMAIL, response.getEmail());
     }
 
     @Test
@@ -74,6 +78,10 @@ class CoordinatorServiceTest {
         assertNotNull(response);
         assertEquals(1, response.size());
         assertEquals(ID, response.get(0).getId());
+        assertEquals(FIRSTNAME, response.get(0).getFirstName());
+        assertEquals(LASTNAME, response.get(0).getLastName());
+        assertEquals(PHONE, response.get(0).getPhone());
+        assertEquals(EMAIL, response.get(0).getEmail());
     }
 
     @Test
