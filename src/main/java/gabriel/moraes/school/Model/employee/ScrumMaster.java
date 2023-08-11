@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -22,7 +25,15 @@ public class ScrumMaster{
     private String email;
     private String phone;
 
-    @OneToOne(mappedBy = "scrumMaster")
+    @ManyToMany(mappedBy = "scrumMasters")
     @JsonBackReference
-    private ClassRoom scrumMasterCourse;
+    private List<ClassRoom> classRooms = new ArrayList<>();
+
+    public ScrumMaster(Long id, String firstName, String lastName, String email, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+    }
 }

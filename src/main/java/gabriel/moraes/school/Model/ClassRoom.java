@@ -30,15 +30,22 @@ public class ClassRoom {
     private String name;
     private ClassStatus status;
 
-    @OneToOne
-    @JoinColumn(name = "coordinator_id")
-    private Coordinator coordinator;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "classroom_coordinators",
+            joinColumns = @JoinColumn(name = "classroom_id"),
+            inverseJoinColumns = @JoinColumn(name = "coordinator_id"))
+    private List<Coordinator> coordinators = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "scrum_master_id")
-    private ScrumMaster scrumMaster;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "classroom_scrum_masters",
+            joinColumns = @JoinColumn(name = "classroom_id"),
+            inverseJoinColumns = @JoinColumn(name = "scrum_master_id"))
+    private List<ScrumMaster> scrumMasters = new ArrayList<>();
 
-    @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "classroom_instructors",
+            joinColumns = @JoinColumn(name = "classroom_id"),
+            inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<Instructor> instructors = new ArrayList<>();
 
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -47,12 +54,18 @@ public class ClassRoom {
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Squad> squads = new ArrayList<>();
 
-    public ClassRoom(String name, Coordinator coordinator, ScrumMaster scrumMaster, List<Instructor> instructors) {
+    public ClassRoom(String name) {
         this.name = name;
         this.status = ClassStatus.WAITING;
-        this.coordinator = coordinator;
-        this.scrumMaster = scrumMaster;
-        this.instructors = instructors;
     }
 
+    public ClassRoom(Long id, String name, ClassStatus status, List<Coordinator> coordinators, List<ScrumMaster> scrumMasters, List<Instructor> instructors, List<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.coordinators = coordinators;
+        this.scrumMasters = scrumMasters;
+        this.instructors = instructors;
+        this.students = students;
+    }
 }

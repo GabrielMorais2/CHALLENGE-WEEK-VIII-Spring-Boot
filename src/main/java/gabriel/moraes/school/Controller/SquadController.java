@@ -18,21 +18,21 @@ public class SquadController {
     public SquadController(SquadService squadService){
         this.squadService = squadService;
     }
-    @PatchMapping("/{classId}/update-squad/{squadId}")
+    @PatchMapping("/{idClass}/update-squad/{squadId}")
     public ResponseEntity<SquadDtoResponse> updateSquadName(
-            @PathVariable Long classId,
+            @PathVariable Long idClass,
             @PathVariable Long squadId,
             @Valid @RequestBody UpdateSquadNameRequest updateSquadNameRequest) {
 
-        SquadDtoResponse dtoResponse = squadService.updateSquadName(classId, squadId, updateSquadNameRequest.getName());
+        SquadDtoResponse dtoResponse = squadService.updateSquadName(idClass, squadId, updateSquadNameRequest.getName());
 
         return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/create-squad")
-    public ResponseEntity<List<SquadDtoResponse>> createClass(@PathVariable Long id) {
-        List<SquadDtoResponse> dtoResponses = squadService.createSquad(id);
-        return new ResponseEntity<>(dtoResponses, HttpStatus.OK);
+    @PostMapping("/{idClass}/create-squad")
+    public ResponseEntity<List<SquadDtoResponse>> createClass(@PathVariable Long idClass) {
+        List<SquadDtoResponse> dtoResponses = squadService.createSquad(idClass);
+        return new ResponseEntity<>(dtoResponses, HttpStatus.CREATED);
     }
 
 }

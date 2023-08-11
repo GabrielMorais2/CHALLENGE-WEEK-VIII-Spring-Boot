@@ -3,8 +3,8 @@ package gabriel.moraes.school.Service;
 import gabriel.moraes.school.Model.Student;
 import gabriel.moraes.school.Model.employee.DtoRequest.StudentDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.StudentDtoResponse;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.StudentRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class StudentService {
     @Transactional(readOnly = true)
     public StudentDtoResponse getStudentById(Long id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Student not found with id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException("Student not found with id: " + id));
 
         return mapper.map(student, StudentDtoResponse.class);
     }

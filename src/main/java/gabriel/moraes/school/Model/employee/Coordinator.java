@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -21,7 +24,15 @@ public class Coordinator{
     private String email;
     private String phone;
 
-    @OneToOne(mappedBy = "coordinator")
+    @ManyToMany(mappedBy = "coordinators")
     @JsonBackReference
-    private ClassRoom coordinatorClass;
+    private List<ClassRoom> classRooms = new ArrayList<>();
+
+    public Coordinator(Long id, String firstname, String lastname, String email, String phone) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.phone = phone;
+    }
 }

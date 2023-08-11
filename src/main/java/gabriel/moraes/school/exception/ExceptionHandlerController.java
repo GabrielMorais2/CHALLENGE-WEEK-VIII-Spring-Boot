@@ -2,7 +2,6 @@ package gabriel.moraes.school.exception;
 
 import gabriel.moraes.school.exception.validation.ValidationError;
 import gabriel.moraes.school.exception.validation.ValidationErrorResponse;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,17 +26,17 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> entityNotFoundException(EntityNotFoundException ex) {
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<ErrorResponse> objectNotFoundException(ObjectNotFoundException ex) {
         ErrorResponse message = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.NOT_FOUND.value(),
                 timestamp,
                 ex.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ValidationErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ValidationErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException ex) {
         List<ValidationError> validationErrors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -54,8 +53,8 @@ public class ExceptionHandlerController {
     }
 
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> illegalArgumentException(IllegalArgumentException ex) {
+    @ExceptionHandler(InsufficientStudentsException.class)
+    public ResponseEntity<ErrorResponse> insufficientStudentsException(InsufficientStudentsException ex) {
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 timestamp,
@@ -63,8 +62,26 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NoRegisteredStudents.class)
-    public ResponseEntity<ErrorResponse> illegalArgumentException(NoRegisteredStudents ex) {
+    @ExceptionHandler(MaximumStudentsException.class)
+    public ResponseEntity<ErrorResponse> maximumStudentsException(MaximumStudentsException ex) {
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                timestamp,
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(StudentAlreadyAssignedException.class)
+    public ResponseEntity<ErrorResponse> studentAlreadyAssignedException(StudentAlreadyAssignedException ex) {
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                timestamp,
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoRegisteredStudentsException.class)
+    public ResponseEntity<ErrorResponse> noRegisteredStudentsException(NoRegisteredStudentsException ex) {
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 timestamp,

@@ -1,6 +1,7 @@
 package gabriel.moraes.school.Model.employee.DtoRequest;
-
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,14 @@ public class ClassRoomDtoRequest {
     private String name;
 
     @NotNull
-    @Max(value = 1, message = "It is possible to register only 1 coordinator per class.")
-    private Long coordinator;
+    @Size(max = 1, message = "It is possible to register only 1 coordinator per class.")
+    private List<Long> coordinators = new ArrayList<>();
 
     @NotNull
-    @Max(value = 1, message = "It is possible to register only 1 coordinator per class.")
-    private Long scrumMaster;
+    @Size(max = 3, message = "It is possible to register only 1 scrumMaster per class.")
+    private List<Long> scrumMasters = new ArrayList<>();
 
     @NotNull
-    @Size(max = 3)
+    @Size(max = 3, message = "It is possible to register only 1 instructors per class.")
     private List<Long> instructors = new ArrayList<>();
 }
