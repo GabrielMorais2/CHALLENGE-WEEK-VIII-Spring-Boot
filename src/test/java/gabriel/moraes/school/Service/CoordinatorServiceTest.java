@@ -41,7 +41,7 @@ class CoordinatorServiceTest {
         MockitoAnnotations.openMocks(this);
         ModelMapper mapper = new ModelMapper();
         coordinatorService = new CoordinatorService(coordinatorRepository, mapper);
-        startUser();
+        setupTestData();
     }
     @Test
     public void whenGetCoordinatorByIdThenReturnAnCoordinator() {
@@ -100,7 +100,7 @@ class CoordinatorServiceTest {
 
     }
 
-    private void startUser(){
+    private void setupTestData(){
         coordinator = new Coordinator(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
         coordinatorDtoRequest = new CoordinatorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }

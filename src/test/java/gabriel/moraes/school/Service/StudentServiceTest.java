@@ -42,7 +42,7 @@ class StudentServiceTest {
         MockitoAnnotations.openMocks(this);
         ModelMapper mapper = new ModelMapper();
         studentService = new StudentService(studentRepository, mapper);
-        startUser();
+        setupTestData();
     }
     @Test
     public void whenGetStudentByIdThenReturnAnStudentDtoResponse() {
@@ -100,7 +100,7 @@ class StudentServiceTest {
 
     }
 
-    private void startUser(){
+    private void setupTestData(){
         student = new Student(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
         studentDtoRequest = new StudentDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }

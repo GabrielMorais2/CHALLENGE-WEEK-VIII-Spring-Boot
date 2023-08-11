@@ -42,7 +42,7 @@ class ScrumMasterServiceTest {
         MockitoAnnotations.openMocks(this);
         ModelMapper mapper = new ModelMapper();
         scrumMasterService = new ScrumMasterService(scrumMasterRepository, mapper);
-        startUser();
+        setupTestData();
     }
     @Test
     public void whenGetScrumMasterByIdThenReturnAnCoordinator() {
@@ -101,7 +101,7 @@ class ScrumMasterServiceTest {
 
     }
 
-    private void startUser(){
+    private void setupTestData(){
         scrumMaster = new ScrumMaster(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
         scrumMasterDtoRequest = new ScrumMasterDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }

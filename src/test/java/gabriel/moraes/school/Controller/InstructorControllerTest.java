@@ -2,9 +2,13 @@ package gabriel.moraes.school.Controller;
 
 import gabriel.moraes.school.Model.employee.Coordinator;
 import gabriel.moraes.school.Model.employee.DtoRequest.CoordinatorDtoRequest;
+import gabriel.moraes.school.Model.employee.DtoRequest.InstructorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.CoordinatorDtoResponse;
+import gabriel.moraes.school.Model.employee.DtoResponse.InstructorDtoResponse;
 import gabriel.moraes.school.Service.CoordinatorService;
+import gabriel.moraes.school.Service.InstructorService;
 import gabriel.moraes.school.repository.CoordinatorRepository;
+import gabriel.moraes.school.repository.InstructorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,23 +25,22 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-class CoordinatorControllerTest {
-
+class InstructorControllerTest {
     public static final Long ID = 1L;
     public static final String FIRSTNAME = "Gabriel";
     public static final String LASTNAME = "Moraes";
     public static final String EMAIL = "gabriel@moraes";
     public static final String PHONE = "81984458436";
     @Mock
-    private CoordinatorRepository coordinatorRepository;
+    private InstructorRepository instructorRepository;
     @InjectMocks
-    private CoordinatorController coordinatorController;
+    private InstructorController instructorController;
     @Mock
-    private CoordinatorService coordinatorService;
+    private InstructorService instructorService;
     @Mock
     private ModelMapper mapper;
-    private CoordinatorDtoRequest coordinatorDtoRequest;
-    private CoordinatorDtoResponse coordinatorDtoResponse;
+    private InstructorDtoRequest instructorDtoRequest;
+    private InstructorDtoResponse instructorDtoResponse;
 
     @BeforeEach
     public void setup() {
@@ -46,16 +49,16 @@ class CoordinatorControllerTest {
     }
 
     @Test
-    void WhenCoordinatorByIdThenReturnSuccess() {
-        when(coordinatorService.getCoordinatorById(anyLong())).thenReturn(coordinatorDtoResponse);
+    void WhenInstructorByIdThenReturnSuccess() {
+        when(instructorService.getInstructorById(anyLong())).thenReturn(instructorDtoResponse);
 
-        ResponseEntity<CoordinatorDtoResponse> response = coordinatorController.getCoordinatorById(ID);
+        ResponseEntity<InstructorDtoResponse> response = instructorController.getInstructorById(ID);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(CoordinatorDtoResponse.class, response.getBody().getClass());
+        assertEquals(InstructorDtoResponse.class, response.getBody().getClass());
 
         assertEquals(ID, response.getBody().getId());
         assertEquals(FIRSTNAME, response.getBody().getFirstName());
@@ -66,16 +69,16 @@ class CoordinatorControllerTest {
     }
 
     @Test
-    void WhenGetAllCoordinatorThenReturnAListOfCoordinatorDtoResponse() {
-        when(coordinatorService.getAllCoordinators()).thenReturn(List.of(coordinatorDtoResponse));
+    void WhenGetAllInstructorsThenReturnAListOfInstructorDtoResponse() {
+        when(instructorService.getAllInstructors()).thenReturn(List.of(instructorDtoResponse));
 
-        ResponseEntity<List<CoordinatorDtoResponse>> response = coordinatorController.getAllCoordinator();
+        ResponseEntity<List<InstructorDtoResponse>> response = instructorController.getAllInstructors();
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(CoordinatorDtoResponse.class, response.getBody().get(0).getClass());
+        assertEquals(InstructorDtoResponse.class, response.getBody().get(0).getClass());
 
         assertEquals(ID, response.getBody().get(0).getId());
         assertEquals(FIRSTNAME, response.getBody().get(0).getFirstName());
@@ -86,10 +89,10 @@ class CoordinatorControllerTest {
     }
 
     @Test
-    void WhenSaveThenReturnAnCoordinatorDtoResponseCreated() {
-        when(coordinatorService.save(any())).thenReturn(coordinatorDtoResponse);
+    void WhenSaveThenReturnAnInstructorDtoResponseCreated() {
+        when(instructorService.save(any())).thenReturn(instructorDtoResponse);
 
-        ResponseEntity<CoordinatorDtoResponse> response = coordinatorController.save(coordinatorDtoRequest);
+        ResponseEntity<InstructorDtoResponse> response = instructorController.save(instructorDtoRequest);
 
         assertNotNull(response);
 
@@ -105,7 +108,8 @@ class CoordinatorControllerTest {
 
     private void setupTestData(){
         Coordinator coordinator = new Coordinator(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        coordinatorDtoRequest = new CoordinatorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        coordinatorDtoResponse =  new CoordinatorDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        instructorDtoResponse =  new InstructorDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }
+
 }

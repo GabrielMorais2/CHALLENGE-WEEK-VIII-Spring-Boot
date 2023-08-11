@@ -42,7 +42,7 @@ class InstructorServiceTest {
         MockitoAnnotations.openMocks(this);
         ModelMapper mapper = new ModelMapper();
         instructorService = new InstructorService(instructorRepository, mapper);
-        startUser();
+        setupTestData();
     }
     @Test
     public void whenGetInstructorByIdThenReturnAnInstructorDtoResponse() {
@@ -101,7 +101,7 @@ class InstructorServiceTest {
 
     }
 
-    private void startUser(){
+    private void setupTestData(){
         instructor = new Instructor(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
         instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }
