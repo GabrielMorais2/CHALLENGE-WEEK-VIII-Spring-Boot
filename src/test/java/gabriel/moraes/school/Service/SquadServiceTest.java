@@ -41,7 +41,6 @@ class SquadServiceTest {
     private SquadService squadService;
     private ClassRoom classRoom;
     private List<Squad> squads;
-    private Squad squad;
 
     @BeforeEach
     public void setup() {
@@ -141,7 +140,7 @@ class SquadServiceTest {
         classRoom = new ClassRoom(1L, "Spring Program", ClassStatus.WAITING, coordinators, scrumMasters, instructors, students);
         classRoom.setStudents(students);
 
-        squad = new Squad(1L, "The Fofoca Brockers", classRoom, students.subList(0, 4));
+        Squad squad = new Squad(1L, "The Fofoca Brockers", classRoom, students.subList(0, 4));
         Squad squad2 = new Squad(2L, "The Fofoca Brockers", classRoom, students.subList(5,9));
         Squad squad3 = new Squad(3L, "The Fofoca Brockers", classRoom, students.subList(10,14));
         squads.add(squad);

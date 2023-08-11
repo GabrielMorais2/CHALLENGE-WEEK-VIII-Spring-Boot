@@ -1,9 +1,9 @@
 package gabriel.moraes.school.Controller;
 
-import gabriel.moraes.school.Model.employee.DtoRequest.InstructorDtoRequest;
-import gabriel.moraes.school.Model.employee.DtoResponse.InstructorDtoResponse;
-import gabriel.moraes.school.Service.InstructorService;
-import gabriel.moraes.school.repository.InstructorRepository;
+import gabriel.moraes.school.Model.employee.DtoRequest.StudentDtoRequest;
+import gabriel.moraes.school.Model.employee.DtoResponse.StudentDtoResponse;
+import gabriel.moraes.school.Service.StudentService;
+import gabriel.moraes.school.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,20 +20,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-class InstructorControllerTest {
+class StudentControllerTest {
+
     public static final Long ID = 1L;
     public static final String FIRSTNAME = "Gabriel";
     public static final String LASTNAME = "Moraes";
     public static final String EMAIL = "gabriel@moraes";
     public static final String PHONE = "81984458436";
     @Mock
-    private InstructorRepository instructorRepository;
+    private StudentRepository studentRepository;
     @InjectMocks
-    private InstructorController instructorController;
+    private StudentController studentController;
     @Mock
-    private InstructorService instructorService;
-    private InstructorDtoRequest instructorDtoRequest;
-    private InstructorDtoResponse instructorDtoResponse;
+    private StudentService studentService;
+    private StudentDtoRequest studentDtoRequest;
+    private StudentDtoResponse studentDtoResponse;
 
     @BeforeEach
     public void setup() {
@@ -42,16 +43,16 @@ class InstructorControllerTest {
     }
 
     @Test
-    void WhenInstructorByIdThenReturnSuccess() {
-        when(instructorService.getInstructorById(anyLong())).thenReturn(instructorDtoResponse);
+    void WhenStudentByIdThenReturnSuccess() {
+        when(studentService.getStudentById(anyLong())).thenReturn(studentDtoResponse);
 
-        ResponseEntity<InstructorDtoResponse> response = instructorController.getInstructorById(ID);
+        ResponseEntity<StudentDtoResponse> response = studentController.getStudentById(ID);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(InstructorDtoResponse.class, response.getBody().getClass());
+        assertEquals(StudentDtoResponse.class, response.getBody().getClass());
 
         assertEquals(ID, response.getBody().getId());
         assertEquals(FIRSTNAME, response.getBody().getFirstName());
@@ -62,16 +63,16 @@ class InstructorControllerTest {
     }
 
     @Test
-    void WhenGetAllInstructorsThenReturnAListOfInstructorDtoResponse() {
-        when(instructorService.getAllInstructors()).thenReturn(List.of(instructorDtoResponse));
+    void WhenGetAllStudentsThenReturnAListOfStudentDtoResponse() {
+        when(studentService.getAllStudents()).thenReturn(List.of(studentDtoResponse));
 
-        ResponseEntity<List<InstructorDtoResponse>> response = instructorController.getAllInstructors();
+        ResponseEntity<List<StudentDtoResponse>> response = studentController.getAllStudents();
 
         assertNotNull(response);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(InstructorDtoResponse.class, response.getBody().get(0).getClass());
+        assertEquals(StudentDtoResponse.class, response.getBody().get(0).getClass());
 
         assertEquals(ID, response.getBody().get(0).getId());
         assertEquals(FIRSTNAME, response.getBody().get(0).getFirstName());
@@ -82,10 +83,10 @@ class InstructorControllerTest {
     }
 
     @Test
-    void WhenSaveThenReturnAnInstructorDtoResponseCreated() {
-        when(instructorService.save(any())).thenReturn(instructorDtoResponse);
+    void WhenSaveThenReturnAnStudentDtoResponseCreated() {
+        when(studentService.save(any())).thenReturn(studentDtoResponse);
 
-        ResponseEntity<InstructorDtoResponse> response = instructorController.save(instructorDtoRequest);
+        ResponseEntity<StudentDtoResponse> response = studentController.save(studentDtoRequest);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
@@ -101,8 +102,8 @@ class InstructorControllerTest {
     }
 
     private void setupTestData(){
-        instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        instructorDtoResponse =  new InstructorDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        studentDtoRequest = new StudentDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        studentDtoResponse =  new StudentDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }
 
 }

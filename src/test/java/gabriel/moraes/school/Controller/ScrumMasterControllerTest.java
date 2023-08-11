@@ -63,7 +63,7 @@ class ScrumMasterControllerTest {
     }
 
     @Test
-    void WhenGetAllScrumMastersThenReturnAListOfInstructorDtoResponse() {
+    void WhenGetAllScrumMastersThenReturnAListOfScrumMasterDtoResponse() {
         when(scrumMasterService.getAllScrumMasters()).thenReturn(List.of(scrumMasterDtoResponse));
 
         ResponseEntity<List<ScrumMasterDtoResponse>> response = scrumMasterController.getAllScrumMasters();
@@ -89,6 +89,7 @@ class ScrumMasterControllerTest {
         ResponseEntity<ScrumMasterDtoResponse> response = scrumMasterController.save(scrumMasterDtoRequest);
 
         assertNotNull(response);
+        assertNotNull(response.getBody());
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
 

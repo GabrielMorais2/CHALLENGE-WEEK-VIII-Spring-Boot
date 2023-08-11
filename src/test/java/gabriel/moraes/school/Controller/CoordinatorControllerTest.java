@@ -89,6 +89,7 @@ class CoordinatorControllerTest {
         ResponseEntity<CoordinatorDtoResponse> response = coordinatorController.save(coordinatorDtoRequest);
 
         assertNotNull(response);
+        assertNotNull(response.getBody());
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
