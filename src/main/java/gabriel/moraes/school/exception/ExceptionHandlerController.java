@@ -71,6 +71,15 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MinimumInstructorsException.class)
+    public ResponseEntity<ErrorResponse> minimumInstructorsException(MinimumInstructorsException ex) {
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                timestamp,
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(StudentAlreadyAssignedException.class)
     public ResponseEntity<ErrorResponse> studentAlreadyAssignedException(StudentAlreadyAssignedException ex) {
         ErrorResponse message = new ErrorResponse(
