@@ -9,17 +9,21 @@ import gabriel.moraes.school.Model.employee.DtoRequest.ClassRoomDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Model.employee.Instructor;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
-import gabriel.moraes.school.exception.InvalidClassStatusException;
+import gabriel.moraes.school.exception.*;
 import gabriel.moraes.school.repository.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ClassRoomService {
+
+    private static final int minStudent = 15;
+    private static final int maxStudent = 30;
+    private static final int maxInstructors = 3;
 
     private final InstructorRepository instructorRepository;
     private final CoordinatorRepository coordinatorRepository;
@@ -47,21 +51,27 @@ public class ClassRoomService {
 
     @Transactional
     public ClassRoomDtoResponse createClass(ClassRoomDtoRequest classDto) {
-        Coordinator coordinator = findCoordinatorById(classDto.getCoordinator());
-        ScrumMaster scrumMaster = findScrumMasterById(classDto.getScrumMaster());
+
+        List<Coordinator> coordinators = findCoordinatorById(classDto.getCoordinators());
+        List<ScrumMaster> scrumMasters = findScrumMasterById(classDto.getScrumMasters());
         List<Instructor> instructors = findInstructorsByIds(classDto.getInstructors());
 
         validateInstructors(instructors);
 
-        ClassRoom classRoom = new ClassRoom(classDto.getName(), coordinator, scrumMaster, instructors);
-        assignClassToInstructors(instructors, classRoom);
+        ClassRoom classRoom = new ClassRoom(classDto.getName());
+
+        classRoom.getCoordinators().addAll(coordinators);
+        classRoom.getScrumMasters().addAll(scrumMasters);
+        classRoom.getInstructors().addAll(instructors);
 
         ClassRoom savedClassRoom = classRoomRepository.save(classRoom);
 
         return mapper.map(savedClassRoom, ClassRoomDtoResponse.class);
     }
 
+    @Transactional
     public ClassRoomDtoResponse addStudentsToClass(Long id, AddStudentsDtoRequest addStudentsDtoRequest) {
+
         ClassRoom classRoom = findClassById(id);
         List<Student> students = findStudentsByIds(addStudentsDtoRequest.getStudents());
 
@@ -74,33 +84,80 @@ public class ClassRoomService {
         return mapper.map(classRoom, ClassRoomDtoResponse.class);
     }
 
+    private void assignClassToStudents(List<Student> students, ClassRoom classRoom) {
+        if (classRoom.getStatus() != ClassStatus.WAITING) {
+            throw new InvalidClassStatusException("It is only possible to add new students when the class room status is in WAITING");
+        }
+
+        for (Student student : students) {
+            if (student.getClassRoom() != null) {
+                throw new StudentAlreadyAssignedException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
+            }
+            student.setClassRoom(classRoom);
+        }
+    }
+
     private ClassRoom findClassById(Long id) {
         return classRoomRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException("Class room not found with id: " + id));
     }
 
-    private Coordinator findCoordinatorById(Long coordinatorId) {
-        return coordinatorRepository.findById(coordinatorId)
-                .orElseThrow(() -> new EntityNotFoundException("Coordinator not found"));
+    private List<Coordinator> findCoordinatorById(List<Long> coordinatorIds) {
+        List<Coordinator> coordinators = coordinatorRepository.findAllById(coordinatorIds);
+
+        if (coordinatorIds.size() != coordinators.size()) {
+            List<Long> notFoundIds = new ArrayList<>(coordinatorIds);
+            notFoundIds.removeAll(coordinators.stream().map(Coordinator::getId).toList());
+
+            throw new ObjectNotFoundException("Coordinators not found for IDs: " + notFoundIds);
+        }
+
+        return coordinators;
     }
 
-    private ScrumMaster findScrumMasterById(Long scrumMasterId) {
-        return scrumMasterRepository .findById(scrumMasterId)
-                .orElseThrow(() -> new EntityNotFoundException("Scrum Master not found"));
+    private List<ScrumMaster> findScrumMasterById(List<Long> scrumMasterIds) {
+        List<ScrumMaster> scrumMasters = scrumMasterRepository.findAllById(scrumMasterIds);
+
+        if (scrumMasterIds.size() != scrumMasters.size()) {
+            List<Long> notFoundIds = new ArrayList<>(scrumMasterIds);
+            notFoundIds.removeAll(scrumMasters.stream().map(ScrumMaster::getId).toList());
+
+            throw new ObjectNotFoundException("Scrum Masters not found for IDs: " + notFoundIds);
+        }
+
+        return scrumMasters;
     }
 
     private List<Instructor> findInstructorsByIds(List<Long> instructorIds) {
-        return instructorRepository.findAllById(instructorIds);
+        List<Instructor> instructors = instructorRepository.findAllById(instructorIds);
+
+        if (instructorIds.size() != instructors.size()) {
+            List<Long> notFoundIds = new ArrayList<>(instructorIds);
+            notFoundIds.removeAll(instructors.stream().map(Instructor::getId).toList());
+
+            throw new ObjectNotFoundException("Instructors not found for IDs: " + notFoundIds);
+        }
+
+        return instructors;
     }
 
     private List<Student> findStudentsByIds(List<Long> studentIds) {
-        return studentRepository.findAllById(studentIds);
+        List<Student> students = studentRepository.findAllById(studentIds);
+
+        if (studentIds.size() != students.size()) {
+            List<Long> notFoundIds = new ArrayList<>(studentIds);
+            notFoundIds.removeAll(students.stream().map(Student::getId).toList());
+
+            throw new ObjectNotFoundException("Students not found for IDs: " + notFoundIds);
+        }
+
+        return students;
     }
 
     private void validateStartStatus(ClassRoom classRoom) {
         int studentsCount = classRoom.getStudents().size();
-        if (studentsCount < 15 || studentsCount > 30) {
-            throw new IllegalArgumentException("A minimum of 15 students is required to start a class.");
+        if (studentsCount < minStudent || studentsCount > maxStudent) {
+            throw new InsufficientStudentsException("A minimum of 15 students is required to start a class.");
         }
 
         if (classRoom.getStatus() != ClassStatus.WAITING) {
@@ -110,38 +167,16 @@ public class ClassRoomService {
         classRoom.setStatus(ClassStatus.STARTED);
     }
 
-    private void validateInstructors(List<Instructor> instructors) {
-        if (instructors.size() < 3) {
-            throw new IllegalArgumentException("Requires a minimum of 3 instructors");
-        }
-    }
-
     private void validateStudents(List<Student> students) {
         int studentsCount = students.size();
-        if (studentsCount > 30) {
-            throw new IllegalArgumentException("A class can have a maximum of 30 students");
+        if (studentsCount > maxStudent) {
+            throw new MaximumStudentsException("A class can have a maximum of 30 students");
         }
     }
 
-    private void assignClassToStudents(List<Student> students, ClassRoom classRoom) {
-        if (classRoom.getStatus() != ClassStatus.WAITING) {
-            throw new InvalidClassStatusException("It is only possible to add new students when the class room status is in WAITING");
-        }
-
-        for (Student student : students) {
-            if (student.getClassRoom() != null) {
-                throw new IllegalArgumentException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
-            }
-            student.setClassRoom(classRoom);
-        }
-    }
-
-    private void assignClassToInstructors(List<Instructor> instructors, ClassRoom classRoom) {
-        for (Instructor instructor : instructors) {
-            if (instructor.getClassRoom() != null) {
-                throw new IllegalArgumentException("Instructor " + instructor.getFirstName() + " is already assigned to a class.");
-            }
-            instructor.setClassRoom(classRoom);
+    private void validateInstructors(List<Instructor> instructors) {
+        if (instructors.size() < maxInstructors) {
+            throw new IllegalArgumentException("Requires a minimum of 3 instructors");
         }
     }
 

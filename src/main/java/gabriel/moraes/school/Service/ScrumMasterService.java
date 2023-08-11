@@ -3,8 +3,8 @@ package gabriel.moraes.school.Service;
 import gabriel.moraes.school.Model.employee.DtoRequest.ScrumMasterDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.ScrumMasterDtoResponse;
 import gabriel.moraes.school.Model.employee.ScrumMaster;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ScrumMasterRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class ScrumMasterService {
     @Transactional(readOnly = true)
     public ScrumMasterDtoResponse getScrumMasterById(Long id) {
         ScrumMaster scrumMaster = scrumMasterRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Scrum Master not found with id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException("Scrum Master not found with id: " + id));
 
         return mapper.map(scrumMaster, ScrumMasterDtoResponse.class);
     }
