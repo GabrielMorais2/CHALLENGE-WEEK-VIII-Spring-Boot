@@ -48,7 +48,7 @@ public class ClassRoom {
             inverseJoinColumns = @JoinColumn(name = "instructor_id"))
     private List<Instructor> instructors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "classRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

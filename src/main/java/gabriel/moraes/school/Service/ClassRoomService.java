@@ -176,7 +176,7 @@ public class ClassRoomService {
 
     private void validateInstructors(List<Instructor> instructors) {
         if (instructors.size() < maxInstructors) {
-            throw new IllegalArgumentException("Requires a minimum of 3 instructors");
+            throw new MinimumInstructorsException("Requires a minimum of 3 instructors");
         }
     }
 

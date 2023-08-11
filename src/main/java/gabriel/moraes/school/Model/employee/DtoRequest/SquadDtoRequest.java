@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SquadDtoRequest {
 
-    private Long id;
     private String name;
     private List<Long> students = new ArrayList<>();
 

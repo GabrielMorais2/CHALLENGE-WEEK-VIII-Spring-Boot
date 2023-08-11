@@ -1,7 +1,7 @@
 package gabriel.moraes.school.Model.employee.DtoRequest;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ClassRoomDtoRequest {
 
-    @NotBlank
+    @NotBlank(message = "Name is required")
+    @Pattern(regexp = "^(?!\\s)[\\p{L}\\d]+(?:[\\s-][\\p{L}\\d]+)*$", message = "Name should only contain letters, numbers, and spaces")
     private String name;
 
     @NotNull
