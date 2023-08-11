@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -21,7 +24,18 @@ public class Coordinator{
     private String email;
     private String phone;
 
-    @OneToOne(mappedBy = "coordinator")
+    @ManyToMany(mappedBy = "coordinators")
     @JsonBackReference
-    private ClassRoom coordinatorClass;
+    private List<ClassRoom> classRooms = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "ScrumMaster{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
