@@ -58,4 +58,14 @@ public class ClassRoom {
         this.name = name;
         this.status = ClassStatus.WAITING;
     }
+
+    public ClassRoom(Long id, String name, ClassStatus status, List<Coordinator> coordinators, List<ScrumMaster> scrumMasters, List<Instructor> instructors, List<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.coordinators = coordinators;
+        this.scrumMasters = scrumMasters;
+        this.instructors = instructors;
+        this.students = students;
+    }
 }
