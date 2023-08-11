@@ -1,9 +1,9 @@
 package gabriel.moraes.school.Service;
 
-import gabriel.moraes.school.Model.employee.DtoRequest.InstructorDtoRequest;
-import gabriel.moraes.school.Model.employee.DtoResponse.InstructorDtoResponse;
-import gabriel.moraes.school.Model.employee.Instructor;
-import gabriel.moraes.school.repository.InstructorRepository;
+import gabriel.moraes.school.Model.Student;
+import gabriel.moraes.school.Model.employee.DtoRequest.StudentDtoRequest;
+import gabriel.moraes.school.Model.employee.DtoResponse.StudentDtoResponse;
+import gabriel.moraes.school.repository.StudentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-class InstructorServiceTest {
+class StudentServiceTest {
 
     public static final Long ID = 1L;
     public static final String FIRSTNAME = "Gabriel";
@@ -30,25 +30,25 @@ class InstructorServiceTest {
     public static final String PHONE = "81984458436";
 
     @Mock
-    private InstructorRepository instructorRepository;
+    private StudentRepository studentRepository;
     @InjectMocks
-    private InstructorService instructorService;
+    private StudentService studentService;
 
-    private Instructor instructor;
-    private InstructorDtoRequest instructorDtoRequest;
+    private Student student;
+    private StudentDtoRequest studentDtoRequest;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ModelMapper mapper = new ModelMapper();
-        instructorService = new InstructorService(instructorRepository, mapper);
+        studentService = new StudentService(studentRepository, mapper);
         startUser();
     }
     @Test
-    public void whenGetInstructorByIdThenReturnAnInstructorDtoResponse() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(instructor));
+    public void whenGetStudentByIdThenReturnAnStudentDtoResponse() {
+        Mockito.when(studentRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(student));
 
-        InstructorDtoResponse response = instructorService.getInstructorById(ID);
+        StudentDtoResponse response = studentService.getStudentById(ID);
 
         assertNotNull(response);
         assertEquals(ID, response.getId());
@@ -59,22 +59,22 @@ class InstructorServiceTest {
     }
 
     @Test
-    public void whenGetInstructorByIdThenReturnAnEntityNotFoundException() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Instructor not found with id:" + ID));
+    public void whenGetStudentByIdThenReturnAnEntityNotFoundException() {
+        Mockito.when(studentRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("student not found with id:" + ID));
 
         try {
-            instructorService.getInstructorById(ID);
+            studentService.getStudentById(ID);
         } catch (Exception ex){
             assertEquals(EntityNotFoundException.class, ex.getClass());
-            assertEquals("Instructor not found with id:" + ID, ex.getMessage());
+            assertEquals("student not found with id:" + ID, ex.getMessage());
         }
     }
 
     @Test
-    void whenGetAllInstructorsThenReturnAnListOfInstructors() {
-        when(instructorRepository.findAll()).thenReturn(List.of(instructor));
+    void whenGetAllStudentsThenReturnAnListOfStudents() {
+        when(studentRepository.findAll()).thenReturn(List.of(student));
 
-        List<InstructorDtoResponse> response = instructorService.getAllInstructors();
+        List<StudentDtoResponse> response = studentService.getAllStudents();
 
         assertNotNull(response);
         assertEquals(1, response.size());
@@ -83,17 +83,16 @@ class InstructorServiceTest {
         assertEquals(LASTNAME, response.get(0).getLastName());
         assertEquals(PHONE, response.get(0).getPhone());
         assertEquals(EMAIL, response.get(0).getEmail());
-
     }
 
     @Test
-    void WhenSaveThenReturnAnInstructorDtoResponse() {
-        when(instructorRepository.save(any())).thenReturn(instructor);
+    void WhenSaveStudentThenReturnAnStudentDtoResponse() {
+        when(studentRepository.save(any())).thenReturn(student);
 
-        InstructorDtoResponse response = instructorService.save(instructorDtoRequest);
+        StudentDtoResponse response = studentService.save(studentDtoRequest);
 
         assertNotNull(response);
-        assertEquals(InstructorDtoResponse.class, response.getClass());
+        assertEquals(StudentDtoResponse.class, response.getClass());
         assertEquals(FIRSTNAME, response.getFirstName());
         assertEquals(LASTNAME, response.getLastName());
         assertEquals(EMAIL, response.getEmail());
@@ -102,8 +101,8 @@ class InstructorServiceTest {
     }
 
     private void startUser(){
-        instructor = new Instructor(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        student = new Student(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        studentDtoRequest = new StudentDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
     }
 
 }

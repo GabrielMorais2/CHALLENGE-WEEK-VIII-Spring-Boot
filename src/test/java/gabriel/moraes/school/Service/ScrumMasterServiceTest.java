@@ -59,7 +59,7 @@ class ScrumMasterServiceTest {
     }
 
     @Test
-    public void whenGetScrumMasterThenReturnAnEntityNotFoundException() {
+    public void whenGetScrumMasterByIdThenReturnAnEntityNotFoundException() {
         Mockito.when(scrumMasterRepository.findById(Mockito.anyLong())).thenThrow(new EntityNotFoundException("Scrum Master not found with id:" + ID));
 
         try {
@@ -86,7 +86,7 @@ class ScrumMasterServiceTest {
     }
 
     @Test
-    void save() {
+    void WhenSaveScrumMasterThenReturnAnScrumMasterDtoResponse() {
         when(scrumMasterRepository.save(any())).thenReturn(scrumMaster);
 
         ScrumMasterDtoResponse response = scrumMasterService.save(scrumMasterDtoRequest);

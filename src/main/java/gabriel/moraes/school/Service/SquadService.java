@@ -22,38 +22,42 @@ import java.util.stream.Collectors;
 @Service
 public class SquadService {
 
+    private final ClassRoomRepository classRoomRepository;
+    private final SquadRepository squadRepository;
+    private final ModelMapper mapper;
+
     @Autowired
-    private ClassRoomRepository classRoomRepository;
-    @Autowired
-    private SquadRepository squadRepository;
-    @Autowired
-    private ModelMapper mapper;
+    public SquadService(ClassRoomRepository classRoomRepository, SquadRepository squadRepository, ModelMapper mapper) {
+        this.classRoomRepository = classRoomRepository;
+        this.squadRepository = squadRepository;
+        this.mapper = mapper;
+    }
 
     @Transactional
-    public List<SquadDtoResponse> createSquad(Long idClass) {
-        ClassRoom classRoom = getClassRoomById(idClass);
+    public List<SquadDtoResponse> createSquad(Long classId) {
+        ClassRoom classRoom = getClassRoomById(classId);
         List<Squad> squads = createSquadsFromClassRoom(classRoom);
         updateClassRoomWithSquads(classRoom, squads);
         setSquadForStudents(squads);
         return mapSquadsToDtoResponse(squads);
     }
 
-    private ClassRoom getClassRoomById(Long idClass) {
+    private ClassRoom getClassRoomById(Long classId) {
+        ClassRoom classRoom = classRoomRepository.findById(classId)
+                .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + classId));
 
-        ClassRoom classRoom = classRoomRepository.findById(idClass).get();
-        if(classRoom.getStudents().isEmpty()){
+        if (classRoom.getStudents().isEmpty()) {
             throw new NoRegisteredStudents("There are no registered students.");
-        };
+        }
 
-        if(!(classRoom.getStatus() == ClassStatus.STARTED)){
+        if (classRoom.getStatus() != ClassStatus.STARTED) {
             throw new InvalidClassStatusException("It is only possible to create squads when a class is started.");
-        };
+        }
 
-        return classRoomRepository.findById(idClass)
-                .orElseThrow(() -> new EntityNotFoundException("Class room not found with id: " + idClass));
+        return classRoom;
     }
-    private List<Squad> createSquadsFromClassRoom(ClassRoom classRoom) {
 
+    private List<Squad> createSquadsFromClassRoom(ClassRoom classRoom) {
         List<Student> students = classRoom.getStudents();
         int maxStudentsPerSquad = 5;
         List<Squad> squads = new ArrayList<>();
@@ -61,7 +65,7 @@ public class SquadService {
         for (int studentIndex = 0; studentIndex < students.size(); studentIndex += maxStudentsPerSquad) {
             int currentSquadSize = Math.min(maxStudentsPerSquad, students.size() - studentIndex);
             List<Student> squadStudents = students.subList(studentIndex, studentIndex + currentSquadSize);
-            Squad squad = new Squad("Não informado", classRoom, squadStudents);
+            Squad squad = new Squad("Uninformed", classRoom, squadStudents);
             squads.add(squad);
         }
 
@@ -70,7 +74,6 @@ public class SquadService {
 
     @Transactional
     public SquadDtoResponse updateSquadName(Long classId, Long squadId, String newName) {
-
         ClassRoom classRoom = getClassRoomById(classId);
 
         Squad squadToUpdate = classRoom.getSquads().stream()
@@ -90,10 +93,7 @@ public class SquadService {
     }
 
     private void setSquadForStudents(List<Squad> squads) {
-        for (Squad squad : squads) {
-            List<Student> squadStudents = squad.getStudents();
-            squadStudents.forEach(student -> student.setSquad(squad));
-        }
+        squads.forEach(squad -> squad.getStudents().forEach(student -> student.setSquad(squad)));
     }
 
     private List<SquadDtoResponse> mapSquadsToDtoResponse(List<Squad> squads) {

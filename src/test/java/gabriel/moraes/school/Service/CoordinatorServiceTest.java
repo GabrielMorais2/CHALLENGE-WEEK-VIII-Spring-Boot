@@ -85,7 +85,7 @@ class CoordinatorServiceTest {
     }
 
     @Test
-    void save() {
+    void WhenSaveCoordinatorThenReturnAnCoordinatorDtoResponse() {
         when(coordinatorRepository.save(any())).thenReturn(coordinator);
 
         CoordinatorDtoResponse response = coordinatorService.save(coordinatorDtoRequest);
