@@ -75,7 +75,8 @@ public class ClassRoomService {
         ClassRoom classRoom = findClassById(id);
         List<Student> students = findStudentsByIds(addStudentsDtoRequest.getStudents());
 
-        validateStudents(students);
+        validateStudents(classRoom.getStudents());
+
         assignClassToStudents(students, classRoom);
 
         classRoom.getStudents().addAll(students);
@@ -88,6 +89,7 @@ public class ClassRoomService {
         if (classRoom.getStatus() != ClassStatus.WAITING) {
             throw new InvalidClassStatusException("It is only possible to add new students when the class room status is in WAITING");
         }
+
 
         for (Student student : students) {
             if (student.getClassRoom() != null) {
@@ -169,7 +171,7 @@ public class ClassRoomService {
 
     private void validateStudents(List<Student> students) {
         int studentsCount = students.size();
-        if (studentsCount > maxStudent) {
+        if (studentsCount >= maxStudent) {
             throw new MaximumStudentsException("A class can have a maximum of 30 students");
         }
     }

@@ -31,7 +31,6 @@ class SquadControllerTest {
     private SquadController squadController;
     @Mock
     private SquadService squadService;
-    private CoordinatorDtoRequest coordinatorDtoRequest;
     private SquadDtoResponse squadDtoResponse;
     private UpdateSquadNameRequest updateSquadNameRequest;
     private List<Student> students;
@@ -90,4 +89,5 @@ class SquadControllerTest {
         updateSquadNameRequest = new UpdateSquadNameRequest("Kaisen");
 
     }
+
 }
