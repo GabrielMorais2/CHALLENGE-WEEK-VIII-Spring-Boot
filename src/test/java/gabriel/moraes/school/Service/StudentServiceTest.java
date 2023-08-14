@@ -16,9 +16,12 @@ import org.modelmapper.ModelMapper;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 class StudentServiceTest {
@@ -33,7 +36,6 @@ class StudentServiceTest {
     private StudentRepository studentRepository;
     @InjectMocks
     private StudentService studentService;
-
     private Student student;
     private StudentDtoRequest studentDtoRequest;
 
@@ -99,6 +101,22 @@ class StudentServiceTest {
         assertEquals(PHONE, response.getPhone());
 
     }
+
+    @Test
+    void deleteStudent_WithExistingId_doesNotThrowAnyException(){
+        when(studentRepository.findById(1L)).thenReturn(java.util.Optional.of(student));
+        doNothing().when(studentRepository).delete(student);
+
+        assertThatCode(() -> studentService.deleteStudentById(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void deleteStudent_WithUnexistingId_ReturnNotFound(){
+        when(studentRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.empty());
+
+        assertThatThrownBy(() -> studentService.deleteStudentById(99L)).isInstanceOf(ObjectNotFoundException.class);
+    }
+
 
     private void setupTestData(){
         student = new Student(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);

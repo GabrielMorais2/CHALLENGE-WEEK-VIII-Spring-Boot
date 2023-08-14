@@ -44,7 +44,7 @@ public class ClassRoomController {
     @PatchMapping("/{id}/add-students")
     public ResponseEntity<ClassRoomDtoResponse> addStudentsToClass(
             @PathVariable Long id,
-            @RequestBody AddStudentsDtoRequest addStudentsDtoRequest) {
+            @Valid @RequestBody AddStudentsDtoRequest addStudentsDtoRequest) {
 
         ClassRoomDtoResponse response = classService.addStudentsToClass(id, addStudentsDtoRequest);
 

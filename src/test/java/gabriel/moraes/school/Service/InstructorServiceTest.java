@@ -46,7 +46,7 @@ class InstructorServiceTest {
     }
     @Test
     public void whenGetInstructorByIdThenReturnAnInstructorDtoResponse() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(instructor));
+        when(instructorRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(instructor));
 
         InstructorDtoResponse response = instructorService.getInstructorById(ID);
 
@@ -60,7 +60,7 @@ class InstructorServiceTest {
 
     @Test
     public void whenGetInstructorByIdThenReturnAnObjectNotFoundException() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Instructor not found with id:" + ID));
+        when(instructorRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Instructor not found with id:" + ID));
 
         try {
             instructorService.getInstructorById(ID);

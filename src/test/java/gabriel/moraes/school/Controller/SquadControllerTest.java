@@ -1,7 +1,6 @@
 package gabriel.moraes.school.Controller;
 
 import gabriel.moraes.school.Model.Student;
-import gabriel.moraes.school.Model.employee.DtoRequest.CoordinatorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.UpdateSquadNameRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.Service.SquadService;
@@ -31,7 +30,6 @@ class SquadControllerTest {
     private SquadController squadController;
     @Mock
     private SquadService squadService;
-    private CoordinatorDtoRequest coordinatorDtoRequest;
     private SquadDtoResponse squadDtoResponse;
     private UpdateSquadNameRequest updateSquadNameRequest;
     private List<Student> students;
@@ -90,4 +88,5 @@ class SquadControllerTest {
         updateSquadNameRequest = new UpdateSquadNameRequest("Kaisen");
 
     }
+
 }
