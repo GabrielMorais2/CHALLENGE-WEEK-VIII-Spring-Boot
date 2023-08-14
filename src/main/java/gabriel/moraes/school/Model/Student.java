@@ -37,4 +37,8 @@ public class Student {
         this.email = email;
         this.phone = phone;
     }
+
+    public Student(Long studentId) {
+        this.id = studentId;
+    }
 }

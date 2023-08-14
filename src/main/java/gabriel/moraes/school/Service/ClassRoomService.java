@@ -56,8 +56,6 @@ public class ClassRoomService {
         List<ScrumMaster> scrumMasters = findScrumMasterById(classDto.getScrumMasters());
         List<Instructor> instructors = findInstructorsByIds(classDto.getInstructors());
 
-        validateInstructors(instructors);
-
         ClassRoom classRoom = new ClassRoom(classDto.getName());
 
         classRoom.getCoordinators().addAll(coordinators);
@@ -131,6 +129,10 @@ public class ClassRoomService {
     }
 
     private List<Instructor> findInstructorsByIds(List<Long> instructorIds) {
+        if (instructorIds.size() < maxInstructors) {
+            throw new MinimumInstructorsException("Requires a minimum of 3 instructors");
+        }
+
         List<Instructor> instructors = instructorRepository.findAllById(instructorIds);
 
         if (instructorIds.size() != instructors.size()) {
@@ -173,12 +175,6 @@ public class ClassRoomService {
         int studentsCount = students.size();
         if (studentsCount >= maxStudent) {
             throw new MaximumStudentsException("A class can have a maximum of 30 students");
-        }
-    }
-
-    private void validateInstructors(List<Instructor> instructors) {
-        if (instructors.size() < maxInstructors) {
-            throw new MinimumInstructorsException("Requires a minimum of 3 instructors");
         }
     }
 

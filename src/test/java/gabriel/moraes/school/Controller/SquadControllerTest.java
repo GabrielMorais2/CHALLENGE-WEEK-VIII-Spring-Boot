@@ -1,7 +1,6 @@
 package gabriel.moraes.school.Controller;
 
 import gabriel.moraes.school.Model.Student;
-import gabriel.moraes.school.Model.employee.DtoRequest.CoordinatorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.UpdateSquadNameRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.Service.SquadService;

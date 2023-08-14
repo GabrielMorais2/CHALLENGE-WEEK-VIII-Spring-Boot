@@ -5,7 +5,6 @@ import gabriel.moraes.school.Model.employee.DtoRequest.StudentDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.StudentDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.StudentRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,10 +19,10 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 class StudentServiceTest {
 
