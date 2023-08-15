@@ -1,0 +1,274 @@
+{
+  "id": 1,
+  "name": "The fofoca Brokers",
+  "status": "STARTED",
+  "coordinator": {
+    "id": 1,
+    "firstName": "Ana",
+    "lastName": "Lima",
+    "email": "ana.lima@example.com",
+    "phone": "123-456-7890"
+  },
+  "scrumMaster": {
+    "id": 1,
+    "firstName": "Pedro",
+    "lastName": "Santos",
+    "email": "pedro.santos@example.com",
+    "phone": "234-567-8901"
+  },
+  "instructors": [
+    {
+      "id": 1,
+      "firstName": "Lucas",
+      "lastName": "Pereira",
+      "email": "lucas.pereira@example.com",
+      "phone": "456-789-0123"
+    },
+    {
+      "id": 2,
+      "firstName": "Mariana",
+      "lastName": "Fernandes",
+      "email": "mariana.fernandes@example.com",
+      "phone": "890-123-4567"
+    },
+    {
+      "id": 3,
+      "firstName": "Rafael",
+      "lastName": "Almeida",
+      "email": "rafael.almeida@example.com",
+      "phone": "234-567-8901"
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "firstName": "Amanda",
+      "lastName": "Almeida",
+      "email": "amanda.almeida@example.com",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": 2,
+      "firstName": "Gabriel",
+      "lastName": "Santos",
+      "email": "gabriel.santos@example.com",
+      "phone": "987-654-3210"
+    },
+    {
+      "id": 3,
+      "firstName": "Camila",
+      "lastName": "Fernandes",
+      "email": "camila.fernandes@example.com",
+      "phone": "345-678-9012"
+    },
+    {
+      "id": 4,
+      "firstName": "João",
+      "lastName": "Almeida",
+      "email": "joao.almeida@example.com",
+      "phone": "567-890-1234"
+    },
+    {
+      "id": 5,
+      "firstName": "Bianca",
+      "lastName": "Santos",
+      "email": "bianca.santos@example.com",
+      "phone": "789-012-3456"
+    },
+    {
+      "id": 6,
+      "firstName": "Guilherme",
+      "lastName": "Lima",
+      "email": "guilherme.lima@example.com",
+      "phone": "890-123-4567"
+    },
+    {
+      "id": 7,
+      "firstName": "Isabela",
+      "lastName": "Oliveira",
+      "email": "isabela.oliveira@example.com",
+      "phone": "901-234-5678"
+    },
+    {
+      "id": 8,
+      "firstName": "Fernando",
+      "lastName": "Silva",
+      "email": "fernando.silva@example.com",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": 9,
+      "firstName": "Laura",
+      "lastName": "Pereira",
+      "email": "laura.pereira@example.com",
+      "phone": "234-567-8901"
+    },
+    {
+      "id": 10,
+      "firstName": "Matheus",
+      "lastName": "Fernandes",
+      "email": "matheus.fernandes@example.com",
+      "phone": "345-678-9012"
+    },
+    {
+      "id": 11,
+      "firstName": "Júlia",
+      "lastName": "Silva",
+      "email": "julia.silva@example.com",
+      "phone": "567-890-1234"
+    },
+    {
+      "id": 12,
+      "firstName": "Enzo",
+      "lastName": "Pereira",
+      "email": "enzo.pereira@example.com",
+      "phone": "789-012-3456"
+    },
+    {
+      "id": 13,
+      "firstName": "João",
+      "lastName": "Almeida",
+      "email": "joao.almeida@example.com",
+      "phone": "567-890-1234"
+    },
+    {
+      "id": 14,
+      "firstName": "Bianca",
+      "lastName": "Santos",
+      "email": "bianca.santos@example.com",
+      "phone": "789-012-3456"
+    },
+    {
+      "id": 15,
+      "firstName": "Guilherme",
+      "lastName": "Lima",
+      "email": "guilherme.lima@example.com",
+      "phone": "890-123-4567"
+    }
+  ],
+  "squads": [
+    {
+      "id": 1,
+      "name": "Não informado",
+      "students": [
+        {
+          "id": 1,
+          "firstName": "Amanda",
+          "lastName": "Almeida",
+          "email": "amanda.almeida@example.com",
+          "phone": "123-456-7890"
+        },
+        {
+          "id": 2,
+          "firstName": "Gabriel",
+          "lastName": "Santos",
+          "email": "gabriel.santos@example.com",
+          "phone": "987-654-3210"
+        },
+        {
+          "id": 3,
+          "firstName": "Camila",
+          "lastName": "Fernandes",
+          "email": "camila.fernandes@example.com",
+          "phone": "345-678-9012"
+        },
+        {
+          "id": 4,
+          "firstName": "João",
+          "lastName": "Almeida",
+          "email": "joao.almeida@example.com",
+          "phone": "567-890-1234"
+        },
+        {
+          "id": 5,
+          "firstName": "Bianca",
+          "lastName": "Santos",
+          "email": "bianca.santos@example.com",
+          "phone": "789-012-3456"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Não informado",
+      "students": [
+        {
+          "id": 6,
+          "firstName": "Guilherme",
+          "lastName": "Lima",
+          "email": "guilherme.lima@example.com",
+          "phone": "890-123-4567"
+        },
+        {
+          "id": 7,
+          "firstName": "Isabela",
+          "lastName": "Oliveira",
+          "email": "isabela.oliveira@example.com",
+          "phone": "901-234-5678"
+        },
+        {
+          "id": 8,
+          "firstName": "Fernando",
+          "lastName": "Silva",
+          "email": "fernando.silva@example.com",
+          "phone": "123-456-7890"
+        },
+        {
+          "id": 9,
+          "firstName": "Laura",
+          "lastName": "Pereira",
+          "email": "laura.pereira@example.com",
+          "phone": "234-567-8901"
+        },
+        {
+          "id": 10,
+          "firstName": "Matheus",
+          "lastName": "Fernandes",
+          "email": "matheus.fernandes@example.com",
+          "phone": "345-678-9012"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Não informado",
+      "students": [
+        {
+          "id": 11,
+          "firstName": "Júlia",
+          "lastName": "Silva",
+          "email": "julia.silva@example.com",
+          "phone": "567-890-1234"
+        },
+        {
+          "id": 12,
+          "firstName": "Enzo",
+          "lastName": "Pereira",
+          "email": "enzo.pereira@example.com",
+          "phone": "789-012-3456"
+        },
+        {
+          "id": 13,
+          "firstName": "João",
+          "lastName": "Almeida",
+          "email": "joao.almeida@example.com",
+          "phone": "567-890-1234"
+        },
+        {
+          "id": 14,
+          "firstName": "Bianca",
+          "lastName": "Santos",
+          "email": "bianca.santos@example.com",
+          "phone": "789-012-3456"
+        },
+        {
+          "id": 15,
+          "firstName": "Guilherme",
+          "lastName": "Lima",
+          "email": "guilherme.lima@example.com",
+          "phone": "890-123-4567"
+        }
+      ]
+    }
+  ]
+}

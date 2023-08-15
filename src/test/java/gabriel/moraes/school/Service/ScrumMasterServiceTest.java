@@ -7,10 +7,12 @@ import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.ScrumMasterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ScrumMasterServiceTest {
 
     public static final Long ID = 1L;
@@ -36,16 +41,15 @@ class ScrumMasterServiceTest {
 
     private ScrumMaster scrumMaster;
     private ScrumMasterDtoRequest scrumMasterDtoRequest;
+    @Spy
+    private ModelMapper mapper;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        ModelMapper mapper = new ModelMapper();
-        scrumMasterService = new ScrumMasterService(scrumMasterRepository, mapper);
         setupTestData();
     }
     @Test
-    public void whenGetScrumMasterByIdThenReturnAnCoordinator() {
+    public void getScrumMasterById_ReturnAnScrumMasterDtoResponse() {
         Mockito.when(scrumMasterRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(scrumMaster));
 
         ScrumMasterDtoResponse response = scrumMasterService.getScrumMasterById(ID);
@@ -59,19 +63,14 @@ class ScrumMasterServiceTest {
     }
 
     @Test
-    public void whenGetScrumMasterByIdThenReturnAnObjectNotFoundException() {
-        Mockito.when(scrumMasterRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Scrum Master not found with id:" + ID));
+    public void getScrumMasterById_WithInvalidId_ReturnAnObjectNotFoundException() {
+        Mockito.when(scrumMasterRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        try {
-            scrumMasterService.getScrumMasterById(ID);
-        } catch (Exception ex){
-            assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("Scrum Master not found with id:" + ID, ex.getMessage());
-        }
+        assertThrows(ObjectNotFoundException.class, () -> scrumMasterService.getScrumMasterById(anyLong()));
     }
 
     @Test
-    void whenGetAllScrumMastersThenReturnAnListOfScrumMasters() {
+    void getAllScrumMasters_ReturnAnListOfScrumMasterDtoResponse() {
         when(scrumMasterRepository.findAll()).thenReturn(List.of(scrumMaster));
 
         List<ScrumMasterDtoResponse> response = scrumMasterService.getAllScrumMasters();
@@ -86,7 +85,7 @@ class ScrumMasterServiceTest {
     }
 
     @Test
-    void WhenSaveScrumMasterThenReturnAnScrumMasterDtoResponse() {
+    void saveScrumMaster_ReturnAnScrumMasterDtoResponse() {
         when(scrumMasterRepository.save(any())).thenReturn(scrumMaster);
 
         ScrumMasterDtoResponse response = scrumMasterService.save(scrumMasterDtoRequest);

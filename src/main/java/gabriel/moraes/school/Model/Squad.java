@@ -28,7 +28,7 @@ public class Squad {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
-    @JsonBackReference
+    @JsonBackReference(value = "classRoom-squads")
     private ClassRoom classRoom;
 
     @OneToMany(mappedBy = "squad", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

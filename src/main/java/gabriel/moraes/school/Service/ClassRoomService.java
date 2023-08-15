@@ -88,7 +88,6 @@ public class ClassRoomService {
             throw new InvalidClassStatusException("It is only possible to add new students when the class room status is in WAITING");
         }
 
-
         for (Student student : students) {
             if (student.getClassRoom() != null) {
                 throw new StudentAlreadyAssignedException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
@@ -108,23 +107,18 @@ public class ClassRoomService {
         if (coordinatorIds.size() != coordinators.size()) {
             List<Long> notFoundIds = new ArrayList<>(coordinatorIds);
             notFoundIds.removeAll(coordinators.stream().map(Coordinator::getId).toList());
-
             throw new ObjectNotFoundException("Coordinators not found for IDs: " + notFoundIds);
         }
-
         return coordinators;
     }
 
     private List<ScrumMaster> findScrumMasterById(List<Long> scrumMasterIds) {
         List<ScrumMaster> scrumMasters = scrumMasterRepository.findAllById(scrumMasterIds);
-
         if (scrumMasterIds.size() != scrumMasters.size()) {
             List<Long> notFoundIds = new ArrayList<>(scrumMasterIds);
             notFoundIds.removeAll(scrumMasters.stream().map(ScrumMaster::getId).toList());
-
             throw new ObjectNotFoundException("Scrum Masters not found for IDs: " + notFoundIds);
         }
-
         return scrumMasters;
     }
 
@@ -132,29 +126,22 @@ public class ClassRoomService {
         if (instructorIds.size() < maxInstructors) {
             throw new MinimumInstructorsException("Requires a minimum of 3 instructors");
         }
-
         List<Instructor> instructors = instructorRepository.findAllById(instructorIds);
-
         if (instructorIds.size() != instructors.size()) {
             List<Long> notFoundIds = new ArrayList<>(instructorIds);
             notFoundIds.removeAll(instructors.stream().map(Instructor::getId).toList());
-
             throw new ObjectNotFoundException("Instructors not found for IDs: " + notFoundIds);
         }
-
         return instructors;
     }
 
     private List<Student> findStudentsByIds(List<Long> studentIds) {
         List<Student> students = studentRepository.findAllById(studentIds);
-
         if (studentIds.size() != students.size()) {
             List<Long> notFoundIds = new ArrayList<>(studentIds);
             notFoundIds.removeAll(students.stream().map(Student::getId).toList());
-
             throw new ObjectNotFoundException("Students not found for IDs: " + notFoundIds);
         }
-
         return students;
     }
 
@@ -163,7 +150,6 @@ public class ClassRoomService {
         if (studentsCount < minStudent || studentsCount > maxStudent) {
             throw new InsufficientStudentsException("A minimum of 15 students is required to start a class.");
         }
-
         if (classRoom.getStatus() != ClassStatus.WAITING) {
             throw new InvalidClassStatusException("To start a class you need the status in WAITING");
         }
