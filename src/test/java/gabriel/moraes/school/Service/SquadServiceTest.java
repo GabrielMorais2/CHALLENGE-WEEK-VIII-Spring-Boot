@@ -1,6 +1,7 @@
 package gabriel.moraes.school.Service;
 
 import gabriel.moraes.school.Model.ClassRoom;
+import gabriel.moraes.school.Model.ClassStatus;
 import gabriel.moraes.school.Model.Squad;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.Utils.JsonUtils;
@@ -18,18 +19,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class SquadServiceTest {
-
-    public static final long ID = 1L;
 
     @Mock
     private SquadRepository squadRepository;
@@ -42,9 +42,7 @@ class SquadServiceTest {
 
     private static final String CLASSROOM = "Payload/ClassRoom/CLASSROOM_WITH_STUDENTS_AND_START.json";
     private static final String SQUAD = "Payload/Squad/Squads.json";
-    private static final String CLASSROOM_COMPLETE = "Payload/ClassRoom/CLASSROOM_WITH_STUDENTS_AND_SQUAD.json";
-
-
+    private static final String SQUAD_UPDATENAME = "Payload/Squad/SQUAD_UPDATENAME.json";
 
     @Test
     void createSquad_ReturnSquadDtoResponse() throws IOException {
@@ -53,6 +51,7 @@ class SquadServiceTest {
         Squad[] squads = JsonUtils.getObjectFromFile(SQUAD, Squad[].class);
 
         when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
+
         when(squadRepository.saveAll(anyList())).thenReturn(List.of(squads));
 
         List<SquadDtoResponse> response = squadService.createSquad(1L);
@@ -67,75 +66,48 @@ class SquadServiceTest {
     @Test
     void updateSquadName_ReturnSquadDtoResponseWithNameUpdate() throws IOException {
 
-        ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM_COMPLETE, ClassRoom.class);
-        Squad[] squads = JsonUtils.getObjectFromFile(SQUAD, Squad[].class);
+        Squad[] squads = JsonUtils.getObjectFromFile(SQUAD_UPDATENAME, Squad[].class);
 
         String newSquadName = "New Squad Name";
 
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
-        when(squadRepository.save(any())).thenReturn(squads);
+        when(squadRepository.findById(anyLong())).thenReturn(Optional.ofNullable(squads[0]));
 
-        SquadDtoResponse response = squadService.updateSquadName(ID, ID, newSquadName);
+        when(squadRepository.save(any())).thenReturn(squads[0]);
 
-        verify(classRoomRepository).findById(1L);
-        //verify(squadRepository).save(squads.get(0));
+        SquadDtoResponse response = squadService.updateSquadName(1L, newSquadName);
+
+        verify(squadRepository).save(squads[0]);
 
         assertNotNull(response);
 
-        //assertEquals(newSquadName, squads.get(0).getName());
-        //assertEquals(squads.get(0).getId(), response.getId());
+        assertEquals(newSquadName, squads[0].getName());
+        assertEquals(squads[0].getId(), response.getId());
         assertEquals(newSquadName, response.getName());
     }
     @Test
-    void whenCreateSquadThenReturnAnClassRoomInvalidObjectNotFoundException() throws IOException {
+    void createSquad_WithInvalidIdClassroom_ReturnAnObjectNotFoundException(){
+        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM, ClassRoom.class);
-        List<Squad> squads = Collections.singletonList(JsonUtils.getObjectFromFile(SQUAD, Squad.class));
-
-        when(classRoomRepository.findById(anyLong())).thenThrow(new ObjectNotFoundException("Class room not found with id:" + ID));
-
-        try {
-            squadService.createSquad(ID);
-        } catch (Exception ex){
-            assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("Class room not found with id:" + ID, ex.getMessage());
-        }
+        assertThrows(ObjectNotFoundException.class, () -> squadService.createSquad(anyLong()));
     }
 
     @Test
-    void whenCreateSquadThenReturnAnInvalidClassStatusException() {
-        when(classRoomRepository.findById(anyLong())).thenThrow(new InvalidClassStatusException("It is only possible to create squads when a class is started."));
+    void whenCreateSquadThenReturnAnInvalidClassStatusException() throws IOException {
+        ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM, ClassRoom.class);
+        classRoom.setStatus(ClassStatus.WAITING);
 
-        try {
-            squadService.createSquad(ID);
-        } catch (Exception ex) {
-            assertEquals(InvalidClassStatusException.class, ex.getClass());
-            assertEquals("It is only possible to create squads when a class is started.", ex.getMessage());
+        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
 
-            verify(classRoomRepository).findById(ID);
-        }
+        assertThrows(InvalidClassStatusException.class, () -> squadService.createSquad(anyLong()));
     }
 
     @Test
     void whenCreateSquadThenReturnAnNoRegisteredStudentsException() throws IOException {
-
         ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM, ClassRoom.class);
-        List<Squad> squads = Collections.singletonList(JsonUtils.getObjectFromFile(SQUAD, Squad.class));
-
         classRoom.setStudents(new ArrayList<>());
 
-        when(classRoomRepository.findById(anyLong())).thenThrow(new NoRegisteredStudentsException("There are no registered students."));
+        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
 
-        try {
-            squadService.createSquad(ID);
-        } catch (Exception ex) {
-            assertEquals(NoRegisteredStudentsException.class, ex.getClass());
-            assertEquals("There are no registered students.", ex.getMessage());
-
-            verify(classRoomRepository).findById(ID);
-        }
-
-        verify(classRoomRepository).findById(ID);
-
+        assertThrows(NoRegisteredStudentsException.class, () -> squadService.createSquad(anyLong()));
     }
 }

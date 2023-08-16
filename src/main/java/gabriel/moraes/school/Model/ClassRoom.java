@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(
+        scope = ClassRoom.class,
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )

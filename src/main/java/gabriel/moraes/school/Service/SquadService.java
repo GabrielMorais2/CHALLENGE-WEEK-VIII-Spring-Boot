@@ -73,12 +73,8 @@ public class SquadService {
     }
 
     @Transactional
-    public SquadDtoResponse updateSquadName(Long classId, Long squadId, String newName) {
-        ClassRoom classRoom = getClassRoomById(classId);
-
-        Squad squadToUpdate = classRoom.getSquads().stream()
-                .filter(squad -> squad.getId().equals(squadId))
-                .findFirst()
+    public SquadDtoResponse updateSquadName(Long squadId, String newName) {
+        Squad squadToUpdate = squadRepository.findById(squadId)
                 .orElseThrow(() -> new ObjectNotFoundException("Squad not found with id: " + squadId));
 
         squadToUpdate.setName(newName);
