@@ -7,23 +7,27 @@ import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
     public static final Long ID = 1L;
@@ -38,16 +42,15 @@ class StudentServiceTest {
     private StudentService studentService;
     private Student student;
     private StudentDtoRequest studentDtoRequest;
+    @Spy
+    private ModelMapper mapper;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        ModelMapper mapper = new ModelMapper();
-        studentService = new StudentService(studentRepository, mapper);
         setupTestData();
     }
     @Test
-    public void whenGetStudentByIdThenReturnAnStudentDtoResponse() {
+    public void getStudentById_ReturnAnStudentDtoResponse() {
         Mockito.when(studentRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(student));
 
         StudentDtoResponse response = studentService.getStudentById(ID);
@@ -61,19 +64,14 @@ class StudentServiceTest {
     }
 
     @Test
-    public void whenGetStudentByIdThenReturnAnObjectNotFoundException() {
-        Mockito.when(studentRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("student not found with id:" + ID));
+    public void getStudentsById_WithInvalidId_ReturnAnObjectNotFoundException() {
+        Mockito.when(studentRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        try {
-            studentService.getStudentById(ID);
-        } catch (Exception ex){
-            assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("student not found with id:" + ID, ex.getMessage());
-        }
+        assertThrows(ObjectNotFoundException.class, () -> studentService.getStudentById(anyLong()));
     }
 
     @Test
-    void whenGetAllStudentsThenReturnAnListOfStudents() {
+    void getAllStudents_ReturnAnListOfStudentsDtoResponse() {
         when(studentRepository.findAll()).thenReturn(List.of(student));
 
         List<StudentDtoResponse> response = studentService.getAllStudents();
@@ -88,7 +86,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void WhenSaveStudentThenReturnAnStudentDtoResponse() {
+    void saveStudent_ReturnAnStudentDtoResponse() {
         when(studentRepository.save(any())).thenReturn(student);
 
         StudentDtoResponse response = studentService.save(studentDtoRequest);
@@ -114,7 +112,7 @@ class StudentServiceTest {
     void deleteStudent_WithUnexistingId_ReturnNotFound(){
         when(studentRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.empty());
 
-        assertThatThrownBy(() -> studentService.deleteStudentById(99L)).isInstanceOf(ObjectNotFoundException.class);
+        assertThrows(ObjectNotFoundException.class, () -> studentService.deleteStudentById(anyLong()));
     }
 
 

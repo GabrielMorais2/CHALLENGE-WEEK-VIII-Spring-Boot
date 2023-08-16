@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "name": "New Squad Name",
+    "students": [
+      {
+        "id": 1,
+        "firstName": "Amanda",
+        "lastName": "Almeida",
+        "email": "amanda.almeida@example.com",
+        "phone": "123-456-7890"
+      },
+      {
+        "id": 2,
+        "firstName": "Gabriel",
+        "lastName": "Santos",
+        "email": "gabriel.santos@example.com",
+        "phone": "987-654-3210"
+      },
+      {
+        "id": 3,
+        "firstName": "Camila",
+        "lastName": "Fernandes",
+        "email": "camila.fernandes@example.com",
+        "phone": "345-678-9012"
+      },
+      {
+        "id": 4,
+        "firstName": "João",
+        "lastName": "Almeida",
+        "email": "joao.almeida@example.com",
+        "phone": "567-890-1234"
+      },
+      {
+        "id": 5,
+        "firstName": "Bianca",
+        "lastName": "Santos",
+        "email": "bianca.santos@example.com",
+        "phone": "789-012-3456"
+      }
+    ]
+  }
+]

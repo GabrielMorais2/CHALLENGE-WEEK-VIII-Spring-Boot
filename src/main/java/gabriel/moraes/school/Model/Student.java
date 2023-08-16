@@ -22,12 +22,12 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "classroom_id")
-    @JsonBackReference
+    @JsonBackReference(value = "classRoom-students")
     private ClassRoom classRoom;
 
     @ManyToOne
     @JoinColumn(name = "squad_id")
-    @JsonBackReference
+    @JsonBackReference(value = "squad-student")
     private Squad squad;
 
     public Student(Long id, String firstName, String lastName, String email, String phone) {

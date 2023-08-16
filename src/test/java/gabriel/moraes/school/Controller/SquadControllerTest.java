@@ -45,9 +45,9 @@ class SquadControllerTest {
         String newName = "Kaisen";
         SquadDtoResponse squadDtoResponseUpdate = new SquadDtoResponse(1L, "Kaisen", students);
 
-        when(squadService.updateSquadName(anyLong(), anyLong(), anyString())).thenReturn(squadDtoResponseUpdate);
+        when(squadService.updateSquadName(anyLong(), anyString())).thenReturn(squadDtoResponseUpdate);
 
-        ResponseEntity<SquadDtoResponse> response = squadController.updateSquadName(1L, 1L, updateSquadNameRequest);
+        ResponseEntity<SquadDtoResponse> response = squadController.updateSquadName(1L, updateSquadNameRequest);
 
         assertNotNull(response);
         assertNotNull(response.getBody());

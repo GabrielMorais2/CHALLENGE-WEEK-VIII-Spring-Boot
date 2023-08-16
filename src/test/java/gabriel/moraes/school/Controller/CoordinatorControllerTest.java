@@ -72,14 +72,18 @@ class CoordinatorControllerTest {
     }
 
     @Test
-    void saveCoordinator_withInvalidData_ReturnBadRequest() throws Exception {
+    void saveCoordinator_withEmptyData_ReturnBadRequest() throws Exception {
         CoordinatorDtoRequest emptyCoordinatorDtoRequest = new CoordinatorDtoRequest("", "", "", "");
-        CoordinatorDtoRequest invalidCoordinatorDtoRequest = new CoordinatorDtoRequest(null, null, null, null);
 
         mockMvc.perform(post("/api/v1/coordinators")
                         .content(objectMapper.writeValueAsString(emptyCoordinatorDtoRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void saveCoordinator_withInvalidData_ReturnBadRequest() throws Exception {
+        CoordinatorDtoRequest invalidCoordinatorDtoRequest = new CoordinatorDtoRequest(null, null, null, null);
 
         mockMvc.perform(post("/api/v1/coordinators")
                         .content(objectMapper.writeValueAsString(invalidCoordinatorDtoRequest))
