@@ -34,6 +34,8 @@ The Compass Scholarship Program Management System is a comprehensive solution to
 - MySQL
 - Lombok
 - Documentation with OpenAi
+- Junit 5
+- Mockito
 
 ## Documentation
 
@@ -69,6 +71,63 @@ Open src/main/resources/application.yaml and set your MySQL database configurati
 
 The application should be accessible at http://localhost:8080.
 
+## Test Coverage
+
+The School Management System project has undergone comprehensive testing to ensure its reliability and functionality. As of the latest update, the test coverage stands at approximately 93%. This high test coverage helps ensure that the code is thoroughly tested and reduces the likelihood of bugs and issues in the application.
+
+We have used JUnit 5 and Mockito for unit testing various components of the system. These tests cover a wide range of scenarios and edge cases to guarantee robust performance.
+
+To run the tests and check the coverage locally, follow these steps:
+
+1. Navigate to the project directory:
+
+```shell
+cd CHALLENGE-WEEK-VIII-Spring-Boot
+```
+
+2. Run the tests with coverage report:
+
+```shell
+./mvnw clean test jacoco:report
+```
+
+3. Open the generated coverage report:
+   
+After running the above command, you can open the generated HTML coverage report located at http://localhost:8080/target/site/jacoco/index.html in your web browser.
+
+Feel free to explore the detailed coverage report to understand which parts of the code are well-covered by tests and which areas might need further attention.
+
+## Application Business Rules
+
+Below are the business rules that must be followed in your application:
+
+### Class Creation:
+
+   A new class must be created with the following role composition:
+
+ - 1 coordinator - The coordinator may be registered in other classes.
+ - 1 scrum master - The scrum master may be registered in other classes.
+ - 3 instructors - Instructors may be registered in other classes.
+
+### Class Status:
+
+   Each class goes through three different stages:
+
+ - "Waiting" (The class is automatically assigned to this status when created).
+ - "Started" (There is a specific endpoint to start the class, with validations such as the number of students, class status, and other checks).
+ - "Finished" (There is a specific endpoint to finish the class).
+
+### Adding Students:
+
+- After the class is created, students can be added to it as long as the class is in the "Waiting" status.
+- The maximum number of students in a class is 30.
+- To start the class (status "Started"), there must be at least 15 students.
+
+### Squad Creation:
+
+- After the class is started (status "Started"), it's possible to create squads. This is done by providing the class ID to the system.
+- The system performs internal logic to distribute students evenly among squads, with a maximum of 5 students per squad.
+
 ## API Endpoints
 
 ### Classroom
@@ -102,11 +161,12 @@ The application should be accessible at http://localhost:8080.
 - GET /api/v1/students/{id} - Get information about a specific student.
 - GET /api/v1/students - Get a list of all students.
 - POST /api/v1/students - Create a new student.
+- DELETE /api/v1/students/{id} - delete students by Id
 
 ### Squad
 
-- PATCH /api/v1/squads/{classId}/update-squad/{squadId} - Update the name of a squad.
 - POST /api/v1/squads/{id}/create-squad - Create squads for a class.
+- PATCH /api/v1/squads/update-squad/{squadId} - Update the name of a squad.
 
 ## Contributing
 
