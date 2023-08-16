@@ -1,0 +1,1862 @@
+{
+	"info": {
+		"_postman_id": "66b3e5bc-511b-4414-bc43-7596cbae74f1",
+		"name": "Compass Scholarship Program Management System",
+		"description": "The Compass Scholarship Program Management System is a comprehensive solution to manage various aspects of a Scholarship Program environment. From creating classes and managing instructors to organizing students into squads, this system aims to simplify administrative tasks and foster better communication among stakeholders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23922939"
+	},
+	"item": [
+		{
+			"name": "Create Instructors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/instructors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"instructors"
+					]
+				},
+				"description": "Create a new instructor"
+			},
+			"response": [
+				{
+					"name": "Create Instructors",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/instructors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"instructors"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Aug 2023 17:42:41 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 4,\n    \"firstName\": \"gabriel\",\n    \"lastName\": \"moraes\",\n    \"email\": \"gabriel@moraes\",\n    \"phone\": \"81984458436\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Find All Instructors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/instructors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"instructors"
+					]
+				},
+				"description": "Get a list of all instructors"
+			},
+			"response": [
+				{
+					"name": "Find All Instructors",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/instructors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"instructors"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:06 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"firstName\": \"Lucas\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"lucas.pereira@example.com\",\n        \"phone\": \"456-789-0123\"\n    },\n    {\n        \"id\": 2,\n        \"firstName\": \"Mariana\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"mariana.fernandes@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 3,\n        \"firstName\": \"Rafael\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"rafael.almeida@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 4,\n        \"firstName\": \"Lucas\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"lucas.pereira@example.com\",\n        \"phone\": \"456-789-0123\"\n    },\n    {\n        \"id\": 5,\n        \"firstName\": \"Mariana\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"mariana.fernandes@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 6,\n        \"firstName\": \"Rafael\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"rafael.almeida@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 7,\n        \"firstName\": \"Lucas\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"lucas.pereira@example.com\",\n        \"phone\": \"456-789-0123\"\n    },\n    {\n        \"id\": 8,\n        \"firstName\": \"Mariana\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"mariana.fernandes@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 9,\n        \"firstName\": \"Rafael\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"rafael.almeida@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 10,\n        \"firstName\": \"Lucas\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"lucas.pereira@example.com\",\n        \"phone\": \"456-789-0123\"\n    },\n    {\n        \"id\": 11,\n        \"firstName\": \"Mariana\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"mariana.fernandes@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 12,\n        \"firstName\": \"Rafael\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"rafael.almeida@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 13,\n        \"firstName\": \"Lucas\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"lucas.pereira@example.com\",\n        \"phone\": \"456-789-0123\"\n    },\n    {\n        \"id\": 14,\n        \"firstName\": \"Mariana\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"mariana.fernandes@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 15,\n        \"firstName\": \"Rafael\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"rafael.almeida@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 16,\n        \"firstName\": \"gabriel\",\n        \"lastName\": \"moraes\",\n        \"email\": \"gabriel@moraes\",\n        \"phone\": \"81984458436\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Find Instructor By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/instructors/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"instructors",
+						"1"
+					]
+				},
+				"description": "Get information about a specific instructor"
+			},
+			"response": [
+				{
+					"name": "Find Instructor By Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/instructors/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"instructors",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:13 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"firstName\": \"Lucas\",\n    \"lastName\": \"Pereira\",\n    \"email\": \"lucas.pereira@example.com\",\n    \"phone\": \"456-789-0123\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Scrum Masters",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/scrum-masters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"scrum-masters"
+					]
+				},
+				"description": "Create a new Scrum Master"
+			},
+			"response": [
+				{
+					"name": "Create Scrum Masters",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/scrum-masters",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"scrum-masters"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:19 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 16,\n    \"firstName\": \"gabriel\",\n    \"lastName\": \"moraes\",\n    \"email\": \"gabriel@moraes\",\n    \"phone\": \"81984458436\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Scrum Master By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/scrum-masters/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"scrum-masters",
+						"1"
+					]
+				},
+				"description": "Get information about a specific scrum master"
+			},
+			"response": [
+				{
+					"name": "Get Scrum Master By Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/scrum-masters/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"scrum-masters",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:24 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"firstName\": \"Pedro\",\n    \"lastName\": \"Santos\",\n    \"email\": \"pedro.santos@example.com\",\n    \"phone\": \"234-567-8901\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get All Scrum Masters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/scrum-masters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"scrum-masters"
+					]
+				},
+				"description": "Get a list of all scrum masters"
+			},
+			"response": [
+				{
+					"name": "Get All Scrum Masters",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/scrum-masters",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"scrum-masters"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:30 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 2,\n        \"firstName\": \"Carolina\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"carolina.oliveira@example.com\",\n        \"phone\": \"678-901-2345\"\n    },\n    {\n        \"id\": 3,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 4,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 5,\n        \"firstName\": \"Carolina\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"carolina.oliveira@example.com\",\n        \"phone\": \"678-901-2345\"\n    },\n    {\n        \"id\": 6,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 7,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 8,\n        \"firstName\": \"Carolina\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"carolina.oliveira@example.com\",\n        \"phone\": \"678-901-2345\"\n    },\n    {\n        \"id\": 9,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 10,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 11,\n        \"firstName\": \"Carolina\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"carolina.oliveira@example.com\",\n        \"phone\": \"678-901-2345\"\n    },\n    {\n        \"id\": 12,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 13,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 14,\n        \"firstName\": \"Carolina\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"carolina.oliveira@example.com\",\n        \"phone\": \"678-901-2345\"\n    },\n    {\n        \"id\": 15,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 16,\n        \"firstName\": \"gabriel\",\n        \"lastName\": \"moraes\",\n        \"email\": \"gabriel@moraes\",\n        \"phone\": \"81984458436\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create Coordinator",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/coordinators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"coordinators"
+					]
+				},
+				"description": "Create a new Coordinator"
+			},
+			"response": [
+				{
+					"name": "Create Coordinator",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/coordinators",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"coordinators"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:34 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 16,\n    \"firstName\": \"gabriel\",\n    \"lastName\": \"moraes\",\n    \"email\": \"gabriel@moraes\",\n    \"phone\": \"81984458436\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get All Coordinators",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/coordinators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"coordinators"
+					]
+				},
+				"description": "Get a list of all coordinators"
+			},
+			"response": [
+				{
+					"name": "Get All Coordinators",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/coordinators",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"coordinators"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:38 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 2,\n        \"firstName\": \"Paulo\",\n        \"lastName\": \"Silva\",\n        \"email\": \"paulo.silva@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 3,\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Santos\",\n        \"email\": \"maria.santos@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 4,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 5,\n        \"firstName\": \"Paulo\",\n        \"lastName\": \"Silva\",\n        \"email\": \"paulo.silva@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 6,\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Santos\",\n        \"email\": \"maria.santos@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 7,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 8,\n        \"firstName\": \"Paulo\",\n        \"lastName\": \"Silva\",\n        \"email\": \"paulo.silva@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 9,\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Santos\",\n        \"email\": \"maria.santos@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 10,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 11,\n        \"firstName\": \"Paulo\",\n        \"lastName\": \"Silva\",\n        \"email\": \"paulo.silva@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 12,\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Santos\",\n        \"email\": \"maria.santos@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 13,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 14,\n        \"firstName\": \"Paulo\",\n        \"lastName\": \"Silva\",\n        \"email\": \"paulo.silva@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 15,\n        \"firstName\": \"Maria\",\n        \"lastName\": \"Santos\",\n        \"email\": \"maria.santos@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 16,\n        \"firstName\": \"gabriel\",\n        \"lastName\": \"moraes\",\n        \"email\": \"gabriel@moraes\",\n        \"phone\": \"81984458436\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Coordinator By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/coordinators/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"coordinators",
+						"19"
+					]
+				},
+				"description": "Get information about a specific coordinator"
+			},
+			"response": [
+				{
+					"name": "Get Coordinator By Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/coordinators/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"coordinators",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:47 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"firstName\": \"Paulo\",\n    \"lastName\": \"Silva\",\n    \"email\": \"paulo.silva@example.com\",\n    \"phone\": \"987-654-3210\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/coordinators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"coordinators"
+					]
+				},
+				"description": "Create a new Student"
+			},
+			"response": [
+				{
+					"name": "Create Student",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"firstName\":\"gabriel\",\r\n\t\"lastName\":\"moraes\",\r\n\t\"email\":\"gabriel@moraes\",\r\n\t\"phone\":\"81984458436\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"students"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:23:53 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 76,\n    \"firstName\": \"gabriel\",\n    \"lastName\": \"moraes\",\n    \"email\": \"gabriel@moraes\",\n    \"phone\": \"81984458436\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Student By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/coordinators/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"coordinators",
+						"19"
+					]
+				},
+				"description": "Get information about a specific student"
+			},
+			"response": [
+				{
+					"name": "Get Student By Id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/students/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"students",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:24:04 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"firstName\": \"Gabriel\",\n    \"lastName\": \"Santos\",\n    \"email\": \"gabriel.santos@example.com\",\n    \"phone\": \"987-654-3210\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get All Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/coordinators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"coordinators"
+					]
+				},
+				"description": "Get a list of all students"
+			},
+			"response": [
+				{
+					"name": "Get All Students",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"students"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:24:18 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"firstName\": \"Amanda\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"amanda.almeida@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 2,\n        \"firstName\": \"Gabriel\",\n        \"lastName\": \"Santos\",\n        \"email\": \"gabriel.santos@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 3,\n        \"firstName\": \"Camila\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"camila.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 4,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 5,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 6,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 7,\n        \"firstName\": \"Isabela\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"isabela.oliveira@example.com\",\n        \"phone\": \"901-234-5678\"\n    },\n    {\n        \"id\": 8,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 9,\n        \"firstName\": \"Laura\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"laura.pereira@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 10,\n        \"firstName\": \"Matheus\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"matheus.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 11,\n        \"firstName\": \"Júlia\",\n        \"lastName\": \"Silva\",\n        \"email\": \"julia.silva@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 12,\n        \"firstName\": \"Enzo\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"enzo.pereira@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 13,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 14,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 15,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 16,\n        \"firstName\": \"Amanda\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"amanda.almeida@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 17,\n        \"firstName\": \"Gabriel\",\n        \"lastName\": \"Santos\",\n        \"email\": \"gabriel.santos@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 18,\n        \"firstName\": \"Camila\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"camila.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 19,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 20,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 21,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 22,\n        \"firstName\": \"Isabela\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"isabela.oliveira@example.com\",\n        \"phone\": \"901-234-5678\"\n    },\n    {\n        \"id\": 23,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 24,\n        \"firstName\": \"Laura\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"laura.pereira@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 25,\n        \"firstName\": \"Matheus\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"matheus.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 26,\n        \"firstName\": \"Júlia\",\n        \"lastName\": \"Silva\",\n        \"email\": \"julia.silva@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 27,\n        \"firstName\": \"Enzo\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"enzo.pereira@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 28,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 29,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 30,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 31,\n        \"firstName\": \"Amanda\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"amanda.almeida@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 32,\n        \"firstName\": \"Gabriel\",\n        \"lastName\": \"Santos\",\n        \"email\": \"gabriel.santos@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 33,\n        \"firstName\": \"Camila\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"camila.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 34,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 35,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 36,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 37,\n        \"firstName\": \"Isabela\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"isabela.oliveira@example.com\",\n        \"phone\": \"901-234-5678\"\n    },\n    {\n        \"id\": 38,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 39,\n        \"firstName\": \"Laura\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"laura.pereira@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 40,\n        \"firstName\": \"Matheus\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"matheus.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 41,\n        \"firstName\": \"Júlia\",\n        \"lastName\": \"Silva\",\n        \"email\": \"julia.silva@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 42,\n        \"firstName\": \"Enzo\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"enzo.pereira@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 43,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 44,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 45,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 46,\n        \"firstName\": \"Amanda\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"amanda.almeida@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 47,\n        \"firstName\": \"Gabriel\",\n        \"lastName\": \"Santos\",\n        \"email\": \"gabriel.santos@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 48,\n        \"firstName\": \"Camila\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"camila.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 49,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 50,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 51,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 52,\n        \"firstName\": \"Isabela\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"isabela.oliveira@example.com\",\n        \"phone\": \"901-234-5678\"\n    },\n    {\n        \"id\": 53,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 54,\n        \"firstName\": \"Laura\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"laura.pereira@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 55,\n        \"firstName\": \"Matheus\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"matheus.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 56,\n        \"firstName\": \"Júlia\",\n        \"lastName\": \"Silva\",\n        \"email\": \"julia.silva@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 57,\n        \"firstName\": \"Enzo\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"enzo.pereira@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 58,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 59,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 60,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 61,\n        \"firstName\": \"Amanda\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"amanda.almeida@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 62,\n        \"firstName\": \"Gabriel\",\n        \"lastName\": \"Santos\",\n        \"email\": \"gabriel.santos@example.com\",\n        \"phone\": \"987-654-3210\"\n    },\n    {\n        \"id\": 63,\n        \"firstName\": \"Camila\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"camila.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 64,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 65,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 66,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 67,\n        \"firstName\": \"Isabela\",\n        \"lastName\": \"Oliveira\",\n        \"email\": \"isabela.oliveira@example.com\",\n        \"phone\": \"901-234-5678\"\n    },\n    {\n        \"id\": 68,\n        \"firstName\": \"Fernando\",\n        \"lastName\": \"Silva\",\n        \"email\": \"fernando.silva@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    {\n        \"id\": 69,\n        \"firstName\": \"Laura\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"laura.pereira@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    {\n        \"id\": 70,\n        \"firstName\": \"Matheus\",\n        \"lastName\": \"Fernandes\",\n        \"email\": \"matheus.fernandes@example.com\",\n        \"phone\": \"345-678-9012\"\n    },\n    {\n        \"id\": 71,\n        \"firstName\": \"Júlia\",\n        \"lastName\": \"Silva\",\n        \"email\": \"julia.silva@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 72,\n        \"firstName\": \"Enzo\",\n        \"lastName\": \"Pereira\",\n        \"email\": \"enzo.pereira@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 73,\n        \"firstName\": \"João\",\n        \"lastName\": \"Almeida\",\n        \"email\": \"joao.almeida@example.com\",\n        \"phone\": \"567-890-1234\"\n    },\n    {\n        \"id\": 74,\n        \"firstName\": \"Bianca\",\n        \"lastName\": \"Santos\",\n        \"email\": \"bianca.santos@example.com\",\n        \"phone\": \"789-012-3456\"\n    },\n    {\n        \"id\": 75,\n        \"firstName\": \"Guilherme\",\n        \"lastName\": \"Lima\",\n        \"email\": \"guilherme.lima@example.com\",\n        \"phone\": \"890-123-4567\"\n    },\n    {\n        \"id\": 76,\n        \"firstName\": \"gabriel\",\n        \"lastName\": \"moraes\",\n        \"email\": \"gabriel@moraes\",\n        \"phone\": \"81984458436\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "delete student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/students/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"students",
+						"3"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "delete student",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/students/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"students",
+								"15"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 16 Aug 2023 17:48:24 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Create Class",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"The fofoca Brokers\",\r\n\t\"coordinator\": 1,\r\n\t\"scrumMaster\": 1,\r\n\t\"instructors\": [1,2,3]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/class",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"class"
+					]
+				},
+				"description": "Create a new Classes"
+			},
+			"response": [
+				{
+					"name": "Create Class",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"The fofoca Brokers\",\r\n\t\"coordinator\": 1,\r\n\t\"scrumMaster\": 1,\r\n\t\"instructors\": [1,2,3]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:24:23 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"The fofoca Brokers\",\n    \"status\": \"WAITING\",\n    \"coordinator\": {\n        \"id\": 1,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    \"scrumMaster\": {\n        \"id\": 1,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    \"instructors\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Lucas\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"lucas.pereira@example.com\",\n            \"phone\": \"456-789-0123\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Mariana\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"mariana.fernandes@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Rafael\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"rafael.almeida@example.com\",\n            \"phone\": \"234-567-8901\"\n        }\n    ],\n    \"students\": [],\n    \"squads\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Class By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"description": "Get information about a specific Classes"
+			},
+			"response": [
+				{
+					"name": "Get Classes With Students",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:24:31 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"The fofoca Brokers\",\n    \"status\": \"WAITING\",\n    \"coordinator\": {\n        \"id\": 1,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    \"scrumMaster\": {\n        \"id\": 1,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    \"instructors\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Lucas\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"lucas.pereira@example.com\",\n            \"phone\": \"456-789-0123\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Mariana\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"mariana.fernandes@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Rafael\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"rafael.almeida@example.com\",\n            \"phone\": \"234-567-8901\"\n        }\n    ],\n    \"students\": [],\n    \"squads\": []\n}"
+				},
+				{
+					"name": "Get Classes by Id With students and Squads",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:25:00 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"The fofoca Brokers\",\n    \"status\": \"STARTED\",\n    \"coordinator\": {\n        \"id\": 1,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    \"scrumMaster\": {\n        \"id\": 1,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    \"instructors\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Lucas\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"lucas.pereira@example.com\",\n            \"phone\": \"456-789-0123\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Mariana\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"mariana.fernandes@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Rafael\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"rafael.almeida@example.com\",\n            \"phone\": \"234-567-8901\"\n        }\n    ],\n    \"students\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Amanda\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"amanda.almeida@example.com\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Gabriel\",\n            \"lastName\": \"Santos\",\n            \"email\": \"gabriel.santos@example.com\",\n            \"phone\": \"987-654-3210\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Camila\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"camila.fernandes@example.com\",\n            \"phone\": \"345-678-9012\"\n        },\n        {\n            \"id\": 4,\n            \"firstName\": \"João\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"joao.almeida@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 5,\n            \"firstName\": \"Bianca\",\n            \"lastName\": \"Santos\",\n            \"email\": \"bianca.santos@example.com\",\n            \"phone\": \"789-012-3456\"\n        },\n        {\n            \"id\": 6,\n            \"firstName\": \"Guilherme\",\n            \"lastName\": \"Lima\",\n            \"email\": \"guilherme.lima@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 7,\n            \"firstName\": \"Isabela\",\n            \"lastName\": \"Oliveira\",\n            \"email\": \"isabela.oliveira@example.com\",\n            \"phone\": \"901-234-5678\"\n        },\n        {\n            \"id\": 8,\n            \"firstName\": \"Fernando\",\n            \"lastName\": \"Silva\",\n            \"email\": \"fernando.silva@example.com\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": 9,\n            \"firstName\": \"Laura\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"laura.pereira@example.com\",\n            \"phone\": \"234-567-8901\"\n        },\n        {\n            \"id\": 10,\n            \"firstName\": \"Matheus\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"matheus.fernandes@example.com\",\n            \"phone\": \"345-678-9012\"\n        },\n        {\n            \"id\": 11,\n            \"firstName\": \"Júlia\",\n            \"lastName\": \"Silva\",\n            \"email\": \"julia.silva@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 12,\n            \"firstName\": \"Enzo\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"enzo.pereira@example.com\",\n            \"phone\": \"789-012-3456\"\n        },\n        {\n            \"id\": 13,\n            \"firstName\": \"João\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"joao.almeida@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 14,\n            \"firstName\": \"Bianca\",\n            \"lastName\": \"Santos\",\n            \"email\": \"bianca.santos@example.com\",\n            \"phone\": \"789-012-3456\"\n        },\n        {\n            \"id\": 15,\n            \"firstName\": \"Guilherme\",\n            \"lastName\": \"Lima\",\n            \"email\": \"guilherme.lima@example.com\",\n            \"phone\": \"890-123-4567\"\n        }\n    ],\n    \"squads\": [\n        {\n            \"id\": 1,\n            \"name\": \"Não informado\",\n            \"students\": [\n                {\n                    \"id\": 1,\n                    \"firstName\": \"Amanda\",\n                    \"lastName\": \"Almeida\",\n                    \"email\": \"amanda.almeida@example.com\",\n                    \"phone\": \"123-456-7890\"\n                },\n                {\n                    \"id\": 2,\n                    \"firstName\": \"Gabriel\",\n                    \"lastName\": \"Santos\",\n                    \"email\": \"gabriel.santos@example.com\",\n                    \"phone\": \"987-654-3210\"\n                },\n                {\n                    \"id\": 3,\n                    \"firstName\": \"Camila\",\n                    \"lastName\": \"Fernandes\",\n                    \"email\": \"camila.fernandes@example.com\",\n                    \"phone\": \"345-678-9012\"\n                },\n                {\n                    \"id\": 4,\n                    \"firstName\": \"João\",\n                    \"lastName\": \"Almeida\",\n                    \"email\": \"joao.almeida@example.com\",\n                    \"phone\": \"567-890-1234\"\n                },\n                {\n                    \"id\": 5,\n                    \"firstName\": \"Bianca\",\n                    \"lastName\": \"Santos\",\n                    \"email\": \"bianca.santos@example.com\",\n                    \"phone\": \"789-012-3456\"\n                }\n            ]\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Não informado\",\n            \"students\": [\n                {\n                    \"id\": 6,\n                    \"firstName\": \"Guilherme\",\n                    \"lastName\": \"Lima\",\n                    \"email\": \"guilherme.lima@example.com\",\n                    \"phone\": \"890-123-4567\"\n                },\n                {\n                    \"id\": 7,\n                    \"firstName\": \"Isabela\",\n                    \"lastName\": \"Oliveira\",\n                    \"email\": \"isabela.oliveira@example.com\",\n                    \"phone\": \"901-234-5678\"\n                },\n                {\n                    \"id\": 8,\n                    \"firstName\": \"Fernando\",\n                    \"lastName\": \"Silva\",\n                    \"email\": \"fernando.silva@example.com\",\n                    \"phone\": \"123-456-7890\"\n                },\n                {\n                    \"id\": 9,\n                    \"firstName\": \"Laura\",\n                    \"lastName\": \"Pereira\",\n                    \"email\": \"laura.pereira@example.com\",\n                    \"phone\": \"234-567-8901\"\n                },\n                {\n                    \"id\": 10,\n                    \"firstName\": \"Matheus\",\n                    \"lastName\": \"Fernandes\",\n                    \"email\": \"matheus.fernandes@example.com\",\n                    \"phone\": \"345-678-9012\"\n                }\n            ]\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Não informado\",\n            \"students\": [\n                {\n                    \"id\": 11,\n                    \"firstName\": \"Júlia\",\n                    \"lastName\": \"Silva\",\n                    \"email\": \"julia.silva@example.com\",\n                    \"phone\": \"567-890-1234\"\n                },\n                {\n                    \"id\": 12,\n                    \"firstName\": \"Enzo\",\n                    \"lastName\": \"Pereira\",\n                    \"email\": \"enzo.pereira@example.com\",\n                    \"phone\": \"789-012-3456\"\n                },\n                {\n                    \"id\": 13,\n                    \"firstName\": \"João\",\n                    \"lastName\": \"Almeida\",\n                    \"email\": \"joao.almeida@example.com\",\n                    \"phone\": \"567-890-1234\"\n                },\n                {\n                    \"id\": 14,\n                    \"firstName\": \"Bianca\",\n                    \"lastName\": \"Santos\",\n                    \"email\": \"bianca.santos@example.com\",\n                    \"phone\": \"789-012-3456\"\n                },\n                {\n                    \"id\": 15,\n                    \"firstName\": \"Guilherme\",\n                    \"lastName\": \"Lima\",\n                    \"email\": \"guilherme.lima@example.com\",\n                    \"phone\": \"890-123-4567\"\n                }\n            ]\n        }\n    ]\n}"
+				},
+				{
+					"name": "get a class by id without students",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Aug 2023 17:48:59 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"The fofoca Brokers\",\n    \"status\": \"WAITING\",\n    \"coordinators\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Ana\",\n            \"lastName\": \"Lima\",\n            \"email\": \"ana.lima@example.com\",\n            \"phone\": \"123-456-7890\"\n        }\n    ],\n    \"scrumMasters\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Pedro\",\n            \"lastName\": \"Santos\",\n            \"email\": \"pedro.santos@example.com\",\n            \"phone\": \"234-567-8901\"\n        }\n    ],\n    \"instructors\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Lucas\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"lucas.pereira@example.com\",\n            \"phone\": \"456-789-0123\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Mariana\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"mariana.fernandes@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Rafael\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"rafael.almeida@example.com\",\n            \"phone\": \"234-567-8901\"\n        }\n    ],\n    \"students\": [],\n    \"squads\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Add Students Classes",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"students\": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/class/1/add-students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"class",
+						"1",
+						"add-students"
+					]
+				},
+				"description": "Add students to a class"
+			},
+			"response": [
+				{
+					"name": "Add Students Classes",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"students\": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/add-students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"add-students"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:24:40 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"The fofoca Brokers\",\n    \"status\": \"WAITING\",\n    \"coordinator\": {\n        \"id\": 1,\n        \"firstName\": \"Ana\",\n        \"lastName\": \"Lima\",\n        \"email\": \"ana.lima@example.com\",\n        \"phone\": \"123-456-7890\"\n    },\n    \"scrumMaster\": {\n        \"id\": 1,\n        \"firstName\": \"Pedro\",\n        \"lastName\": \"Santos\",\n        \"email\": \"pedro.santos@example.com\",\n        \"phone\": \"234-567-8901\"\n    },\n    \"instructors\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Lucas\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"lucas.pereira@example.com\",\n            \"phone\": \"456-789-0123\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Mariana\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"mariana.fernandes@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Rafael\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"rafael.almeida@example.com\",\n            \"phone\": \"234-567-8901\"\n        }\n    ],\n    \"students\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Amanda\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"amanda.almeida@example.com\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Gabriel\",\n            \"lastName\": \"Santos\",\n            \"email\": \"gabriel.santos@example.com\",\n            \"phone\": \"987-654-3210\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Camila\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"camila.fernandes@example.com\",\n            \"phone\": \"345-678-9012\"\n        },\n        {\n            \"id\": 4,\n            \"firstName\": \"João\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"joao.almeida@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 5,\n            \"firstName\": \"Bianca\",\n            \"lastName\": \"Santos\",\n            \"email\": \"bianca.santos@example.com\",\n            \"phone\": \"789-012-3456\"\n        },\n        {\n            \"id\": 6,\n            \"firstName\": \"Guilherme\",\n            \"lastName\": \"Lima\",\n            \"email\": \"guilherme.lima@example.com\",\n            \"phone\": \"890-123-4567\"\n        },\n        {\n            \"id\": 7,\n            \"firstName\": \"Isabela\",\n            \"lastName\": \"Oliveira\",\n            \"email\": \"isabela.oliveira@example.com\",\n            \"phone\": \"901-234-5678\"\n        },\n        {\n            \"id\": 8,\n            \"firstName\": \"Fernando\",\n            \"lastName\": \"Silva\",\n            \"email\": \"fernando.silva@example.com\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": 9,\n            \"firstName\": \"Laura\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"laura.pereira@example.com\",\n            \"phone\": \"234-567-8901\"\n        },\n        {\n            \"id\": 10,\n            \"firstName\": \"Matheus\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"matheus.fernandes@example.com\",\n            \"phone\": \"345-678-9012\"\n        },\n        {\n            \"id\": 11,\n            \"firstName\": \"Júlia\",\n            \"lastName\": \"Silva\",\n            \"email\": \"julia.silva@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 12,\n            \"firstName\": \"Enzo\",\n            \"lastName\": \"Pereira\",\n            \"email\": \"enzo.pereira@example.com\",\n            \"phone\": \"789-012-3456\"\n        },\n        {\n            \"id\": 13,\n            \"firstName\": \"João\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"joao.almeida@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 14,\n            \"firstName\": \"Bianca\",\n            \"lastName\": \"Santos\",\n            \"email\": \"bianca.santos@example.com\",\n            \"phone\": \"789-012-3456\"\n        },\n        {\n            \"id\": 15,\n            \"firstName\": \"Guilherme\",\n            \"lastName\": \"Lima\",\n            \"email\": \"guilherme.lima@example.com\",\n            \"phone\": \"890-123-4567\"\n        }\n    ],\n    \"squads\": []\n}"
+				},
+				{
+					"name": "Error student already assisgned to a class",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"students\": [1]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/add-students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"add-students"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Aug 2023 17:51:28 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2023-08-16T14:46:19.0465185\",\n    \"message\": \"Student Amanda[ID: 1] is already assigned to a class.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Started Class",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/class/1/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"class",
+						"1",
+						"start"
+					]
+				},
+				"description": "Start a class"
+			},
+			"response": [
+				{
+					"name": "Started Class",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"start"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 22:24:46 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Error - To start a class you need the status in WAITING",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"start"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 22:27:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2023-08-11T19:21:50.1104686\",\n    \"message\": \"To start a class you need the status in WAITING\"\n}"
+				},
+				{
+					"name": "Error minimum 15 students is required",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"start"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Aug 2023 17:50:57 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2023-08-16T14:46:19.0465185\",\n    \"message\": \"A minimum of 15 students is required to start a class.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Finish Class",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/class/1/finish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"class",
+						"1",
+						"finish"
+					]
+				},
+				"description": "Finish a class"
+			},
+			"response": [
+				{
+					"name": "Error - Classroom needs to be in STARTED status to be finished",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/finish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"finish"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 22:24:00 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2023-08-11T19:21:50.1104686\",\n    \"message\": \"Classroom needs to be in STARTED status to be finished.\"\n}"
+				},
+				{
+					"name": "Finish Class - sucess",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/classes/1/finish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"classes",
+								"1",
+								"finish"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 22:27:37 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Create Squad",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/squad/1/create-squad",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"squad",
+						"1",
+						"create-squad"
+					]
+				},
+				"description": "Create a new Squad"
+			},
+			"response": [
+				{
+					"name": "Create Squad",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/squads/1/create-squad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"squads",
+								"1",
+								"create-squad"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 22:24:50 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Uninformed\",\n        \"students\": [\n            {\n                \"id\": 1,\n                \"firstName\": \"Amanda\",\n                \"lastName\": \"Almeida\",\n                \"email\": \"amanda.almeida@example.com\",\n                \"phone\": \"123-456-7890\"\n            },\n            {\n                \"id\": 2,\n                \"firstName\": \"Gabriel\",\n                \"lastName\": \"Santos\",\n                \"email\": \"gabriel.santos@example.com\",\n                \"phone\": \"987-654-3210\"\n            },\n            {\n                \"id\": 3,\n                \"firstName\": \"Camila\",\n                \"lastName\": \"Fernandes\",\n                \"email\": \"camila.fernandes@example.com\",\n                \"phone\": \"345-678-9012\"\n            },\n            {\n                \"id\": 4,\n                \"firstName\": \"João\",\n                \"lastName\": \"Almeida\",\n                \"email\": \"joao.almeida@example.com\",\n                \"phone\": \"567-890-1234\"\n            },\n            {\n                \"id\": 5,\n                \"firstName\": \"Bianca\",\n                \"lastName\": \"Santos\",\n                \"email\": \"bianca.santos@example.com\",\n                \"phone\": \"789-012-3456\"\n            }\n        ]\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Uninformed\",\n        \"students\": [\n            {\n                \"id\": 6,\n                \"firstName\": \"Guilherme\",\n                \"lastName\": \"Lima\",\n                \"email\": \"guilherme.lima@example.com\",\n                \"phone\": \"890-123-4567\"\n            },\n            {\n                \"id\": 7,\n                \"firstName\": \"Isabela\",\n                \"lastName\": \"Oliveira\",\n                \"email\": \"isabela.oliveira@example.com\",\n                \"phone\": \"901-234-5678\"\n            },\n            {\n                \"id\": 8,\n                \"firstName\": \"Fernando\",\n                \"lastName\": \"Silva\",\n                \"email\": \"fernando.silva@example.com\",\n                \"phone\": \"123-456-7890\"\n            },\n            {\n                \"id\": 9,\n                \"firstName\": \"Laura\",\n                \"lastName\": \"Pereira\",\n                \"email\": \"laura.pereira@example.com\",\n                \"phone\": \"234-567-8901\"\n            },\n            {\n                \"id\": 10,\n                \"firstName\": \"Matheus\",\n                \"lastName\": \"Fernandes\",\n                \"email\": \"matheus.fernandes@example.com\",\n                \"phone\": \"345-678-9012\"\n            }\n        ]\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Uninformed\",\n        \"students\": [\n            {\n                \"id\": 11,\n                \"firstName\": \"Júlia\",\n                \"lastName\": \"Silva\",\n                \"email\": \"julia.silva@example.com\",\n                \"phone\": \"567-890-1234\"\n            },\n            {\n                \"id\": 12,\n                \"firstName\": \"Enzo\",\n                \"lastName\": \"Pereira\",\n                \"email\": \"enzo.pereira@example.com\",\n                \"phone\": \"789-012-3456\"\n            },\n            {\n                \"id\": 13,\n                \"firstName\": \"João\",\n                \"lastName\": \"Almeida\",\n                \"email\": \"joao.almeida@example.com\",\n                \"phone\": \"567-890-1234\"\n            },\n            {\n                \"id\": 14,\n                \"firstName\": \"Bianca\",\n                \"lastName\": \"Santos\",\n                \"email\": \"bianca.santos@example.com\",\n                \"phone\": \"789-012-3456\"\n            },\n            {\n                \"id\": 15,\n                \"firstName\": \"Guilherme\",\n                \"lastName\": \"Lima\",\n                \"email\": \"guilherme.lima@example.com\",\n                \"phone\": \"890-123-4567\"\n            }\n        ]\n    }\n]"
+				},
+				{
+					"name": "\"There are no registered students.\"",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/squads/2/create-squad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"squads",
+								"2",
+								"create-squad"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 16 Aug 2023 17:54:57 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 400,\n    \"timestamp\": \"2023-08-16T14:46:19.0465185\",\n    \"message\": \"There are no registered students.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Name Squad",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\":\"the fofoca brokers\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/squad/1/update-squad/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"squad",
+						"1",
+						"update-squad",
+						"1"
+					]
+				},
+				"description": "Update the name of a squad by id class and by id squad"
+			},
+			"response": [
+				{
+					"name": "Update Name Squad",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\":\"the fofoca brokers\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/squads/1/update-squad/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"squads",
+								"1",
+								"update-squad",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 11 Aug 2023 22:26:05 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"name\": \"the fofoca brokers\",\n    \"students\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Amanda\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"amanda.almeida@example.com\",\n            \"phone\": \"123-456-7890\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Gabriel\",\n            \"lastName\": \"Santos\",\n            \"email\": \"gabriel.santos@example.com\",\n            \"phone\": \"987-654-3210\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Camila\",\n            \"lastName\": \"Fernandes\",\n            \"email\": \"camila.fernandes@example.com\",\n            \"phone\": \"345-678-9012\"\n        },\n        {\n            \"id\": 4,\n            \"firstName\": \"João\",\n            \"lastName\": \"Almeida\",\n            \"email\": \"joao.almeida@example.com\",\n            \"phone\": \"567-890-1234\"\n        },\n        {\n            \"id\": 5,\n            \"firstName\": \"Bianca\",\n            \"lastName\": \"Santos\",\n            \"email\": \"bianca.santos@example.com\",\n            \"phone\": \"789-012-3456\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	]
+}

@@ -2,9 +2,6 @@ package gabriel.moraes.school.Model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import gabriel.moraes.school.Model.employee.Coordinator;
-import gabriel.moraes.school.Model.employee.Instructor;
-import gabriel.moraes.school.Model.employee.ScrumMaster;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
