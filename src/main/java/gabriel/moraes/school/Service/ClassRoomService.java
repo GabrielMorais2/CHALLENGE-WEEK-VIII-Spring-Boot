@@ -56,8 +56,6 @@ public class ClassRoomService {
         List<ScrumMaster> scrumMasters = findScrumMasterById(classDto.getScrumMasters());
         List<Instructor> instructors = findInstructorsByIds(classDto.getInstructors());
 
-        validateInstructors(instructors);
-
         ClassRoom classRoom = new ClassRoom(classDto.getName());
 
         classRoom.getCoordinators().addAll(coordinators);
@@ -75,7 +73,8 @@ public class ClassRoomService {
         ClassRoom classRoom = findClassById(id);
         List<Student> students = findStudentsByIds(addStudentsDtoRequest.getStudents());
 
-        validateStudents(students);
+        validateStudents(classRoom.getStudents());
+
         assignClassToStudents(students, classRoom);
 
         classRoom.getStudents().addAll(students);
@@ -108,49 +107,41 @@ public class ClassRoomService {
         if (coordinatorIds.size() != coordinators.size()) {
             List<Long> notFoundIds = new ArrayList<>(coordinatorIds);
             notFoundIds.removeAll(coordinators.stream().map(Coordinator::getId).toList());
-
             throw new ObjectNotFoundException("Coordinators not found for IDs: " + notFoundIds);
         }
-
         return coordinators;
     }
 
     private List<ScrumMaster> findScrumMasterById(List<Long> scrumMasterIds) {
         List<ScrumMaster> scrumMasters = scrumMasterRepository.findAllById(scrumMasterIds);
-
         if (scrumMasterIds.size() != scrumMasters.size()) {
             List<Long> notFoundIds = new ArrayList<>(scrumMasterIds);
             notFoundIds.removeAll(scrumMasters.stream().map(ScrumMaster::getId).toList());
-
             throw new ObjectNotFoundException("Scrum Masters not found for IDs: " + notFoundIds);
         }
-
         return scrumMasters;
     }
 
     private List<Instructor> findInstructorsByIds(List<Long> instructorIds) {
+        if (instructorIds.size() < maxInstructors) {
+            throw new MinimumInstructorsException("Requires a minimum of 3 instructors");
+        }
         List<Instructor> instructors = instructorRepository.findAllById(instructorIds);
-
         if (instructorIds.size() != instructors.size()) {
             List<Long> notFoundIds = new ArrayList<>(instructorIds);
             notFoundIds.removeAll(instructors.stream().map(Instructor::getId).toList());
-
             throw new ObjectNotFoundException("Instructors not found for IDs: " + notFoundIds);
         }
-
         return instructors;
     }
 
     private List<Student> findStudentsByIds(List<Long> studentIds) {
         List<Student> students = studentRepository.findAllById(studentIds);
-
         if (studentIds.size() != students.size()) {
             List<Long> notFoundIds = new ArrayList<>(studentIds);
             notFoundIds.removeAll(students.stream().map(Student::getId).toList());
-
             throw new ObjectNotFoundException("Students not found for IDs: " + notFoundIds);
         }
-
         return students;
     }
 
@@ -159,7 +150,6 @@ public class ClassRoomService {
         if (studentsCount < minStudent || studentsCount > maxStudent) {
             throw new InsufficientStudentsException("A minimum of 15 students is required to start a class.");
         }
-
         if (classRoom.getStatus() != ClassStatus.WAITING) {
             throw new InvalidClassStatusException("To start a class you need the status in WAITING");
         }
@@ -169,14 +159,8 @@ public class ClassRoomService {
 
     private void validateStudents(List<Student> students) {
         int studentsCount = students.size();
-        if (studentsCount > maxStudent) {
+        if (studentsCount >= maxStudent) {
             throw new MaximumStudentsException("A class can have a maximum of 30 students");
-        }
-    }
-
-    private void validateInstructors(List<Instructor> instructors) {
-        if (instructors.size() < maxInstructors) {
-            throw new MinimumInstructorsException("Requires a minimum of 3 instructors");
         }
     }
 

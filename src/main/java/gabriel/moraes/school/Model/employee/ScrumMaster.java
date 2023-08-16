@@ -26,7 +26,7 @@ public class ScrumMaster{
     private String phone;
 
     @ManyToMany(mappedBy = "scrumMasters")
-    @JsonBackReference
+    @JsonBackReference(value = "classRoom-scrum-masters")
     private List<ClassRoom> classRooms = new ArrayList<>();
 
     public ScrumMaster(Long id, String firstName, String lastName, String email, String phone) {

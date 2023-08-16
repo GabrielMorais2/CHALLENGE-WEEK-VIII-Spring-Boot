@@ -25,7 +25,7 @@ public class Instructor{
     private String phone;
 
     @ManyToMany(mappedBy = "instructors")
-    @JsonBackReference
+    @JsonBackReference(value = "classRoom-instructors")
     private List<ClassRoom> classRooms = new ArrayList<>();
 
     public Instructor(Long id, String firstName, String lastName, String email, String phone) {

@@ -1,7 +1,6 @@
 package gabriel.moraes.school.Controller;
 
 import gabriel.moraes.school.Model.Student;
-import gabriel.moraes.school.Model.employee.DtoRequest.CoordinatorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoRequest.UpdateSquadNameRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.SquadDtoResponse;
 import gabriel.moraes.school.Service.SquadService;
@@ -31,7 +30,6 @@ class SquadControllerTest {
     private SquadController squadController;
     @Mock
     private SquadService squadService;
-    private CoordinatorDtoRequest coordinatorDtoRequest;
     private SquadDtoResponse squadDtoResponse;
     private UpdateSquadNameRequest updateSquadNameRequest;
     private List<Student> students;
@@ -47,9 +45,9 @@ class SquadControllerTest {
         String newName = "Kaisen";
         SquadDtoResponse squadDtoResponseUpdate = new SquadDtoResponse(1L, "Kaisen", students);
 
-        when(squadService.updateSquadName(anyLong(), anyLong(), anyString())).thenReturn(squadDtoResponseUpdate);
+        when(squadService.updateSquadName(anyLong(), anyString())).thenReturn(squadDtoResponseUpdate);
 
-        ResponseEntity<SquadDtoResponse> response = squadController.updateSquadName(1L, 1L, updateSquadNameRequest);
+        ResponseEntity<SquadDtoResponse> response = squadController.updateSquadName(1L, updateSquadNameRequest);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
@@ -90,4 +88,5 @@ class SquadControllerTest {
         updateSquadNameRequest = new UpdateSquadNameRequest("Kaisen");
 
     }
+
 }

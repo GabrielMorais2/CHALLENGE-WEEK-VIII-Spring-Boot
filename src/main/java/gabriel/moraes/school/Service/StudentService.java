@@ -45,4 +45,11 @@ public class StudentService {
         Student studentSaved = studentRepository.save(student);
         return mapper.map(studentSaved, StudentDtoResponse.class);
     }
+
+    public void deleteStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                        .orElseThrow(() -> new ObjectNotFoundException("Student not found"));
+
+        studentRepository.delete(student);
+    }
 }

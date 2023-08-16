@@ -27,4 +27,22 @@ public class ClassRoomDtoResponse {
     private List<Student> students = new ArrayList<>();
     private List<Squad> squads = new ArrayList<>();
 
+    public ClassRoomDtoResponse(Long id, String name, ClassStatus status, List<Coordinator> coordinators, List<ScrumMaster> scrumMasters, List<Instructor> instructors) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.coordinators = coordinators;
+        this.scrumMasters = scrumMasters;
+        this.instructors = instructors;
+    }
+
+    public ClassRoomDtoResponse(Long id, String name, ClassStatus status, List<Coordinator> coordinators, List<ScrumMaster> scrumMasters, List<Instructor> instructors, List<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.coordinators = coordinators;
+        this.scrumMasters = scrumMasters;
+        this.instructors = instructors;
+        this.students = students;
+    }
 }

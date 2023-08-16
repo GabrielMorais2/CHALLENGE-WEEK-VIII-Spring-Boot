@@ -7,10 +7,12 @@ import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.InstructorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class InstructorServiceTest {
 
     public static final Long ID = 1L;
@@ -36,17 +41,16 @@ class InstructorServiceTest {
 
     private Instructor instructor;
     private InstructorDtoRequest instructorDtoRequest;
+    @Spy
+    private ModelMapper mapper;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        ModelMapper mapper = new ModelMapper();
-        instructorService = new InstructorService(instructorRepository, mapper);
         setupTestData();
     }
     @Test
-    public void whenGetInstructorByIdThenReturnAnInstructorDtoResponse() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(instructor));
+    public void getInstructorById_ReturnAnInstructorDtoResponse() {
+        when(instructorRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(instructor));
 
         InstructorDtoResponse response = instructorService.getInstructorById(ID);
 
@@ -59,19 +63,14 @@ class InstructorServiceTest {
     }
 
     @Test
-    public void whenGetInstructorByIdThenReturnAnObjectNotFoundException() {
-        Mockito.when(instructorRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Instructor not found with id:" + ID));
+    public void getInstructorById_WithInvalidId_ReturnAnObjectNotFoundException() {
+        when(instructorRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        try {
-            instructorService.getInstructorById(ID);
-        } catch (Exception ex){
-            assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("Instructor not found with id:" + ID, ex.getMessage());
-        }
+        assertThrows(ObjectNotFoundException.class, () -> instructorService.getInstructorById(anyLong()));
     }
 
     @Test
-    void whenGetAllInstructorsThenReturnAnListOfInstructors() {
+    void getAllInstructor_ReturnAnListOfInstructorDtoResponse() {
         when(instructorRepository.findAll()).thenReturn(List.of(instructor));
 
         List<InstructorDtoResponse> response = instructorService.getAllInstructors();
@@ -87,7 +86,7 @@ class InstructorServiceTest {
     }
 
     @Test
-    void WhenSaveThenReturnAnInstructorDtoResponse() {
+    void saveInstructor_ReturnAnInstructorDtoResponse() {
         when(instructorRepository.save(any())).thenReturn(instructor);
 
         InstructorDtoResponse response = instructorService.save(instructorDtoRequest);

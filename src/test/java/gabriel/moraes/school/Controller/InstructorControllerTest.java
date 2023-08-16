@@ -1,108 +1,137 @@
 package gabriel.moraes.school.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gabriel.moraes.school.Model.employee.DtoRequest.InstructorDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.InstructorDtoResponse;
 import gabriel.moraes.school.Service.InstructorService;
-import gabriel.moraes.school.repository.InstructorRepository;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@WebMvcTest(InstructorController.class)
 class InstructorControllerTest {
     public static final Long ID = 1L;
     public static final String FIRSTNAME = "Gabriel";
     public static final String LASTNAME = "Moraes";
     public static final String EMAIL = "gabriel@moraes";
     public static final String PHONE = "81984458436";
-    @Mock
-    private InstructorRepository instructorRepository;
-    @InjectMocks
-    private InstructorController instructorController;
-    @Mock
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
     private InstructorService instructorService;
+
     private InstructorDtoRequest instructorDtoRequest;
     private InstructorDtoResponse instructorDtoResponse;
 
+
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        setupTestData();
+        instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        instructorDtoResponse = new InstructorDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+    }
+
+
+
+    @Test
+    void saveInstructor_withValidData_ReturnCreated() throws Exception {
+        when(instructorService.save(instructorDtoRequest)).thenReturn(instructorDtoResponse);
+
+        mockMvc.perform(post("/api/v1/instructors")
+                        .content(objectMapper.writeValueAsString(instructorDtoResponse))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.firstName").value(FIRSTNAME))
+                .andExpect(jsonPath("$.lastName").value(LASTNAME))
+                .andExpect(jsonPath("$.email").value(EMAIL))
+                .andExpect(jsonPath("$.phone").value(PHONE));
     }
 
     @Test
-    void WhenInstructorByIdThenReturnSuccess() {
+    void saveInstructor_withInvalidData_ReturnBadRequest() throws Exception {
+        InstructorDtoRequest emptyInstructorsDtoRequest = new InstructorDtoRequest("", "", "", "");
+        InstructorDtoRequest invalidInstructorDtoRequest = new InstructorDtoRequest(null, null, null, null);
+
+        mockMvc.perform(post("/api/v1/instructors")
+                        .content(objectMapper.writeValueAsString(emptyInstructorsDtoRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(post("/api/v1/instructors")
+                        .content(objectMapper.writeValueAsString(invalidInstructorDtoRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getInstructorById_ExistingId_ReturnInstructor() throws Exception {
         when(instructorService.getInstructorById(anyLong())).thenReturn(instructorDtoResponse);
 
-        ResponseEntity<InstructorDtoResponse> response = instructorController.getInstructorById(ID);
-
-        assertNotNull(response);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(InstructorDtoResponse.class, response.getBody().getClass());
-
-        assertEquals(ID, response.getBody().getId());
-        assertEquals(FIRSTNAME, response.getBody().getFirstName());
-        assertEquals(LASTNAME, response.getBody().getLastName());
-        assertEquals(PHONE, response.getBody().getPhone());
-        assertEquals(EMAIL, response.getBody().getEmail());
-
+        mockMvc.perform(get("/api/v1/instructors/{id}", ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.firstName").value(FIRSTNAME))
+                .andExpect(jsonPath("$.lastName").value(LASTNAME))
+                .andExpect(jsonPath("$.email").value(EMAIL))
+                .andExpect(jsonPath("$.phone").value(PHONE));
     }
 
     @Test
-    void WhenGetAllInstructorsThenReturnAListOfInstructorDtoResponse() {
-        when(instructorService.getAllInstructors()).thenReturn(List.of(instructorDtoResponse));
+    void getInstructorById_UnexistingId_ReturnsObjectNotFound() throws Exception {
+        when(instructorService.getInstructorById(anyLong())).thenThrow(new ObjectNotFoundException("instructors not found"));
 
-        ResponseEntity<List<InstructorDtoResponse>> response = instructorController.getAllInstructors();
-
-        assertNotNull(response);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(InstructorDtoResponse.class, response.getBody().get(0).getClass());
-
-        assertEquals(ID, response.getBody().get(0).getId());
-        assertEquals(FIRSTNAME, response.getBody().get(0).getFirstName());
-        assertEquals(LASTNAME, response.getBody().get(0).getLastName());
-        assertEquals(PHONE, response.getBody().get(0).getPhone());
-        assertEquals(EMAIL, response.getBody().get(0).getEmail());
-
+        mockMvc.perform(get("/api/v1/instructors/{id}", 2L))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ObjectNotFoundException))
+                .andExpect(result -> assertEquals("instructors not found", Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 
     @Test
-    void WhenSaveThenReturnAnInstructorDtoResponseCreated() {
-        when(instructorService.save(any())).thenReturn(instructorDtoResponse);
+    void getAllInstructors_ReturnAnListInstructors() throws Exception {
+        List<InstructorDtoResponse> instructorDtoResponsesList = Arrays.asList(instructorDtoResponse, instructorDtoResponse);
+        when(instructorService.getAllInstructors()).thenReturn(instructorDtoResponsesList);
 
-        ResponseEntity<InstructorDtoResponse> response = instructorController.save(instructorDtoRequest);
-
-        assertNotNull(response);
-        assertNotNull(response.getBody());
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
-        assertEquals(ID, response.getBody().getId());
-        assertEquals(FIRSTNAME, response.getBody().getFirstName());
-        assertEquals(LASTNAME, response.getBody().getLastName());
-        assertEquals(PHONE, response.getBody().getPhone());
-        assertEquals(EMAIL, response.getBody().getEmail());
-
+        mockMvc.perform(get("/api/v1/instructors"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(ID))
+                .andExpect(jsonPath("$[0].firstName").value(FIRSTNAME))
+                .andExpect(jsonPath("$[0].lastName").value(LASTNAME))
+                .andExpect(jsonPath("$[0].email").value(EMAIL))
+                .andExpect(jsonPath("$[0].phone").value(PHONE));
     }
 
-    private void setupTestData(){
-        instructorDtoRequest = new InstructorDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        instructorDtoResponse =  new InstructorDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+    @Test
+    void getAllInstructors_ReturnNoInstructors() throws Exception {
+        when(instructorService.getAllInstructors()).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/api/v1/instructors"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
     }
 
 }

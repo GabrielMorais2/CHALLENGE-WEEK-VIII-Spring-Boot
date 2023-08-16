@@ -7,10 +7,12 @@ import gabriel.moraes.school.exception.ObjectNotFoundException;
 import gabriel.moraes.school.repository.CoordinatorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class CoordinatorServiceTest {
     public static final Long ID = 1L;
     public static final String FIRSTNAME = "Gabriel";
@@ -32,19 +37,19 @@ class CoordinatorServiceTest {
     private CoordinatorRepository coordinatorRepository;
     @InjectMocks
     private CoordinatorService coordinatorService;
+    @Spy
+    private ModelMapper mapper;
 
     private Coordinator coordinator;
     private CoordinatorDtoRequest coordinatorDtoRequest;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        ModelMapper mapper = new ModelMapper();
-        coordinatorService = new CoordinatorService(coordinatorRepository, mapper);
         setupTestData();
     }
+
     @Test
-    public void whenGetCoordinatorByIdThenReturnAnCoordinator() {
+    public void getCoordinatorById_ReturnAnCoordinatorDtoResponse() {
         Mockito.when(coordinatorRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(coordinator));
 
         CoordinatorDtoResponse response = coordinatorService.getCoordinatorById(ID);
@@ -58,19 +63,14 @@ class CoordinatorServiceTest {
     }
 
     @Test
-    public void whenGetCoordinatorByIdThenReturnAnObjectNotFoundException() {
-        Mockito.when(coordinatorRepository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Coordinator not found with id:" + ID));
+    public void getCoordinatorById_WithInvalidId_ReturnAnObjectNotFoundException() {
+        Mockito.when(coordinatorRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        try {
-            coordinatorService.getCoordinatorById(ID);
-        } catch (Exception ex){
-            assertEquals(ObjectNotFoundException.class, ex.getClass());
-            assertEquals("Coordinator not found with id:" + ID, ex.getMessage());
-        }
+        assertThrows(ObjectNotFoundException.class, () -> coordinatorService.getCoordinatorById(anyLong()));
     }
 
     @Test
-    void whenGetAllCoordinatorThenReturnAnListOfCoordinator() {
+    void getAllCoordinator_ReturnAnListOfCoordinatorDtoResponse() {
         when(coordinatorRepository.findAll()).thenReturn(List.of(coordinator));
 
         List<CoordinatorDtoResponse> response = coordinatorService.getAllCoordinators();
@@ -85,7 +85,7 @@ class CoordinatorServiceTest {
     }
 
     @Test
-    void WhenSaveCoordinatorThenReturnAnCoordinatorDtoResponse() {
+    void saveCoordinator_ReturnAnCoordinatorDtoResponse() {
         when(coordinatorRepository.save(any())).thenReturn(coordinator);
 
         CoordinatorDtoResponse response = coordinatorService.save(coordinatorDtoRequest);

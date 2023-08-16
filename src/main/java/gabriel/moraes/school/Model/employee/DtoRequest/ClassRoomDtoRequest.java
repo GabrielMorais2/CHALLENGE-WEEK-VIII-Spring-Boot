@@ -28,6 +28,6 @@ public class ClassRoomDtoRequest {
     private List<Long> scrumMasters = new ArrayList<>();
 
     @NotNull
-    @Size(max = 3, message = "It is possible to register only 1 instructors per class.")
+    @Size(max = 3, message = "It is possible to register only 3 instructors per class.")
     private List<Long> instructors = new ArrayList<>();
 }

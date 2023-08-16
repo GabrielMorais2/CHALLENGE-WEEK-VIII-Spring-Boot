@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "firstName": "Lucas",
+    "lastName": "Pereira",
+    "email": "lucas.pereira@example.com",
+    "phone": "456-789-0123"
+  },
+  {
+    "id": 2,
+    "firstName": "Mariana",
+    "lastName": "Fernandes",
+    "email": "mariana.fernandes@example.com",
+    "phone": "890-123-4567"
+  },
+  {
+    "id": 3,
+    "firstName": "Rafael",
+    "lastName": "Almeida",
+    "email": "rafael.almeida@example.com",
+    "phone": "234-567-8901"
+  }
+]

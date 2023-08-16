@@ -1,25 +1,33 @@
 package gabriel.moraes.school.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gabriel.moraes.school.Model.employee.DtoRequest.StudentDtoRequest;
 import gabriel.moraes.school.Model.employee.DtoResponse.StudentDtoResponse;
 import gabriel.moraes.school.Service.StudentService;
-import gabriel.moraes.school.repository.StudentRepository;
+import gabriel.moraes.school.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@WebMvcTest(StudentController.class)
 class StudentControllerTest {
 
     public static final Long ID = 1L;
@@ -27,83 +35,120 @@ class StudentControllerTest {
     public static final String LASTNAME = "Moraes";
     public static final String EMAIL = "gabriel@moraes";
     public static final String PHONE = "81984458436";
-    @Mock
-    private StudentRepository studentRepository;
-    @InjectMocks
-    private StudentController studentController;
-    @Mock
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
     private StudentService studentService;
+
     private StudentDtoRequest studentDtoRequest;
     private StudentDtoResponse studentDtoResponse;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
-        setupTestData();
+        studentDtoRequest = new StudentDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
+        studentDtoResponse = new StudentDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
+    }
+
+
+    @Test
+    void saveStudent_withValidData_ReturnCreated() throws Exception {
+        when(studentService.save(studentDtoRequest)).thenReturn(studentDtoResponse);
+
+        mockMvc.perform(post("/api/v1/students")
+                        .content(objectMapper.writeValueAsString(studentDtoResponse))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.firstName").value(FIRSTNAME))
+                .andExpect(jsonPath("$.lastName").value(LASTNAME))
+                .andExpect(jsonPath("$.email").value(EMAIL))
+                .andExpect(jsonPath("$.phone").value(PHONE));
     }
 
     @Test
-    void WhenStudentByIdThenReturnSuccess() {
+    void saveStudent_withInvalidData_ReturnBadRequest() throws Exception {
+        StudentDtoRequest emptyStudentDtoRequest = new StudentDtoRequest("", "", "", "");
+        StudentDtoRequest invalidStudentDtoRequest = new StudentDtoRequest(null, null, null, null);
+
+        mockMvc.perform(post("/api/v1/students")
+                        .content(objectMapper.writeValueAsString(emptyStudentDtoRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        mockMvc.perform(post("/api/v1/students")
+                        .content(objectMapper.writeValueAsString(invalidStudentDtoRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getStudentById_ExistingId_ReturnScrumMaster() throws Exception {
         when(studentService.getStudentById(anyLong())).thenReturn(studentDtoResponse);
 
-        ResponseEntity<StudentDtoResponse> response = studentController.getStudentById(ID);
+        mockMvc.perform(get("/api/v1/students/{id}", ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.firstName").value(FIRSTNAME))
+                .andExpect(jsonPath("$.lastName").value(LASTNAME))
+                .andExpect(jsonPath("$.email").value(EMAIL))
+                .andExpect(jsonPath("$.phone").value(PHONE));
+    }
 
-        assertNotNull(response);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(StudentDtoResponse.class, response.getBody().getClass());
+    @Test
+    void getStudentById_UnexistingId_ReturnsObjectNotFound() throws Exception {
+        when(studentService.getStudentById(anyLong())).thenThrow(new ObjectNotFoundException("Student not found"));
 
-        assertEquals(ID, response.getBody().getId());
-        assertEquals(FIRSTNAME, response.getBody().getFirstName());
-        assertEquals(LASTNAME, response.getBody().getLastName());
-        assertEquals(PHONE, response.getBody().getPhone());
-        assertEquals(EMAIL, response.getBody().getEmail());
+        mockMvc.perform(get("/api/v1/students/{id}", 2L))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ObjectNotFoundException))
+                .andExpect(result -> assertEquals("Student not found", Objects.requireNonNull(result.getResolvedException()).getMessage()));
+    }
+
+    @Test
+    void getAllStudents_ReturnAnListStudents() throws Exception {
+        List<StudentDtoResponse> studentDtoResponseList = Arrays.asList(studentDtoResponse, studentDtoResponse);
+        when(studentService.getAllStudents()).thenReturn(studentDtoResponseList);
+
+        mockMvc.perform(get("/api/v1/students"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(ID))
+                .andExpect(jsonPath("$[0].firstName").value(FIRSTNAME))
+                .andExpect(jsonPath("$[0].lastName").value(LASTNAME))
+                .andExpect(jsonPath("$[0].email").value(EMAIL))
+                .andExpect(jsonPath("$[0].phone").value(PHONE));
+    }
+
+    @Test
+    void getAllStudents_ReturnNoStudents() throws Exception {
+        when(studentService.getAllStudents()).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/api/v1/students"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    void deleteStudent_WithExistingId_ReturnNoContent() throws Exception {
+        mockMvc.perform(delete("/api/v1/students/{id}", 1L))
+                .andExpect(status().isNoContent());
 
     }
 
     @Test
-    void WhenGetAllStudentsThenReturnAListOfStudentDtoResponse() {
-        when(studentService.getAllStudents()).thenReturn(List.of(studentDtoResponse));
+    void deleteStudent_WithUnexistingId_ReturnNotFound() throws Exception {
+        doThrow(new ObjectNotFoundException("Id not found")).when(studentService).deleteStudentById(1L);
 
-        ResponseEntity<List<StudentDtoResponse>> response = studentController.getAllStudents();
-
-        assertNotNull(response);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(StudentDtoResponse.class, response.getBody().get(0).getClass());
-
-        assertEquals(ID, response.getBody().get(0).getId());
-        assertEquals(FIRSTNAME, response.getBody().get(0).getFirstName());
-        assertEquals(LASTNAME, response.getBody().get(0).getLastName());
-        assertEquals(PHONE, response.getBody().get(0).getPhone());
-        assertEquals(EMAIL, response.getBody().get(0).getEmail());
+        mockMvc.perform(delete("/api/v1/students/{id}", 1L))
+                .andExpect(status().isNotFound());
 
     }
 
-    @Test
-    void WhenSaveThenReturnAnStudentDtoResponseCreated() {
-        when(studentService.save(any())).thenReturn(studentDtoResponse);
 
-        ResponseEntity<StudentDtoResponse> response = studentController.save(studentDtoRequest);
-
-        assertNotNull(response);
-        assertNotNull(response.getBody());
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-
-        assertEquals(ID, response.getBody().getId());
-        assertEquals(FIRSTNAME, response.getBody().getFirstName());
-        assertEquals(LASTNAME, response.getBody().getLastName());
-        assertEquals(PHONE, response.getBody().getPhone());
-        assertEquals(EMAIL, response.getBody().getEmail());
-
-    }
-
-    private void setupTestData(){
-        studentDtoRequest = new StudentDtoRequest(FIRSTNAME, LASTNAME, EMAIL, PHONE);
-        studentDtoResponse =  new StudentDtoResponse(ID, FIRSTNAME, LASTNAME, EMAIL, PHONE);
-    }
 
 }
