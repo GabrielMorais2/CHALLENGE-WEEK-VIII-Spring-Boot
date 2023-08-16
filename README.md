@@ -93,7 +93,7 @@ cd CHALLENGE-WEEK-VIII-Spring-Boot
 
 3. Open the generated coverage report:
    
-After running the above command, you can open the generated HTML coverage report located at http://localhost:8080/target/site/jacoco/index.html in your web browser.
+After running the above command, you can open the generated HTML coverage report located at target/site/jacoco/index.html in your web browser.
 
 Feel free to explore the detailed coverage report to understand which parts of the code are well-covered by tests and which areas might need further attention.
 
