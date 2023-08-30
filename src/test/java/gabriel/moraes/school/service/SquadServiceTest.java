@@ -1,15 +1,17 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.Model.ClassRoom;
-import gabriel.moraes.school.Model.ClassStatus;
-import gabriel.moraes.school.Model.DtoResponse.SquadDtoResponse;
-import gabriel.moraes.school.Model.Squad;
 import gabriel.moraes.school.Utils.JsonUtils;
+import gabriel.moraes.school.domain.classroom.ClassRoom;
+import gabriel.moraes.school.domain.classroom.ClassRoomRepository;
+import gabriel.moraes.school.domain.classroom.ClassRoomService;
+import gabriel.moraes.school.domain.classroom.ClassStatus;
+import gabriel.moraes.school.domain.squad.Squad;
+import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
+import gabriel.moraes.school.domain.squad.SquadRepository;
+import gabriel.moraes.school.domain.squad.SquadService;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
 import gabriel.moraes.school.exception.NoRegisteredStudentsException;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
-import gabriel.moraes.school.repository.ClassRoomRepository;
-import gabriel.moraes.school.repository.SquadRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +36,7 @@ class SquadServiceTest {
     @Mock
     private SquadRepository squadRepository;
     @Mock
-    private ClassRoomRepository classRoomRepository;
+    private ClassRoomService classRoomService;
     @InjectMocks
     private SquadService squadService;
     @Spy
@@ -50,7 +52,7 @@ class SquadServiceTest {
         ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM, ClassRoom.class);
         Squad[] squads = JsonUtils.getObjectFromFile(SQUAD, Squad[].class);
 
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
+        when(classRoomService.findClassById((anyLong()))).thenReturn(classRoom);
 
         when(squadRepository.saveAll(anyList())).thenReturn(List.of(squads));
 
@@ -84,19 +86,13 @@ class SquadServiceTest {
         assertEquals(squads[0].getId(), response.getId());
         assertEquals(newSquadName, response.getName());
     }
-    @Test
-    void createSquad_WithInvalidIdClassroom_ReturnAnObjectNotFoundException(){
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        assertThrows(ObjectNotFoundException.class, () -> squadService.createSquad(anyLong()));
-    }
 
     @Test
     void whenCreateSquadThenReturnAnInvalidClassStatusException() throws IOException {
         ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM, ClassRoom.class);
         classRoom.setStatus(ClassStatus.WAITING);
 
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
+        when(classRoomService.findClassById(anyLong())).thenReturn(classRoom);
 
         assertThrows(InvalidClassStatusException.class, () -> squadService.createSquad(anyLong()));
     }
@@ -106,7 +102,7 @@ class SquadServiceTest {
         ClassRoom classRoom = JsonUtils.getObjectFromFile(CLASSROOM, ClassRoom.class);
         classRoom.setStudents(new ArrayList<>());
 
-        when(classRoomRepository.findById(anyLong())).thenReturn(Optional.of(classRoom));
+        when(classRoomService.findClassById(anyLong())).thenReturn(classRoom);
 
         assertThrows(NoRegisteredStudentsException.class, () -> squadService.createSquad(anyLong()));
     }

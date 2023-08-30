@@ -1,10 +1,9 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.Model.Coordinator;
-import gabriel.moraes.school.Model.DtoRequest.CoordinatorDtoRequest;
-import gabriel.moraes.school.Model.DtoResponse.CoordinatorDtoResponse;
+import gabriel.moraes.school.domain.coordinator.*;
+import gabriel.moraes.school.domain.coordinator.dto.CoordinatorDtoRequest;
+import gabriel.moraes.school.domain.coordinator.dto.CoordinatorDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
-import gabriel.moraes.school.repository.CoordinatorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

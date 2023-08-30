@@ -1,10 +1,9 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.Model.DtoRequest.ScrumMasterDtoRequest;
-import gabriel.moraes.school.Model.DtoResponse.ScrumMasterDtoResponse;
-import gabriel.moraes.school.Model.ScrumMaster;
+import gabriel.moraes.school.domain.scrummaster.*;
+import gabriel.moraes.school.domain.scrummaster.dto.ScrumMasterDtoRequest;
+import gabriel.moraes.school.domain.scrummaster.dto.ScrumMasterDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
-import gabriel.moraes.school.repository.ScrumMasterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

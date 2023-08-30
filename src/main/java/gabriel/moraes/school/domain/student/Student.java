@@ -1,0 +1,46 @@
+package gabriel.moraes.school.domain.student;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import gabriel.moraes.school.domain.classroom.ClassRoom;
+import gabriel.moraes.school.domain.squad.Squad;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "classroom_id")
+    @JsonBackReference(value = "classRoom-students")
+    private ClassRoom classRoom;
+
+    @ManyToOne
+    @JoinColumn(name = "squad_id")
+    @JsonBackReference(value = "squad-student")
+    private Squad squad;
+
+    public Student(Long id, String firstName, String lastName, String email, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public Student(Long studentId) {
+        this.id = studentId;
+    }
+}
