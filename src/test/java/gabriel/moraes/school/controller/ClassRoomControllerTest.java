@@ -1,12 +1,17 @@
 package gabriel.moraes.school.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gabriel.moraes.school.Model.*;
-import gabriel.moraes.school.Model.DtoRequest.AddStudentsDtoRequest;
-import gabriel.moraes.school.Model.DtoRequest.ClassRoomDtoRequest;
-import gabriel.moraes.school.Model.DtoResponse.ClassRoomDtoResponse;
+import gabriel.moraes.school.domain.classroom.ClassRoomController;
+import gabriel.moraes.school.domain.classroom.ClassRoomService;
+import gabriel.moraes.school.domain.classroom.ClassStatus;
+import gabriel.moraes.school.domain.classroom.dto.AddStudentsDtoRequest;
+import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoRequest;
+import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoResponse;
+import gabriel.moraes.school.domain.coordinator.Coordinator;
+import gabriel.moraes.school.domain.instructor.Instructor;
+import gabriel.moraes.school.domain.scrummaster.ScrumMaster;
+import gabriel.moraes.school.domain.student.Student;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
-import gabriel.moraes.school.service.ClassRoomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

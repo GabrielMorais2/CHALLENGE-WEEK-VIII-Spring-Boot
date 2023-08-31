@@ -1,10 +1,11 @@
 package gabriel.moraes.school.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gabriel.moraes.school.Model.DtoRequest.StudentDtoRequest;
-import gabriel.moraes.school.Model.DtoResponse.StudentDtoResponse;
+import gabriel.moraes.school.domain.student.StudentController;
+import gabriel.moraes.school.domain.student.StudentService;
+import gabriel.moraes.school.domain.student.dto.StudentDtoRequest;
+import gabriel.moraes.school.domain.student.dto.StudentDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
-import gabriel.moraes.school.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

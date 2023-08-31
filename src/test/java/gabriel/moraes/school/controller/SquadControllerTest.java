@@ -1,10 +1,11 @@
 package gabriel.moraes.school.controller;
 
-import gabriel.moraes.school.Model.DtoRequest.UpdateSquadNameRequest;
-import gabriel.moraes.school.Model.DtoResponse.SquadDtoResponse;
-import gabriel.moraes.school.Model.Student;
-import gabriel.moraes.school.repository.SquadRepository;
-import gabriel.moraes.school.service.SquadService;
+import gabriel.moraes.school.domain.squad.SquadController;
+import gabriel.moraes.school.domain.squad.SquadRepository;
+import gabriel.moraes.school.domain.squad.SquadService;
+import gabriel.moraes.school.domain.squad.UpdateSquadNameRequest;
+import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
+import gabriel.moraes.school.domain.student.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

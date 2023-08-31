@@ -1,12 +1,22 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.Model.*;
-import gabriel.moraes.school.Model.DtoRequest.AddStudentsDtoRequest;
-import gabriel.moraes.school.Model.DtoRequest.ClassRoomDtoRequest;
-import gabriel.moraes.school.Model.DtoResponse.ClassRoomDtoResponse;
 import gabriel.moraes.school.Utils.JsonUtils;
+import gabriel.moraes.school.domain.classroom.ClassRoom;
+import gabriel.moraes.school.domain.classroom.ClassRoomRepository;
+import gabriel.moraes.school.domain.classroom.ClassRoomService;
+import gabriel.moraes.school.domain.classroom.ClassStatus;
+import gabriel.moraes.school.domain.classroom.dto.AddStudentsDtoRequest;
+import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoRequest;
+import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoResponse;
+import gabriel.moraes.school.domain.coordinator.Coordinator;
+import gabriel.moraes.school.domain.coordinator.CoordinatorService;
+import gabriel.moraes.school.domain.instructor.Instructor;
+import gabriel.moraes.school.domain.instructor.InstructorService;
+import gabriel.moraes.school.domain.scrummaster.ScrumMaster;
+import gabriel.moraes.school.domain.scrummaster.ScrumMasterService;
+import gabriel.moraes.school.domain.student.Student;
+import gabriel.moraes.school.domain.student.StudentService;
 import gabriel.moraes.school.exception.*;
-import gabriel.moraes.school.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,18 +40,20 @@ import static org.mockito.Mockito.*;
 class ClassRoomServiceTest {
 
     public static final Long ID = 1L;
+
     @Mock
     private ClassRoomRepository classRoomRepository;
+
     @InjectMocks
     private ClassRoomService classRoomService;
     @Mock
-    private InstructorRepository instructorRepository;
+    private InstructorService instructorService;
     @Mock
-    private CoordinatorRepository coordinatorRepository;
+    private CoordinatorService coordinatorService;
     @Mock
-    private StudentRepository studentRepository;
+    private StudentService studentService;
     @Mock
-    private ScrumMasterRepository scrumMasterRepository;
+    private ScrumMasterService scrumMasterService;
     @Spy
     private ModelMapper mapper;
 
@@ -67,9 +79,10 @@ class ClassRoomServiceTest {
         ScrumMaster[] scrumMasters = JsonUtils.getObjectFromFile(SCRUM_MASTER, ScrumMaster[].class);
 
 
-        when(coordinatorRepository.findAllById(any())).thenReturn(List.of(coordinators));
-        when(scrumMasterRepository.findAllById(any())).thenReturn(List.of(scrumMasters));
-        when(instructorRepository.findAllById((any()))).thenReturn(List.of(instructors));
+        when(coordinatorService.getAllCoordinatorsById((any()))).thenReturn(List.of(coordinators));
+        when(scrumMasterService.getAllScrumMastersById(any())).thenReturn(List.of(scrumMasters));
+        when(instructorService.getAllInstructorsById((any()))).thenReturn(List.of(instructors));
+
         when(classRoomRepository.save(any(ClassRoom.class))).thenReturn(classRoom);
 
         ClassRoomDtoResponse response = classRoomService.createClass(classRoomDtoRequest);
@@ -81,35 +94,6 @@ class ClassRoomServiceTest {
         assertEquals(Arrays.stream(coordinators).toList().get(0), response.getCoordinators().get(0));
         assertEquals(Arrays.stream(scrumMasters).toList().get(0), response.getScrumMasters().get(0));
         assertEquals(Arrays.stream(instructors).toList().get(0), response.getInstructors().get(0));
-    }
-    @Test
-    public void createClass_WithNotFoundCoordinator_ReturnObjectNotFoundException() throws IOException {
-        ClassRoomDtoRequest classRoomDtoRequest = JsonUtils.getObjectFromFile(CLASSROOM_DTO_REQUEST, ClassRoomDtoRequest.class);
-
-        when(coordinatorRepository.findAllById(any())).thenReturn(List.of());
-
-        assertThrows(ObjectNotFoundException.class, () -> classRoomService.createClass(classRoomDtoRequest));
-    }
-
-    @Test
-    public void createClass_WithNotFoundScrumMaster_ReturnObjectNotFoundException() throws IOException {
-        ClassRoomDtoRequest classRoomDtoRequest = JsonUtils.getObjectFromFile(CLASSROOM_DTO_REQUEST, ClassRoomDtoRequest.class);
-
-        when(coordinatorRepository.findAllById(any())).thenReturn(List.of(new Coordinator()));
-        when(scrumMasterRepository.findAllById(any())).thenReturn(List.of());
-
-        assertThrows(ObjectNotFoundException.class, () -> classRoomService.createClass(classRoomDtoRequest));
-    }
-
-    @Test
-    public void createClass_WithNotFoundInstructor_ReturnObjectNotFoundException() throws IOException {
-        ClassRoomDtoRequest classRoomDtoRequest = JsonUtils.getObjectFromFile(CLASSROOM_DTO_REQUEST, ClassRoomDtoRequest.class);
-
-        when(coordinatorRepository.findAllById(any())).thenReturn(List.of(new Coordinator()));
-        when(scrumMasterRepository.findAllById(any())).thenReturn(List.of(new ScrumMaster()));
-        when(instructorRepository.findAllById((any()))).thenReturn(List.of());
-
-        assertThrows(ObjectNotFoundException.class, () -> classRoomService.createClass(classRoomDtoRequest));
     }
 
     @Test
@@ -217,7 +201,7 @@ class ClassRoomServiceTest {
         AddStudentsDtoRequest studentIds = JsonUtils.getObjectFromFile(ADDSTUDENTSDTOREQUEST, AddStudentsDtoRequest.class);
 
         when(classRoomRepository.findById(ID)).thenReturn(Optional.of(classRoom));
-        when(studentRepository.findAllById(studentIds.getStudents())).thenReturn(List.of(students));
+        when(studentService.getAllStudentsById(studentIds.getStudents())).thenReturn(List.of(students));
         when(classRoomRepository.save(classRoom)).thenReturn(classRoom);
 
         ClassRoomDtoResponse response = classRoomService.addStudentsToClass(ID, studentIds);
@@ -237,7 +221,7 @@ class ClassRoomServiceTest {
         AddStudentsDtoRequest studentIds = JsonUtils.getObjectFromFile(ADDSTUDENTSDTOREQUEST, AddStudentsDtoRequest.class);
 
         when(classRoomRepository.findById(ID)).thenReturn(Optional.of(classRoom));
-        when(studentRepository.findAllById(studentIds.getStudents())).thenReturn(List.of(students));
+        when(studentService.getAllStudentsById(studentIds.getStudents())).thenReturn(List.of(students));
 
         assertThrows(InvalidClassStatusException.class, () -> classRoomService.addStudentsToClass(ID, studentIds));
     }
@@ -252,7 +236,7 @@ class ClassRoomServiceTest {
         AddStudentsDtoRequest studentIds = JsonUtils.getObjectFromFile(ADDSTUDENTSDTOREQUEST, AddStudentsDtoRequest.class);
 
         when(classRoomRepository.findById(ID)).thenReturn(Optional.of(classRoom));
-        when(studentRepository.findAllById(studentIds.getStudents())).thenReturn(List.of(students));
+        when(studentService.getAllStudentsById(studentIds.getStudents())).thenReturn(List.of(students));
 
         assertThrows(MaximumStudentsException.class, () -> classRoomService.addStudentsToClass(ID, studentIds));
 
@@ -269,7 +253,7 @@ class ClassRoomServiceTest {
         AddStudentsDtoRequest studentIds = JsonUtils.getObjectFromFile(ADDSTUDENTSDTOREQUEST, AddStudentsDtoRequest.class);
 
         when(classRoomRepository.findById(ID)).thenReturn(Optional.of(classRoom));
-        when(studentRepository.findAllById(studentIds.getStudents())).thenReturn(List.of(students));
+        when(studentService.getAllStudentsById(studentIds.getStudents())).thenReturn(List.of(students));
 
         assertThrows(StudentAlreadyAssignedException.class, () -> classRoomService.addStudentsToClass(ID, studentIds));
     }
