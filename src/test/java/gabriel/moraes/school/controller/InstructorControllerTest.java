@@ -2,9 +2,9 @@ package gabriel.moraes.school.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gabriel.moraes.school.domain.instructor.InstructorController;
+import gabriel.moraes.school.domain.instructor.InstructorService;
 import gabriel.moraes.school.domain.instructor.dto.InstructorDtoRequest;
 import gabriel.moraes.school.domain.instructor.dto.InstructorDtoResponse;
-import gabriel.moraes.school.domain.instructor.InstructorService;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

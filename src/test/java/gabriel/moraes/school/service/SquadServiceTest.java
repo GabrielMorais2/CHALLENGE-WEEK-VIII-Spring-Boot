@@ -2,16 +2,14 @@ package gabriel.moraes.school.service;
 
 import gabriel.moraes.school.Utils.JsonUtils;
 import gabriel.moraes.school.domain.classroom.ClassRoom;
-import gabriel.moraes.school.domain.classroom.ClassRoomRepository;
 import gabriel.moraes.school.domain.classroom.ClassRoomService;
 import gabriel.moraes.school.domain.classroom.ClassStatus;
 import gabriel.moraes.school.domain.squad.Squad;
-import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
 import gabriel.moraes.school.domain.squad.SquadRepository;
 import gabriel.moraes.school.domain.squad.SquadService;
+import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
 import gabriel.moraes.school.exception.InvalidClassStatusException;
 import gabriel.moraes.school.exception.NoRegisteredStudentsException;
-import gabriel.moraes.school.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

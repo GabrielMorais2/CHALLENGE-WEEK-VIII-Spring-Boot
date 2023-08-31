@@ -21,14 +21,14 @@ public class ScrumMasterService {
         this.scrumMasterRepository = scrumMasterRepository;
         this.mapper = mapper;
     }
-    @Transactional(readOnly = true)
+
     public ScrumMasterDtoResponse getScrumMasterById(Long id) {
         ScrumMaster scrumMaster = scrumMasterRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Scrum Master not found with id: " + id));
 
         return mapper.map(scrumMaster, ScrumMasterDtoResponse.class);
     }
-    @Transactional(readOnly = true)
+
     public List<ScrumMasterDtoResponse> getAllScrumMasters() {
         List<ScrumMaster> scrumMasters = scrumMasterRepository.findAll();
         return scrumMasters.stream()

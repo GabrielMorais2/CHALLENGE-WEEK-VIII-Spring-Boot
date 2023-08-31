@@ -1,6 +1,8 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.domain.scrummaster.*;
+import gabriel.moraes.school.domain.scrummaster.ScrumMaster;
+import gabriel.moraes.school.domain.scrummaster.ScrumMasterRepository;
+import gabriel.moraes.school.domain.scrummaster.ScrumMasterService;
 import gabriel.moraes.school.domain.scrummaster.dto.ScrumMasterDtoRequest;
 import gabriel.moraes.school.domain.scrummaster.dto.ScrumMasterDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;

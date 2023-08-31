@@ -1,6 +1,8 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.domain.instructor.*;
+import gabriel.moraes.school.domain.instructor.Instructor;
+import gabriel.moraes.school.domain.instructor.InstructorRepository;
+import gabriel.moraes.school.domain.instructor.InstructorService;
 import gabriel.moraes.school.domain.instructor.dto.InstructorDtoRequest;
 import gabriel.moraes.school.domain.instructor.dto.InstructorDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;

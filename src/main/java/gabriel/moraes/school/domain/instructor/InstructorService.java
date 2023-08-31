@@ -21,21 +21,18 @@ public class InstructorService {
         this.instructorRepository = instructorRepository;
         this.mapper = mapper;
     }
-    @Transactional(readOnly = true)
     public InstructorDtoResponse getInstructorById(Long id) {
         Instructor instructor = instructorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Instructor not found with id: " + id));
 
         return mapper.map(instructor, InstructorDtoResponse.class);
     }
-    @Transactional(readOnly = true)
     public List<InstructorDtoResponse> getAllInstructors() {
         List<Instructor> instructors = instructorRepository.findAll();
         return instructors.stream()
                 .map(instructor -> mapper.map(instructor, InstructorDtoResponse.class))
                 .collect(Collectors.toList());
     }
-
     @Transactional
     public InstructorDtoResponse save(InstructorDtoRequest instructorDtoRequest) {
         Instructor instructor = mapper.map(instructorDtoRequest, Instructor.class);

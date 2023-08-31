@@ -1,7 +1,9 @@
 package gabriel.moraes.school.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gabriel.moraes.school.domain.classroom.*;
+import gabriel.moraes.school.domain.classroom.ClassRoomController;
+import gabriel.moraes.school.domain.classroom.ClassRoomService;
+import gabriel.moraes.school.domain.classroom.ClassStatus;
 import gabriel.moraes.school.domain.classroom.dto.AddStudentsDtoRequest;
 import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoRequest;
 import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoResponse;

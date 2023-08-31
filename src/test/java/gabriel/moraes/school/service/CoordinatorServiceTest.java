@@ -1,6 +1,8 @@
 package gabriel.moraes.school.service;
 
-import gabriel.moraes.school.domain.coordinator.*;
+import gabriel.moraes.school.domain.coordinator.Coordinator;
+import gabriel.moraes.school.domain.coordinator.CoordinatorRepository;
+import gabriel.moraes.school.domain.coordinator.CoordinatorService;
 import gabriel.moraes.school.domain.coordinator.dto.CoordinatorDtoRequest;
 import gabriel.moraes.school.domain.coordinator.dto.CoordinatorDtoResponse;
 import gabriel.moraes.school.exception.ObjectNotFoundException;

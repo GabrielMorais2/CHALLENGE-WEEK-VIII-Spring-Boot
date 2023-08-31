@@ -1,4 +1,4 @@
-package gabriel.moraes.school.validations;
+package gabriel.moraes.school.domain.classroom.validations;
 
 import gabriel.moraes.school.domain.classroom.ClassRoom;
 import gabriel.moraes.school.domain.classroom.ClassStatus;
@@ -19,7 +19,7 @@ public interface ValidationsClassRoom {
 
     static void validationsMaxStudents(List<Student> students) {
         if (students.size()  >= MAX_STUDENTS) {
-            throw new MaximumStudentsException("A class can have a maximum of 30 students");
+            throw new MaximumStudentsException("Cannot add students, class is at full capacity");
         }
     }
 
@@ -46,12 +46,9 @@ public interface ValidationsClassRoom {
         }
 
     }
-    static void validateAndAssignStudentsToClass(List<Student> students, ClassRoom classRoom) {
-        for (Student student : students) {
-            if (student.getClassRoom() != null) {
-                throw new StudentAlreadyAssignedException("Student " + student.getFirstName() + "[ID: "+ student.getId()+"]"  + " is already assigned to a class.");
-            }
-            student.setClassRoom(classRoom);
+    static void validateStudentNotAssigned(Student student) {
+        if (student.getClassRoom() != null) {
+            throw new StudentAlreadyAssignedException("Student " + student.getFirstName() + "[ID: " + student.getId() + "]" + " is already assigned to a class.");
         }
     }
     static void validateMaxInstructor(List<Instructor> instructors) {

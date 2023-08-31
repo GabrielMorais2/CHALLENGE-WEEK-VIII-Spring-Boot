@@ -1,7 +1,6 @@
-package gabriel.moraes.school.domain.squad.dto;
+package gabriel.moraes.school.domain.squad;
 
-import gabriel.moraes.school.domain.squad.SquadService;
-import gabriel.moraes.school.domain.squad.UpdateSquadNameRequest;
+import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

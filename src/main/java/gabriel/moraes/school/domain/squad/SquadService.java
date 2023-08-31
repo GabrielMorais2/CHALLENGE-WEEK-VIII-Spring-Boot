@@ -1,7 +1,6 @@
 package gabriel.moraes.school.domain.squad;
 
 import gabriel.moraes.school.domain.classroom.ClassRoom;
-import gabriel.moraes.school.domain.classroom.ClassRoomRepository;
 import gabriel.moraes.school.domain.classroom.ClassRoomService;
 import gabriel.moraes.school.domain.classroom.ClassStatus;
 import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
@@ -11,7 +10,6 @@ import gabriel.moraes.school.exception.NoRegisteredStudentsException;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

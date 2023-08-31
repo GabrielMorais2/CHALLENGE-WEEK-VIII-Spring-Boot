@@ -22,7 +22,6 @@ public class CoordinatorService {
         this.mapper = mapper;
     }
 
-    @Transactional(readOnly = true)
     public CoordinatorDtoResponse getCoordinatorById(Long id) {
         Coordinator coordinator = coordinatorRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Coordinator not found with id: " + id));
@@ -30,7 +29,6 @@ public class CoordinatorService {
         return mapper.map(coordinator, CoordinatorDtoResponse.class);
     }
 
-    @Transactional(readOnly = true)
     public List<CoordinatorDtoResponse> getAllCoordinators() {
         List<Coordinator> coordinators = coordinatorRepository.findAll();
         return coordinators.stream()

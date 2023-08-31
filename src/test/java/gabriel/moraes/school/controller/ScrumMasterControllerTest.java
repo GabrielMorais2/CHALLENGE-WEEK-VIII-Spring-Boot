@@ -2,9 +2,9 @@ package gabriel.moraes.school.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gabriel.moraes.school.domain.scrummaster.ScrumMasterController;
+import gabriel.moraes.school.domain.scrummaster.ScrumMasterService;
 import gabriel.moraes.school.domain.scrummaster.dto.ScrumMasterDtoRequest;
 import gabriel.moraes.school.domain.scrummaster.dto.ScrumMasterDtoResponse;
-import gabriel.moraes.school.domain.scrummaster.ScrumMasterService;
 import gabriel.moraes.school.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

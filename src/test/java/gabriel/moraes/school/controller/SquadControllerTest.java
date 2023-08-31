@@ -1,7 +1,9 @@
 package gabriel.moraes.school.controller;
 
-import gabriel.moraes.school.domain.squad.*;
-import gabriel.moraes.school.domain.squad.dto.SquadController;
+import gabriel.moraes.school.domain.squad.SquadController;
+import gabriel.moraes.school.domain.squad.SquadRepository;
+import gabriel.moraes.school.domain.squad.SquadService;
+import gabriel.moraes.school.domain.squad.UpdateSquadNameRequest;
 import gabriel.moraes.school.domain.squad.dto.SquadDtoResponse;
 import gabriel.moraes.school.domain.student.Student;
 import org.junit.jupiter.api.BeforeEach;

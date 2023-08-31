@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static gabriel.moraes.school.validations.ValidationsClassRoom.*;
+import static gabriel.moraes.school.domain.classroom.validations.ValidationsClassRoom.*;
 
 @Service
 @AllArgsConstructor
@@ -33,7 +33,6 @@ public class ClassRoomService {
     private final ScrumMasterService scrumMasterService;
     private final ModelMapper mapper;
 
-    @Transactional(readOnly = true)
     public ClassRoomDtoResponse getClassById(Long id) {
         ClassRoom classRoom = findClassById(id);
         return mapper.map(classRoom, ClassRoomDtoResponse.class);
@@ -41,20 +40,13 @@ public class ClassRoomService {
 
     @Transactional
     public ClassRoomDtoResponse createClass(ClassRoomDtoRequest classDto) {
-
         List<Coordinator> coordinators = coordinatorService.getAllCoordinatorsById(classDto.getCoordinators());
         List<ScrumMaster> scrumMasters = scrumMasterService.getAllScrumMastersById(classDto.getScrumMasters());
         List<Instructor> instructors = instructorService.getAllInstructorsById(classDto.getInstructors());
 
-        validateMaxCoordinator(coordinators);
-        validateMaxInstructor(instructors);
-        validateMaxScrumMaster(scrumMasters);
+        validateCreateClassInputs(coordinators, scrumMasters, instructors);
 
-        ClassRoom classRoom = new ClassRoom(classDto.getName());
-
-        classRoom.getCoordinators().addAll(coordinators);
-        classRoom.getScrumMasters().addAll(scrumMasters);
-        classRoom.getInstructors().addAll(instructors);
+        ClassRoom classRoom = buildClassRoom(classDto, coordinators, scrumMasters, instructors);
 
         ClassRoom savedClassRoom = classRoomRepository.save(classRoom);
 
@@ -68,17 +60,24 @@ public class ClassRoomService {
         List<Student> students = studentService.getAllStudentsById(addStudentsDtoRequest.getStudents());
 
         validateClassRoomStatus(classRoom.getStatus());
-        validateAndAssignStudentsToClass(students, classRoom);
         validationsMaxStudents(classRoom.getStudents());
 
-        classRoom.getStudents().addAll(students);
+        assignStudentsToClass(classRoom, students);
 
         classRoomRepository.save(classRoom);
 
         return mapper.map(classRoom, ClassRoomDtoResponse.class);
     }
 
-    @Transactional
+    private void assignStudentsToClass(ClassRoom classRoom, List<Student> students) {
+        for (Student student : students) {
+            validateStudentNotAssigned(student);
+            student.setClassRoom(classRoom);
+        }
+        classRoom.getStudents().addAll(students);
+    }
+
+
     public void finish(Long id) {
         ClassRoom classRoom = findClassById(id);
         if (validateFinishClass(classRoom)) {
@@ -86,7 +85,7 @@ public class ClassRoomService {
         }
     }
 
-    @Transactional
+
     public void startClass(Long id) {
         ClassRoom classRoom = findClassById(id);
         if (validateStartClass(classRoom)) {
@@ -97,5 +96,19 @@ public class ClassRoomService {
     public ClassRoom findClassById(Long id) {
         return classRoomRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Class room not found with id: " + id));
+    }
+
+    private void validateCreateClassInputs(List<Coordinator> coordinators, List<ScrumMaster> scrumMasters, List<Instructor> instructors) {
+        validateMaxCoordinator(coordinators);
+        validateMaxInstructor(instructors);
+        validateMaxScrumMaster(scrumMasters);
+    }
+
+    private ClassRoom buildClassRoom(ClassRoomDtoRequest classDto, List<Coordinator> coordinators, List<ScrumMaster> scrumMasters, List<Instructor> instructors) {
+        ClassRoom classRoom = new ClassRoom(classDto.getName());
+        classRoom.getCoordinators().addAll(coordinators);
+        classRoom.getScrumMasters().addAll(scrumMasters);
+        classRoom.getInstructors().addAll(instructors);
+        return classRoom;
     }
 }

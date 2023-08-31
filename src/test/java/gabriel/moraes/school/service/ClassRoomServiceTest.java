@@ -1,7 +1,10 @@
 package gabriel.moraes.school.service;
 
 import gabriel.moraes.school.Utils.JsonUtils;
-import gabriel.moraes.school.domain.classroom.*;
+import gabriel.moraes.school.domain.classroom.ClassRoom;
+import gabriel.moraes.school.domain.classroom.ClassRoomRepository;
+import gabriel.moraes.school.domain.classroom.ClassRoomService;
+import gabriel.moraes.school.domain.classroom.ClassStatus;
 import gabriel.moraes.school.domain.classroom.dto.AddStudentsDtoRequest;
 import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoRequest;
 import gabriel.moraes.school.domain.classroom.dto.ClassRoomDtoResponse;
